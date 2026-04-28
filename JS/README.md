@@ -1,0 +1,1 @@
+- Claude has made some blunders over the topic 18 and 19 so read both files of 18 and 19.
