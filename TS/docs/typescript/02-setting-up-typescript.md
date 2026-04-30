@@ -1,0 +1,518 @@
+# 02 — Setting up TypeScript
+
+## What is this?
+
+Setting up TypeScript means installing the compiler (`tsc`), configuring how it behaves (`tsconfig.json`), and wiring up a development workflow so you can write `.ts` files and run them without manually compiling every time. This is the full toolchain you need before writing a single line of real TypeScript.
+
+## Why does it matter?
+
+In JavaScript you just `node index.js` and you're done. TypeScript has an extra step — `.ts` files must be **compiled** to `.js` before Node.js can run them. Without a proper setup you'll waste time manually compiling, lose live-reload, and have no idea where your compiled files are going. A correct setup gives you `npm run dev` that just works — hot reload, type checking, and a clean build output.
+
+## The JavaScript way vs the TypeScript way
+
+### JavaScript project startup
+
+```js
+// 1. Create project
+mkdir my-api && cd my-api
+npm init -y
+
+// 2. Install express
+npm install express
+
+// 3. Write index.js
+const express = require('express');
+const app = express();
+app.listen(3000);
+
+// 4. Run
+node index.js
+// Done. No compiler step.
+```
+
+### TypeScript project startup
+
+```ts
+// 1. Create project
+mkdir my-api && cd my-api
+npm init -y
+
+// 2. Install TypeScript + tooling
+npm install typescript ts-node nodemon --save-dev
+npm install @types/node --save-dev    // type definitions for Node.js built-ins
+npm install express
+npm install @types/express --save-dev // type definitions for Express
+
+// 3. Generate tsconfig.json
+npx tsc --init
+
+// 4. Write index.ts  (note: .ts not .js)
+import express from 'express';
+const app = express();
+app.listen(3000);
+
+// 5. Run with ts-node during development (no manual compile)
+npx ts-node index.ts
+
+// 6. Compile for production
+npx tsc
+node dist/index.js
+```
+
+The JS project has 0 compile steps. The TS project has a compiler, but that compiler is what gives you type safety.
+
+---
+
+## The full toolchain — what each tool does
+
+| Tool | What it is | When you use it |
+|------|-----------|-----------------|
+| `typescript` | The TypeScript compiler package | Always — this IS TypeScript |
+| `tsc` | The CLI command from the `typescript` package | Compiling `.ts` → `.js` for production |
+| `ts-node` | Runs `.ts` files directly — no manual compile step | Development: `ts-node src/index.ts` |
+| `nodemon` | Watches files and restarts the process on change | Development: hot reload |
+| `@types/node` | Type definitions for Node.js (`fs`, `path`, `process`, etc.) | Every Node.js TS project |
+| `@types/express` | Type definitions for Express | Every Express TS project |
+| `tsconfig.json` | Configuration file for the TypeScript compiler | Always — controls how TS behaves |
+
+---
+
+## Syntax
+
+### Installing everything
+
+```bash
+# Initialize package.json
+npm init -y
+
+# Install TypeScript compiler and dev tools
+npm install --save-dev typescript ts-node nodemon @types/node
+
+# Generate a default tsconfig.json
+npx tsc --init
+```
+
+### tsconfig.json — minimal working config
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2020",          // compile TS down to ES2020 JavaScript
+    "module": "commonjs",        // use require/module.exports (Node.js style)
+    "outDir": "./dist",          // compiled .js files go here
+    "rootDir": "./src",          // your .ts source files live here
+    "strict": true,              // enable ALL strict type checks (do this always)
+    "esModuleInterop": true,     // lets you write import x from 'x' instead of require
+    "skipLibCheck": true         // skip type checking of .d.ts files in node_modules
+  },
+  "include": ["src/**/*"],       // only compile files inside src/
+  "exclude": ["node_modules", "dist"]  // never compile these
+}
+```
+
+### package.json scripts
+
+```json
+{
+  "scripts": {
+    "dev": "nodemon --exec ts-node src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  }
+}
+```
+
+---
+
+## How it works — line by line
+
+### The compile pipeline
+
+```
+You write: src/index.ts
+     ↓
+tsc reads tsconfig.json and compiles
+     ↓
+Output: dist/index.js  (pure JavaScript, no TypeScript syntax)
+     ↓
+Node.js runs: node dist/index.js
+```
+
+### What ts-node does differently
+
+```
+You write: src/index.ts
+     ↓
+ts-node compiles IN MEMORY (no files written to disk)
+     ↓
+Node.js runs the in-memory JS immediately
+```
+
+`ts-node` is fast for development. You never touch `dist/` during dev.
+
+### nodemon + ts-node together
+
+```
+nodemon watches src/**/*.ts for changes
+     ↓
+Any .ts file changes → nodemon kills the old process
+     ↓
+nodemon restarts: ts-node src/index.ts
+     ↓
+You see changes live — just like nodemon with plain JS
+```
+
+---
+
+## Folder structure
+
+```
+my-api/
+├── src/                    ← ALL your .ts source files go here
+│   ├── index.ts            ← entry point
+│   ├── routes/
+│   │   └── userRoutes.ts
+│   └── controllers/
+│       └── userController.ts
+├── dist/                   ← compiled JS output (auto-generated by tsc, never edit)
+│   ├── index.js
+│   └── routes/
+│       └── userRoutes.js
+├── node_modules/
+├── package.json
+├── tsconfig.json
+└── .gitignore
+```
+
+**.gitignore should include:**
+
+```
+node_modules/
+dist/
+```
+
+You never commit `dist/` — it's generated output. Teammates run `npm run build` to generate it.
+
+---
+
+## Example 1 — basic: compiling your first .ts file
+
+### Step 1: Create the file
+
+```ts
+// src/hello.ts
+
+// A simple typed function — this is TypeScript, not JavaScript
+function greetUser(name: string, userId: number): string {
+  return `Hello ${name}, your user ID is ${userId}`;
+}
+
+// Call it
+const message = greetUser("Parsh", 101);
+console.log(message); // Hello Parsh, your user ID is 101
+```
+
+### Step 2: Compile it
+
+```bash
+# This reads tsconfig.json and compiles src/hello.ts → dist/hello.js
+npx tsc
+```
+
+### Step 3: Look at what tsc produced
+
+```js
+// dist/hello.js  — this is what tsc outputs (plain JavaScript, types stripped)
+"use strict";
+function greetUser(name, userId) {       // :string and :number are gone
+  return `Hello ${name}, your user ID is ${userId}`;
+}
+const message = greetUser("Parsh", 101);
+console.log(message);
+```
+
+### Step 4: Run it
+
+```bash
+node dist/hello.js
+# Hello Parsh, your user ID is 101
+```
+
+---
+
+## Example 2 — real world backend use case
+
+### Full Express + TypeScript project wired up
+
+**tsconfig.json**
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
+```
+
+**package.json**
+
+```json
+{
+  "name": "my-api",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "nodemon --exec ts-node src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.0.0",
+    "nodemon": "^3.0.0",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "express": "^4.18.0"
+  }
+}
+```
+
+**src/index.ts**
+
+```ts
+import express, { Request, Response } from 'express';    // typed imports
+
+const app = express();
+app.use(express.json());                                  // parse JSON bodies
+
+const PORT: number = 3000;                               // typed constant
+
+// Typed route handler — Request and Response come from @types/express
+app.get('/health', (req: Request, res: Response): void => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+```
+
+**Running in development:**
+
+```bash
+npm run dev
+# nodemon starts, ts-node compiles in memory, server is live
+# Edit any .ts file → server auto-restarts
+```
+
+**Building for production:**
+
+```bash
+npm run build
+# tsc compiles everything from src/ into dist/
+
+npm start
+# node dist/index.js — runs compiled pure JS
+```
+
+---
+
+## Understanding @types packages
+
+### The problem without @types
+
+```ts
+// Without @types/node installed:
+import path from 'path';          // ❌ TypeScript has no idea what 'path' is
+path.join(__dirname, 'uploads');  // ❌ Cannot find module 'path' or its type declarations
+```
+
+### Why @types packages exist
+
+Node.js itself is written in C and JavaScript — there are no TypeScript types built into it. The `@types/node` package is a community-maintained collection of `.d.ts` files (declaration files) that tell TypeScript: "the `path` module has a `join` function that takes `string` parameters and returns a `string`."
+
+```ts
+// WITH @types/node installed:
+import path from 'path';              // ✅ TypeScript knows what path is
+import fs from 'fs';                  // ✅ TypeScript knows all fs methods
+import { createServer } from 'http'; // ✅ Fully typed
+
+// Your editor now gives you autocomplete for ALL Node.js APIs
+path.join(__dirname, 'uploads');      // TypeScript knows this returns string
+fs.readFileSync('data.json', 'utf8'); // TypeScript knows the overloads
+```
+
+### The rule for @types
+
+```
+If you install a package:       You also need:
+express                    →    @types/express
+cors                       →    @types/cors
+bcrypt                     →    @types/bcrypt
+jsonwebtoken               →    @types/jsonwebtoken
+Node.js built-ins          →    @types/node (covers all of them)
+```
+
+Some newer packages (like `axios`, `zod`, `prisma`) ship their own types built-in. You don't need `@types/axios` — it already has types.
+
+---
+
+## The nodemon config file (advanced but useful)
+
+Instead of a long `--exec` flag, you can create a `nodemon.json`:
+
+```json
+{
+  "watch": ["src"],
+  "ext": "ts",
+  "ignore": ["src/**/*.spec.ts"],
+  "exec": "ts-node src/index.ts"
+}
+```
+
+Then your package.json script becomes just:
+
+```json
+{
+  "scripts": {
+    "dev": "nodemon"
+  }
+}
+```
+
+---
+
+## Common mistakes
+
+### Mistake 1 — Running `node` on a `.ts` file directly
+
+```bash
+# ❌ WRONG — Node.js cannot run TypeScript
+node src/index.ts
+# Error: SyntaxError: Unexpected token ':'
+# Node sees the type annotation `: string` and crashes
+
+# ✅ RIGHT — Use ts-node for development
+npx ts-node src/index.ts
+
+# ✅ RIGHT — Compile first, then run for production
+npx tsc
+node dist/index.js
+```
+
+### Mistake 2 — Committing the `dist/` folder
+
+```bash
+# ❌ WRONG — dist/ is generated output, should never be committed
+git add dist/
+git commit -m "add build files"
+# Now your git history is polluted with compiled JS
+
+# ✅ RIGHT — Add dist/ to .gitignore
+echo "dist/" >> .gitignore
+echo "node_modules/" >> .gitignore
+# Teammates run: npm run build   to generate dist/ themselves
+```
+
+### Mistake 3 — Forgetting `@types` packages, then fighting phantom errors
+
+```bash
+# ❌ WRONG — Installing express but not its types
+npm install express
+# Then in your .ts file:
+# import express from 'express';  ← ❌ Error: Could not find declaration file for 'express'
+# import { Request, Response } from 'express'; ← ❌ Module has no exported member
+
+# ✅ RIGHT — Always install the @types alongside the package
+npm install express
+npm install --save-dev @types/express
+# Now all Express types (Request, Response, NextFunction, Router...) are available
+```
+
+---
+
+## Practice exercises
+
+### Exercise 1 — easy
+
+Set up a brand new TypeScript project from scratch in a new folder. It should have:
+- `package.json` with `dev`, `build`, and `start` scripts
+- `tsconfig.json` with `outDir: ./dist`, `rootDir: ./src`, and `strict: true`
+- A `src/index.ts` file that declares a typed variable `serverName: string`, a typed variable `port: number`, and logs `"Starting [serverName] on port [port]"` to the console.
+
+Run it using `ts-node` and confirm it works.
+
+```ts
+// Write your src/index.ts here
+```
+
+### Exercise 2 — medium
+
+Create a file `src/calculator.ts`. Write a function `calculateDiscount` that takes `originalPrice: number` and `discountPercent: number` and returns `number`. Write a second function `formatPrice` that takes `price: number` and `currency: string` and returns a formatted string like `"USD 89.99"`.
+
+In `src/index.ts`, import both functions (use ES module import syntax — `import { calculateDiscount, formatPrice } from './calculator'`) and call them to print a discounted price.
+
+Also verify what `dist/calculator.js` looks like after running `npm run build` — notice that all types are gone.
+
+```ts
+// Write your src/calculator.ts here
+// Write your src/index.ts here
+```
+
+### Exercise 3 — hard
+
+You're setting up the foundation for a real Express API. Create the full project structure:
+
+1. Install all dependencies correctly (`express`, `typescript`, `ts-node`, `nodemon`, `@types/node`, `@types/express`).
+2. Write a `tsconfig.json` that compiles from `src/` to `dist/`, targets `ES2020`, uses `commonjs` modules, and has `strict` and `esModuleInterop` enabled.
+3. Write `src/index.ts` that:
+   - Creates an Express app with `express.json()` middleware
+   - Has a `PORT` constant typed as `number`, reading from `process.env.PORT` (convert to number) with a fallback of `3000`
+   - Has a `GET /health` route that returns `{ status: "ok", uptime: process.uptime() }`
+   - Has a `GET /users/:userId` route where `userId` is extracted from `req.params`, converted to a number, and returned as `{ userId: theNumber }`
+4. Make `npm run dev` start the server with hot reload.
+
+```ts
+// Write your src/index.ts here
+```
+
+---
+
+## Quick reference cheat sheet
+
+| Command | What it does |
+|---------|-------------|
+| `npm install --save-dev typescript ts-node nodemon` | Install TS toolchain |
+| `npm install --save-dev @types/node @types/express` | Install type definitions |
+| `npx tsc --init` | Generate default `tsconfig.json` |
+| `npx ts-node src/index.ts` | Run a `.ts` file directly (dev only) |
+| `npx tsc` | Compile all `.ts` files to `dist/` |
+| `node dist/index.js` | Run compiled JS (production) |
+| `npm run dev` | Start dev server with hot reload |
+| `npm run build` | Compile for production |
+| `npm start` | Run production build |
+
+| Config option | What it does |
+|--------------|-------------|
+| `"outDir": "./dist"` | Where compiled JS goes |
+| `"rootDir": "./src"` | Where your TS source is |
+| `"strict": true` | Enables all strict checks — always use this |
+| `"esModuleInterop": true` | Allows `import x from 'x'` syntax |
+| `"target": "ES2020"` | What JS version to compile down to |
+| `"module": "commonjs"` | Use `require`/`module.exports` for Node.js |
+| `"skipLibCheck": true` | Skip type-checking node_modules `.d.ts` files |
+
+## Connected topics
+
+- **03 — tsconfig.json in depth** — Every single compiler option explained with real consequences.
+- **04 — TypeScript with Node.js project setup** — Full production-ready project architecture.
+- **48 — Modules in TypeScript** — The `import`/`export` system and how `esModuleInterop` works under the hood.
