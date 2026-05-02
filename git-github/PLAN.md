@@ -126,7 +126,7 @@ production hotfixes, monorepo management, release processes.
 |----|------------------------------------------------------------------------|-------------|------|
 | 01 | The .git Directory — Complete Physical Architecture                    | ✅ Completed  | [topic-01](./topic-01-the-git-directory.md) |
 | 02 | Git Objects Deep Dive — Blobs, Trees, Commits, Tags on Disk           | ✅ Completed  | [topic-02](./topic-02-git-objects-deep-dive.md) |
-| 03 | The DAG & Refs — How History is Built and Navigated                    | ⬜ Not Started | — |
+| 03 | The DAG & Refs — How History is Built and Navigated                    | ✅ Completed  | [topic-03](./topic-03-dag-and-refs.md) |
 | 04 | Git Setup & Configuration (.gitconfig, global/local/system, aliases)   | ⬜ Not Started | — |
 | 05 | The 3 Trees of Git (Working Directory, Index, HEAD) — Data Flow       | ⬜ Not Started | — |
 | 06 | git add & git commit — Exact Internal Mechanics                        | ⬜ Not Started | — |
@@ -243,4 +243,4 @@ If a topic feels too shallow, it gets rewritten. Period.
 
 ---
 
-*Last Updated: Topic 02 — Git Objects Deep Dive — ✅ Completed.*
+*Last Updated: Topic 03 — The DAG & Refs — ✅ Completed.*
