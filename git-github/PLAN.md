@@ -127,10 +127,10 @@ production hotfixes, monorepo management, release processes.
 | 01 | The .git Directory — Complete Physical Architecture                    | ✅ Completed  | [topic-01](./topic-01-the-git-directory.md) |
 | 02 | Git Objects Deep Dive — Blobs, Trees, Commits, Tags on Disk           | ✅ Completed  | [topic-02](./topic-02-git-objects-deep-dive.md) |
 | 03 | The DAG & Refs — How History is Built and Navigated                    | ✅ Completed  | [topic-03](./topic-03-dag-and-refs.md) |
-| 04 | Git Setup & Configuration (.gitconfig, global/local/system, aliases)   | ⬜ Not Started | — |
-| 05 | The 3 Trees of Git (Working Directory, Index, HEAD) — Data Flow       | ⬜ Not Started | — |
-| 06 | git add & git commit — Exact Internal Mechanics                        | ⬜ Not Started | — |
-| 07 | Commits Done Right (atomic commits, Conventional Commits, amend)       | ⬜ Not Started | — |
+| 04 | Git Setup & Configuration (.gitconfig, global/local/system, aliases)   | ✅ Completed  | [topic-04](./topic-04-git-setup-configuration.md) |
+| 05 | The 3 Trees of Git (Working Directory, Index, HEAD) — Data Flow       | ✅ Completed  | [topic-05](./topic-05-three-trees-of-git.md) |
+| 06 | git add & git commit — Exact Internal Mechanics                        | ✅ Completed  | [topic-06](./topic-06-git-add-commit-internals.md) |
+| 07 | Commits Done Right (atomic commits, Conventional Commits, amend)       | ✅ Completed  | [topic-07](./topic-07-commits-done-right.md) |
 | 08 | Branching — Internals, Creation, Switching, Deletion                   | ⬜ Not Started | — |
 | 09 | Merging — Fast-Forward, 3-Way, Recursive, What Happens in .git        | ⬜ Not Started | — |
 | 10 | Remote Repositories (fetch, pull, push, tracking branches, origin)     | ⬜ Not Started | — |
@@ -243,4 +243,4 @@ If a topic feels too shallow, it gets rewritten. Period.
 
 ---
 
-*Last Updated: Topic 03 — The DAG & Refs — ✅ Completed.*
+*Last Updated: Topic 07 — Commits Done Right — ✅ Completed.*
