@@ -131,11 +131,11 @@ production hotfixes, monorepo management, release processes.
 | 05 | The 3 Trees of Git (Working Directory, Index, HEAD) — Data Flow       | ✅ Completed  | [topic-05](./topic-05-three-trees-of-git.md) |
 | 06 | git add & git commit — Exact Internal Mechanics                        | ✅ Completed  | [topic-06](./topic-06-git-add-commit-internals.md) |
 | 07 | Commits Done Right (atomic commits, Conventional Commits, amend)       | ✅ Completed  | [topic-07](./topic-07-commits-done-right.md) |
-| 08 | Branching — Internals, Creation, Switching, Deletion                   | ⬜ Not Started | — |
-| 09 | Merging — Fast-Forward, 3-Way, Recursive, What Happens in .git        | ⬜ Not Started | — |
-| 10 | Remote Repositories (fetch, pull, push, tracking branches, origin)     | ⬜ Not Started | — |
-| 11 | Rebasing — The Power Tool (rebase, interactive rebase, golden rule)    | ⬜ Not Started | — |
-| 12 | Undoing Things (reset soft/mixed/hard, revert, restore, clean)         | ⬜ Not Started | — |
+| 08 | Branching — Internals, Creation, Switching, Deletion                   | ✅ Completed  | [topic-08](./topic-08-branching-internals.md) |
+| 09 | Merging — Fast-Forward, 3-Way, Recursive, What Happens in .git        | ✅ Completed  | [topic-09](./topic-09-merging-internals.md) |
+| 10 | Remote Repositories (fetch, pull, push, tracking branches, origin)     | ✅ Completed  | [topic-10](./topic-10-remote-repositories.md) |
+| 11 | Rebasing — The Power Tool (rebase, interactive rebase, golden rule)    | ✅ Completed  | [topic-11](./topic-11-rebasing.md) |
+| 12 | Undoing Things (reset soft/mixed/hard, revert, restore, clean)         | ✅ Completed  | [topic-12](./topic-12-undoing-things.md) |
 | 13 | Stashing (stash internals, pop, apply, named stashes, untracked)       | ⬜ Not Started | — |
 | 14 | Tags & Releases (lightweight vs annotated, SemVer, on disk)            | ⬜ Not Started | — |
 | 15 | Git Workflows (Gitflow vs GitHub Flow vs Trunk-Based Development)      | ⬜ Not Started | — |
@@ -243,4 +243,4 @@ If a topic feels too shallow, it gets rewritten. Period.
 
 ---
 
-*Last Updated: Topic 07 — Commits Done Right — ✅ Completed.*
+*Last Updated: Topic 12 — Undoing Things — ✅ Completed.*
