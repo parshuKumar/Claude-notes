@@ -190,12 +190,12 @@
 - [x] 05 — SELECT and Projection
 - [x] 06 — WHERE Clause Mastery
 - [x] 07 — NULL in Depth
-- [ ] 08 — Filtering Performance & Sargability
-- [ ] 09 — CASE Expressions
+- [x] 08 — Filtering Performance & Sargability
+- [x] 09 — CASE Expressions
 
 ### Phase 3 — JOINs — Complete Mastery
-- [ ] 10 — JOIN Fundamentals and Mental Model
-- [ ] 11 — INNER JOIN in Depth
+- [x] 10 — JOIN Fundamentals and Mental Model
+- [x] 11 — INNER JOIN in Depth
 - [ ] 12 — LEFT JOIN and RIGHT JOIN
 - [ ] 13 — FULL OUTER JOIN
 - [ ] 14 — CROSS JOIN

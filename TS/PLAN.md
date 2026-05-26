@@ -32,14 +32,14 @@
 - [x] 16. Nested object types — typing deeply nested objects, inline types vs named types, keeping it readable
 - [x] 17. Index signatures — [key: string]: value, dynamic object keys, when you need them, combining with fixed properties
 - [x] 18. Extending interfaces — extends keyword, inheriting and adding properties, extending multiple interfaces
-- [ ] 19. Implementing interfaces in classes — implements keyword, enforcing a contract on a class ← current
+- [x] 19. Implementing interfaces in classes — implements keyword, enforcing a contract on a class
 
 ## PHASE 4 — Functions in TypeScript
 
-- [ ] 20. Function types — typing parameters and return values, void return type, never return type
-- [ ] 21. Optional and default parameters — optional params with ?, default values in TS, how they differ from JS
-- [ ] 22. Rest parameters and spread in TS — typing ...args, rest param types, spread type safety
-- [ ] 23. Function overloads — defining multiple call signatures, implementation signature, when to use
+- [x] 20. Function types — typing parameters and return values, void return type, never return type
+- [x] 21. Optional and default parameters — optional params with ?, default values in TS, how they differ from JS
+- [x] 22. Rest parameters and spread in TS — typing ...args, rest param types, spread type safety
+- [ ] 23. Function overloads — defining multiple call signatures, implementation signature, when to use ← current
 - [ ] 24. Higher-order function types — typing callbacks, typing functions that return functions, generic function types
 - [ ] 25. this in TypeScript — the this parameter, typing this explicitly, avoiding this bugs
 
@@ -123,5 +123,5 @@
 
 ## Current Progress
 
-**Current Topic:** 19  
-**Completed:** 18 / 77  
+**Current Topic:** 23  
+**Completed:** 22 / 77  
