@@ -136,20 +136,20 @@ production hotfixes, monorepo management, release processes.
 | 10 | Remote Repositories (fetch, pull, push, tracking branches, origin)     | ✅ Completed  | [topic-10](./topic-10-remote-repositories.md) |
 | 11 | Rebasing — The Power Tool (rebase, interactive rebase, golden rule)    | ✅ Completed  | [topic-11](./topic-11-rebasing.md) |
 | 12 | Undoing Things (reset soft/mixed/hard, revert, restore, clean)         | ✅ Completed  | [topic-12](./topic-12-undoing-things.md) |
-| 13 | Stashing (stash internals, pop, apply, named stashes, untracked)       | ⬜ Not Started | — |
-| 14 | Tags & Releases (lightweight vs annotated, SemVer, on disk)            | ⬜ Not Started | — |
-| 15 | Git Workflows (Gitflow vs GitHub Flow vs Trunk-Based Development)      | ⬜ Not Started | — |
-| 16 | Pull Requests & Code Review Culture (PR best practices, draft PRs)     | ⬜ Not Started | — |
-| 17 | Merge Strategies at Scale (squash, merge commit, rebase-merge)         | ⬜ Not Started | — |
-| 18 | Resolving Conflicts Like a Senior (3-way merge, ours vs theirs)        | ⬜ Not Started | — |
-| 19 | Git Hooks (pre-commit, commit-msg, pre-push, husky, lint-staged)       | ⬜ Not Started | — |
-| 20 | git reflog — The Safety Net (recover anything, HEAD movement log)      | ⬜ Not Started | — |
-| 21 | git bisect — Debugging with Git (binary search through history)        | ⬜ Not Started | — |
-| 22 | git blame & git log Mastery (codebase archaeology, --follow, -S, -G)   | ⬜ Not Started | — |
-| 23 | Submodules & Monorepos (git submodule, subtree, monorepo strategies)   | ⬜ Not Started | — |
-| 24 | GitHub Advanced (branch protection, CODEOWNERS, Actions, secrets)      | ⬜ Not Started | — |
-| 25 | Packfiles, Garbage Collection & Storage Optimization                   | ⬜ Not Started | — |
-| 26 | Performance & Large Repos (shallow clone, sparse checkout, git-lfs)    | ⬜ Not Started | — |
+| 13 | Stashing (stash internals, pop, apply, named stashes, untracked)       | ✅ Completed  | [topic-13](./topic-13-stashing.md) |
+| 14 | Tags & Releases (lightweight vs annotated, SemVer, on disk)            | ✅ Completed  | [topic-14](./topic-14-tags-and-releases.md) |
+| 15 | Git Workflows (Gitflow vs GitHub Flow vs Trunk-Based Development)      | ✅ Completed  | [topic-15](./topic-15-git-workflows.md) |
+| 16 | Pull Requests & Code Review Culture (PR best practices, draft PRs)     | ✅ Completed  | [topic-16](./topic-16-pull-requests-code-review.md) |
+| 17 | Merge Strategies at Scale (squash, merge commit, rebase-merge)         | ✅ Completed  | [topic-17](./topic-17-merge-strategies-at-scale.md) |
+| 18 | Resolving Conflicts Like a Senior (3-way merge, ours vs theirs)        | ✅ Completed  | [topic-18](./topic-18-resolving-conflicts.md) |
+| 19 | Git Hooks (pre-commit, commit-msg, pre-push, husky, lint-staged)       | ✅ Completed  | [topic-19](./topic-19-git-hooks.md) |
+| 20 | git reflog — The Safety Net (recover anything, HEAD movement log)      | ✅ Completed  | [topic-20](./topic-20-git-reflog.md) |
+| 21 | git bisect — Debugging with Git (binary search through history)        | ✅ Completed  | [topic-21](./topic-21-git-bisect.md) |
+| 22 | git blame & git log Mastery (codebase archaeology, --follow, -S, -G)   | ✅ Completed  | [topic-22](./topic-22-git-blame-log-mastery.md) |
+| 23 | Submodules & Monorepos (git submodule, subtree, monorepo strategies)   | ✅ Completed  | [topic-23](./topic-23-submodules-monorepos.md) |
+| 24 | GitHub Advanced (branch protection, CODEOWNERS, Actions, secrets)      | ✅ Completed  | [topic-24](./topic-24-github-advanced.md) |
+| 25 | Packfiles, Garbage Collection & Storage Optimization                   | ✅ Completed  | [topic-25](./topic-25-packfiles-garbage-collection.md) |
+| 26 | Performance & Large Repos (shallow clone, sparse checkout, git-lfs)    | ✅ Completed  | [topic-26](./topic-26-performance-large-repos.md) |
 
 ---
 
@@ -243,4 +243,4 @@ If a topic feels too shallow, it gets rewritten. Period.
 
 ---
 
-*Last Updated: Topic 12 — Undoing Things — ✅ Completed.*
+*Last Updated: Topic 26 — Performance & Large Repos — ✅ Completed. ALL 26 TOPICS DONE.*

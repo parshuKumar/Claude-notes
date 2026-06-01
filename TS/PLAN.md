@@ -39,35 +39,35 @@
 - [x] 20. Function types — typing parameters and return values, void return type, never return type
 - [x] 21. Optional and default parameters — optional params with ?, default values in TS, how they differ from JS
 - [x] 22. Rest parameters and spread in TS — typing ...args, rest param types, spread type safety
-- [ ] 23. Function overloads — defining multiple call signatures, implementation signature, when to use ← current
-- [ ] 24. Higher-order function types — typing callbacks, typing functions that return functions, generic function types
-- [ ] 25. this in TypeScript — the this parameter, typing this explicitly, avoiding this bugs
+- [x] 23. Function overloads — defining multiple call signatures, implementation signature, when to use
+- [x] 24. Higher-order function types — typing callbacks, typing functions that return functions, generic function types
+- [x] 25. this in TypeScript — the this parameter, typing this explicitly, avoiding this bugs
 
 ## PHASE 5 — Generics
 
-- [ ] 26. What are generics — the problem they solve, the T placeholder, basic generic function
-- [ ] 27. Generic functions — writing reusable functions with type parameters, multiple type params, constraints
-- [ ] 28. Generic interfaces — parameterized interfaces, ApiResponse<T> pattern, real backend examples
-- [ ] 29. Generic classes — typed classes, generic class methods, real use cases
-- [ ] 30. Generic constraints — extends keyword in generics, keyof constraint, only accepting certain shapes
-- [ ] 31. Default type parameters — T = string, making generics optional, when this helps
-- [ ] 32. Utility types — Partial, Required, Readonly, Pick, Omit, Record, Exclude, Extract, NonNullable, ReturnType, Parameters — all of them with real examples
+- [x] 26. What are generics — the problem they solve, the T placeholder, basic generic function
+- [x] 27. Generic functions — writing reusable functions with type parameters, multiple type params, constraints
+- [x] 28. Generic interfaces — parameterized interfaces, ApiResponse<T> pattern, real backend examples
+- [x] 29. Generic classes — typed classes, generic class methods, real use cases
+- [x] 30. Generic constraints — extends keyword in generics, keyof constraint, only accepting certain shapes
+- [x] 31. Default type parameters — T = string, making generics optional, when this helps
+- [x] 32. Utility types — Partial, Required, Readonly, Pick, Omit, Record, Exclude, Extract, NonNullable, ReturnType, Parameters — all of them with real examples
 
 ## PHASE 6 — Classes in TypeScript
 
-- [ ] 33. Classes in TypeScript — class syntax, typed properties, constructor typing, how TS classes extend JS classes
-- [ ] 34. Access modifiers — public, private, protected — what each allows, real encapsulation vs JS # private fields
-- [ ] 35. Readonly class properties — readonly keyword, set once in constructor, difference from private
-- [ ] 36. Parameter properties — constructor shorthand (private name: string in constructor params), cleaning up boilerplate
-- [ ] 37. Abstract classes — abstract keyword, abstract methods, why they exist, when over interface
-- [ ] 38. Class implementing interface — enforcing shape, multiple interfaces, abstract class vs interface decision
-- [ ] 39. Static members in TS — static typed properties and methods, singleton pattern in TS
+- [x] 33. Classes in TypeScript — class syntax, typed properties, constructor typing, how TS classes extend JS classes
+- [x] 34. Access modifiers — public, private, protected — what each allows, real encapsulation vs JS # private fields
+- [x] 35. Readonly class properties — readonly keyword, set once in constructor, difference from private
+- [x] 36. Parameter properties — constructor shorthand (private name: string in constructor params), cleaning up boilerplate
+- [x] 37. Abstract classes — abstract keyword, abstract methods, why they exist, when over interface
+- [x] 38. Class implementing interface — enforcing shape, multiple interfaces, abstract class vs interface decision
+- [x] 39. Static members in TS — static typed properties and methods, singleton pattern in TS
 
 ## PHASE 7 — Advanced types
 
-- [ ] 40. Type narrowing in depth — typeof, instanceof, in operator, equality narrowing, truthiness narrowing
-- [ ] 41. Type guards — custom type guard functions, the is keyword (value is Type), discriminated union guards
-- [ ] 42. Discriminated unions — the tag/kind field pattern, exhaustive checks with never, real state machine example
+- [x] 40. Type narrowing in depth — typeof, instanceof, in operator, equality narrowing, truthiness narrowing
+- [x] 41. Type guards — custom type guard functions, the is keyword (value is Type), discriminated union guards
+- [ ] 42. Discriminated unions — the tag/kind field pattern, exhaustive checks with never, real state machine example ← current
 - [ ] 43. Mapped types — transforming every key of a type, Readonly and Partial built with mapped types, custom mapped types
 - [ ] 44. Conditional types — T extends U ? X : Y, infer keyword, extracting types conditionally
 - [ ] 45. Template literal types — building string types dynamically, combining with unions, real use cases
@@ -123,5 +123,5 @@
 
 ## Current Progress
 
-**Current Topic:** 23  
-**Completed:** 22 / 77  
+**Current Topic:** 42  
+**Completed:** 41 / 77  
