@@ -89,40 +89,55 @@ Given a monotonic predicate `f: Z → {false, false, ..., false, true, true, ...
 
 ## RECOGNITION SIGNALS
 
-### REAL Binary Search Signals (when you SHOULD use it):
+**Signal 1:** You see a sorted array and need to find a target or determine if it exists
+→ Classic binary search, Template 1A (`lo <= hi`). The key test: does the comparison `nums[mid] vs target` give you a definitive direction? If you can say "target must be left of mid" or "right of mid" based purely on the value at mid, binary search applies. Sorting is the pre-condition that makes this decision valid.
 
-| Signal | Example Problem Phrasing |
-|--------|--------------------------|
-| Sorted array + find target | "Search in sorted array" |
-| Sorted array + find boundary | "Find first/last position of X" |
-| Find minimum satisfying value | "Minimize the maximum..." |
-| Find maximum satisfying value | "Maximize the minimum..." |
-| "What is the smallest X such that..." | Koko, capacity to ship |
-| Constraint: n ≤ 10^9 but need O(n log n) | Answer must be O(log n) search |
-| Monotonic property in problem | "Larger X always works if smaller X works" |
-| "K equal parts", "split array" with optimization | Split Array Largest Sum, Painters Partition |
-| Rotated sorted array | "array was sorted then rotated at unknown pivot" |
-| Peak element | "Find any peak, no global sort needed" |
+**Signal 2:** "Find the first/last position of X," "find first occurrence," "find last occurrence" in a sorted array
+→ Lower bound + upper bound combination, Template 1B. First occurrence = `lower_bound(target)`. Last occurrence = `upper_bound(target) - 1`. These exact phrasings are direct calls to Template 1B — recognize them immediately and don't try to do it in one pass.
 
-### FAKE Binary Search Signals (when people misapply it):
+**Signal 3:** The problem says "minimize the maximum" or "maximize the minimum"
+→ Binary search on answer, Template 2A or 2B. These exact phrasings are the clearest possible signal. "Minimize the largest subarray sum," "maximize the minimum distance between balls" — any time you see these paired words, you're looking at a binary search on the answer space.
 
-| Fake Signal | Why It's Wrong |
-|-------------|----------------|
-| "Find element in array" | If unsorted and no property, hash map is O(1) |
-| "Minimum of array" | Not binary searchable if not monotonic |
-| "K-th smallest overall" | Quickselect is O(n) average, not BS directly |
-| Counting problem with no monotonicity | Prefix sum might be right tool |
-| "Sorted array" alone | If you're searching for ALL occurrences, you also need upper_bound |
+**Signal 4:** "What is the minimum X such that [condition]" and the condition is monotonic
+→ Binary search on answer, Template 2A (find FIRST TRUE). Koko Eating Bananas: "minimum speed k such that Koko can finish in h hours." The condition is FFFTTTTT — once speed is sufficient, increasing speed keeps it sufficient. This monotonicity test is the intellectual core of the entire pattern.
 
-### The Monotonicity Test (Ask Yourself This):
+**Signal 5:** "The array was sorted and then rotated at an unknown pivot"
+→ Template 3 (rotated search) or Template 4 (rotated minimum). The key observation is that in any rotated sorted array, at least one half is ALWAYS fully sorted — the rotation creates exactly ONE descent. You identify the sorted half and check if the target falls within it.
 
-If you think a problem is binary search on answer, ask:
-> "If answer X is valid, is answer X+1 ALSO valid (or X-1 also valid)?"
+**Signal 6:** "Find any peak," "find any local maximum," "find where the slope transitions from rising to falling"
+→ Template 5 (peak element). The virtual -∞ boundaries guarantee at least one peak exists. You move toward the rising slope — wherever the slope rises, there must be a peak in that direction.
 
-If YES → binary search on answer.
-If the problem is "is this possible?" and it flips from NO to YES at exactly one threshold → binary search.
+**Signal 7:** Constraints tell you the answer can be up to 10^9 or 10^14 — far too large to enumerate
+→ Binary search on the answer space. 30 iterations cover 10^9; 47 iterations cover 10^14. Any time the answer space is too large to brute-force but you have a O(n) or O(n log n) feasibility check, binary search on the answer gets you to O(n log(answer_range)) total.
 
-If the validity function looks like: NO NO NO YES NO NO YES → **NOT binary searchable** (it's not monotonic).
+**Signal 8:** The problem has a clean "feasibility" structure — "can we do this in X time/cost/size?" and larger X always makes it easier
+→ Binary search on answer. The feasibility function is the check. The monotonicity is that making X larger only helps (or only hurts), never both. Split Array Largest Sum: "can we split with maximum part sum ≤ X?" Larger X = easier = FFFFFFTTTT.
+
+### Signals that LOOK like binary search but are NOT:
+
+**Fake signal 1:** "Find the minimum element in an unsorted array"
+→ Linear scan O(n). Binary search requires sorted data or a monotonic predicate. Without structure, you can't eliminate half the candidates with one comparison. `min_element` in O(n) is already optimal.
+
+**Fake signal 2:** "Count subarrays with sum exactly equal to K" (with negative elements allowed)
+→ Prefix sum + hash map (Pattern 06). The count doesn't change monotonically as K changes — it can go up and down. Binary search on K would give silently wrong answers.
+
+**Fake signal 3:** "Sliding window maximum" or "maximum of every window of size k"
+→ Monotonic deque (Pattern 29). The window slides forward, which binary search can't model. There's no "eliminate half" — you need every position.
+
+**Fake signal 4:** "Find the K-th smallest element in an unsorted array"
+→ QuickSelect O(n) average. Or heap O(n log k). Binary search on value + counting works (O(n log n)) but is suboptimal and harder to code correctly in interviews.
+
+### The Monotonicity Test — Apply Before Every BS on Answer:
+
+Before writing binary search on answer, explicitly verify:
+
+> "If answer X satisfies the condition, does answer X+1 ALSO satisfy it (or X-1 also)?"
+
+- Koko speed: speed 5 works → speed 6 works ✓
+- Split array max sum: max sum 10 allows k splits → max sum 11 also allows k splits ✓
+- Exact subarray count: 5 subarrays equal K → does 6 also? Not necessarily ✗
+
+If you can find even ONE counterexample to monotonicity, binary search gives silently wrong answers. No error, no crash — just wrong output on edge cases.
 
 ---
 
@@ -934,181 +949,366 @@ The real question is always: "What is my check function cost?" If check is O(n),
 
 ## COMMON MISTAKES AT 1600 LEVEL
 
+---
+
 ### Mistake 1: Integer Overflow in `mid` Calculation
 
+**What they do:** Write `int mid = (lo + hi) / 2`.
+
+**What goes wrong:** When doing binary search on answer with large ranges (e.g., lo = 0, hi = 10^9), `lo + hi` can overflow a 32-bit signed integer (max ~2.1 × 10^9). The result becomes negative, mid becomes negative, array access goes out of bounds or infinite loop results.
+
+**The fix:** Always write `mid = lo + (hi - lo) / 2`. Mathematically equivalent, never overflows.
+
 ```cpp
-// WRONG: can overflow when lo and hi are both large integers
+// WRONG: can overflow when lo and hi are both large
 int mid = (lo + hi) / 2;
 
-// RIGHT: safe from overflow
+// CORRECT: safe from overflow
 int mid = lo + (hi - lo) / 2;
-```
 
-**When does this happen?** When `hi = 2*10^9` (for binary search on answer with large range) and `lo` is also large, `lo + hi` overflows 32-bit int (max ~2.1×10⁹). Use `long long` or the safe formula.
-
-```cpp
-// Comprehensive safe version for BS on answer with large ranges:
+// For long long ranges (answer up to 10^18):
 long long lo = 0, hi = 2e18;
-while (lo < hi) {
-    long long mid = lo + (hi - lo) / 2;
-    // ...
-}
+long long mid = lo + (hi - lo) / 2;  // must use long long throughout
 ```
 
 ---
 
-### Mistake 2: `lo <= hi` vs `lo < hi` — Choosing the Wrong Termination
+### Mistake 2: `lo <= hi` vs `lo < hi` — Using the Wrong Termination
+
+**What they do:** Use `lo <= hi` with `hi = mid` for lower bound / BS on answer templates.
+
+**What goes wrong:** When `lo == hi` and `hi = mid`:
+- `mid = (lo + lo) / 2 = lo`
+- `hi = mid = lo` — nothing changed
+- `lo <= hi` is still true — **INFINITE LOOP**
+
+The off-by-one only shows on specific edge cases (small arrays, target at index 0 or n-1), so it passes some tests and fails others.
+
+**The fix:** Apply the decision rule:
+- Finding **exact target**: `lo <= hi` with `lo = mid+1`, `hi = mid-1` (exclude confirmed non-answers)
+- Finding **boundary** (lower bound, BS on answer): `lo < hi` with one branch using `hi = mid` (can't discard potential answers)
 
 ```cpp
-// WRONG for lower_bound (will miss the answer or loop forever):
-int lo = 0, hi = n - 1;      // hi = n-1 instead of n
+// WRONG for lower bound — infinite loop when lo == hi:
 while (lo <= hi) {
     int mid = lo + (hi - lo) / 2;
     if (nums[mid] < target) lo = mid + 1;
-    else hi = mid;             // hi can become lo, then lo <= hi still true
-    // If lo == hi and nums[lo] is the answer, we continue... then lo < hi is false...
-    // Actually this just doesn't converge correctly for lower_bound
+    else hi = mid;                   // lo == hi → mid == lo → hi stays lo → stuck
 }
-// The issue: when lo == hi and hi = mid, nothing changes. Infinite loop.
-```
 
-**Decision rule:**
-- Use `lo <= hi` with `lo = mid+1` and `hi = mid-1` → for finding EXACT target (return when found, -1 if not)
-- Use `lo < hi` with `lo = mid+1` or `hi = mid` → for finding BOUNDARY (lower/upper bound, BS on answer)
+// CORRECT for lower bound:
+while (lo < hi) {                    // stops when lo == hi (one candidate left)
+    int mid = lo + (hi - lo) / 2;
+    if (nums[mid] < target) lo = mid + 1;
+    else hi = mid;                   // shrinks range while keeping candidate
+}
+```
 
 ---
 
-### Mistake 3: Wrong `hi` Initialization for Binary Search on Answer
+### Mistake 3: Wrong Semantic Bounds for `lo` and `hi` in BS on Answer
+
+**What they do:** Set `lo = 0` or `hi = 1e9` or `hi = INT_MAX` without thinking about what the answer MEANS.
+
+**What goes wrong:**
+- `lo = 0` for Koko: speed 0 means 0 bananas/hour → Koko never finishes → check returns true infinitely (or division by zero crash). lo = 0 is not a valid answer semantically.
+- `lo = 0` for Split Array: no subarray of positive integers has sum 0 → check returns false for every mid → lo marches all the way to hi → answer is wrong, no error.
+- `hi = INT_MAX`: wastes extra iterations and signals you didn't reason about the problem.
+
+**The fix:** Derive lo and hi from the problem's semantics, not from "safe large numbers."
 
 ```cpp
-// Koko Eating Bananas — WRONG hi:
-int hi = 1e9;   // Too large (technically fine, just slower by constant)
-int hi = 10;    // Too small! Missing valid answers!
+// Koko Eating Bananas — WRONG lo:
+int lo = 0;   // speed 0 is invalid — causes division by zero
 
-// RIGHT: hi = max possible value that makes semantic sense
-int hi = *max_element(piles.begin(), piles.end()); 
-// Because if speed = max pile size, you finish each pile in 1 hour.
-// Speed can never usefully exceed max pile size.
-```
+// CORRECT:
+int lo = 1;   // minimum useful speed
+int hi = *max_element(piles.begin(), piles.end());
+// hi = max pile: any higher speed still takes 1 hour per pile — useless to go higher
 
-```cpp
 // Split Array Largest Sum — WRONG lo:
-int lo = 0;     // Wrong! A part can't have sum 0 if there are positive elements
+long long lo = 0;   // no part with positive integers has sum 0
 
-// RIGHT:
-int lo = *max_element(nums.begin(), nums.end());
-// Because each part must contain at least one element,
-// and the maximum is a lower bound for the answer.
+// CORRECT:
+long long lo = *max_element(nums.begin(), nums.end());
+// Every part has at least one element; the largest element is the floor
+long long hi = accumulate(nums.begin(), nums.end(), 0LL);
+// If m=1, everything is one part — this is the ceiling
 ```
-
-**Rule:** Think about what `lo` and `hi` represent SEMANTICALLY, not just syntactically. `lo` should be the smallest value that could possibly be the answer. `hi` should be the largest.
 
 ---
 
-### Mistake 4: Forgetting Ceiling Mid for "Last TRUE" Problems
+### Mistake 4: Forgetting Ceiling Mid for the "Maximize" Template
+
+**What they do:** Use floor mid (`lo + (hi-lo)/2`) in the maximize template where `lo = mid` on true.
+
+**What goes wrong:** When `lo = 5, hi = 6`:
+- Floor mid = 5
+- `check(5)` is true → `lo = mid = 5` — **nothing changed**
+- `lo < hi` is still true → **INFINITE LOOP**
+
+**The fix:** Use ceiling mid `(lo + (hi-lo+1) / 2)` in the maximize template.
 
 ```cpp
-// Maximize minimum distance — WRONG:
+// Maximize minimum distance — WRONG (floor mid):
 while (lo < hi) {
-    int mid = lo + (hi - lo) / 2;  // floor mid
-    if (check(mid)) lo = mid;      // lo = mid with floor mid → infinite loop when hi = lo + 1
+    int mid = lo + (hi - lo) / 2;      // floor mid
+    if (check(mid)) lo = mid;           // lo=5 when lo was 5: stuck forever
     else hi = mid - 1;
 }
 
-// RIGHT:
+// CORRECT (ceiling mid):
 while (lo < hi) {
     int mid = lo + (hi - lo + 1) / 2;  // ceiling mid
-    if (check(mid)) lo = mid;
+    if (check(mid)) lo = mid;           // lo=6 when lo was 5: guaranteed progress
     else hi = mid - 1;
 }
-```
 
-**The `lo = hi - 1` deadlock:**
-- `lo = 5, hi = 6`
-- Floor `mid = 5`, `check(5)` is true, so `lo = mid = 5`. Nothing changed. Infinite loop.
-- Ceiling `mid = 6`, `check(6)` is true, so `lo = mid = 6`. Loop terminates.
+// Memory aid: "Maximize → ceiling. Minimize → floor."
+```
 
 ---
 
-### Mistake 5: Not Accounting for "No Solution" Cases
+### Mistake 5: Comparing `nums[lo]` Instead of `nums[hi]` for Rotated Minimum
+
+**What they do:** Write `if (nums[mid] >= nums[lo])` for finding the minimum in a rotated array.
+
+**What goes wrong:** For a non-rotated array `[1, 2, 3, 4, 5]`:
+- `nums[lo]=1 <= nums[mid]=3` is always true
+- They set `lo = mid + 1` repeatedly, always moving right
+- End up at index 4 (value 5) — completely wrong. The minimum is 1.
+
+**The fix:** Compare `nums[mid]` with `nums[hi]`, not `nums[lo]`. The rotation's anomaly is relative to the RIGHT end: if `nums[mid] > nums[hi]`, the descent is to the right of mid.
 
 ```cpp
-// Binary search on answer always finds SOME answer in [lo, hi].
-// You must separately verify the answer makes sense:
+// WRONG: compare with nums[lo] — fails for non-rotated arrays
+if (nums[mid] > nums[lo]) lo = mid + 1;
+else hi = mid;
 
-int kokoSpeed = binarySearch(piles, h);
-
-// But what if h < piles.size()? (fewer hours than piles — impossible)
-// BS still returns something. Add validation:
-if (h < piles.size()) return -1; // or handle per problem
+// CORRECT: compare with nums[hi]
+if (nums[mid] > nums[hi]) lo = mid + 1;  // descent is in right half → min there
+else hi = mid;                            // min is at mid or in left half
 ```
-
-Similarly for Split Array: if `m > n` (more parts than elements), the answer is the sum of all elements (each element is its own part, but we have leftover empty parts — the problem guarantees m ≤ n, but always check constraints).
 
 ---
 
-### Mistake 6: Applying BS When Predicate Isn't Monotonic
+### Mistake 6: Applying Binary Search When Predicate Is Not Monotonic
+
+**What they do:** Binary search on answer for a problem where the check function is NOT monotonic.
+
+**What goes wrong:** Binary search requires FFFFFFTTTT or TTTTFFFFF. If the actual truth values look like FTFTFT or have any non-monotonic pattern, binary search converges to an arbitrary boundary and returns a wrong answer with no error or crash. This is the hardest mistake to debug because everything "looks correct" in the code.
+
+**Example:** "Find the window size K such that the window contains EXACTLY sum S." For arrays with negative numbers, the window sum can go up and down as K grows — not monotonic. Binary search gives silently wrong answers.
+
+**The fix:** Before writing any BS on answer code, explicitly verify monotonicity:
 
 ```cpp
-// WRONG: trying to BS on something non-monotonic
-// "Find the window size K such that the window has the EXACT sum S"
-// This is NOT monotonic — window sums go up AND down as K changes.
+// Before coding, ask: "If check(X) = true, is check(X+1) GUARANTEED to also be true?"
+// If you can find ONE counterexample, binary search is wrong.
 
-// RIGHT for this: sliding window or prefix sums, not binary search.
+// WRONG: trying to BS on non-monotonic check
+// "Find window size K where window has exactly sum S"
+// Sum can decrease as K grows (negative numbers) → not monotonic → BS gives wrong answer
+
+// RIGHT: test your intuition
+// "If window of size K has sum >= S, does K+1 ALSO have sum >= S?"
+// For non-negative arrays: YES (adding more non-negative values keeps sum >= S). Binary search OK.
+// For arrays with negatives: NOT necessarily. Binary search WRONG.
 ```
-
-**Mental check before writing BS on answer:** "Draw" the predicate function on paper. Does it look like `FFFFFFTTTT` or `TTTTFFFF`? If it has any `FTFT` pattern, binary search will give wrong answers silently.
 
 ---
 
 ## PROBLEM SET
 
-### Tier 1: Warmup (Get the templates into muscle memory)
+### WARMUP — 4 problems (build the template into muscle memory)
 
-| # | Problem | LC # | Key Learning | Est. Time |
-|---|---------|------|--------------|-----------|
-| 1 | Binary Search | 704 | Pure binary search, Template 1A | 10 min |
-| 2 | Search Insert Position | 35 | Lower bound = Template 1B | 10 min |
-| 3 | Guess Number Higher or Lower | 374 | BS Template 1A on abstract "array" | 10 min |
-| 4 | First Bad Version | 278 | BS on answer: first TRUE in FFFTTT | 15 min |
+**1. Binary Search — LC 704 — [Pure Template 1A, no tricks]**
 
-**Signs of mastery on Tier 1:** All 4 problems in under 40 total minutes, no off-by-one errors.
+Why this problem: This is the template. No rotation, no answer space, no tricks — just sorted array and target. If you cannot write Template 1A in 2 minutes from memory without bugs, stop everything and drill this until you can. Every other binary search problem is built on this foundation.
 
----
+What to prove: `mid = lo + (hi-lo)/2` (not `(lo+hi)/2`). Both branches use `mid±1` to strictly shrink the range. Returns `-1` correctly when the loop exits without finding the target.
 
-### Tier 2: Core (The problems every interviewer asks)
+Target time: 2 minutes.
 
-| # | Problem | LC # | Key Learning | Est. Time |
-|---|---------|------|--------------|-----------|
-| 5 | Find First and Last Position | 34 | Lower + upper bound combined | 20 min |
-| 6 | Search in Rotated Sorted Array | 33 | Which half is sorted? | 25 min |
-| 7 | Find Minimum in Rotated Sorted Array | 153 | Compare mid with hi, not lo | 20 min |
-| 8 | Find Peak Element | 162 | BS on non-sorted, move toward peak | 20 min |
-| 9 | Koko Eating Bananas | 875 | BS on answer: minimize speed | 25 min |
-
-**Signs of mastery on Tier 2:** No peeking at templates. Correct first try on 33 and 153.
+Edge cases: Empty array (return -1 immediately). Single element that is not target. Target smaller than all elements. Target larger than all elements.
 
 ---
 
-### Tier 3: Stretch (Separate 1600 from 1800)
+**2. Search Insert Position — LC 35 — [Lower bound IS Template 1B]**
 
-| # | Problem | LC # | Key Learning | Est. Time |
-|---|---------|------|--------------|-----------|
-| 10 | Capacity to Ship Packages | 1011 | BS on answer: consecutive allocation check | 30 min |
-| 11 | Split Array Largest Sum | 410 | BS on answer: minimize the maximum, correct lo | 35 min |
-| 12 | Median of Two Sorted Arrays | 4 | BS on partition — hardest BS problem | 45 min |
-| 13 | Sqrt(x) | 69 | Integer sqrt via "last TRUE" template | 15 min |
+Why this problem: This problem is the definition of lower_bound. The return value is either the index of the target or the index where the target would be inserted to keep the array sorted. That is exactly what lower_bound returns. Implement it with `hi = nums.size()` (not `nums.size()-1`) to handle the "insert at the end" case.
+
+What to prove: `hi = nums.size()` (the answer can be index n — insertion at end). `lo < hi` termination. `hi = mid` when `nums[mid] >= target` (keeping mid as a candidate).
+
+Target time: 3 minutes.
+
+Edge cases: Target is larger than all elements → return n. Target equals nums[0] → return 0. All duplicates: the return is the FIRST index of the target.
 
 ---
 
-### Tier 4: Contest (What appears in Codeforces Div 2 C/D)
+**3. Guess Number Higher or Lower — LC 374 — [BS on implicit range, no array]**
 
-| # | Problem | LC # | Key Learning | Est. Time |
-|---|---------|------|--------------|-----------|
-| 14 | Magnetic Force Between Two Balls | 1552 | Maximize minimum: "last TRUE" template | 30 min |
-| 15 | Minimize Max Distance to Gas Station | 774 | Floating point BS | 35 min |
-| 16 | Find in Mountain Array | 1095 | Peak first, then two BS passes | 35 min |
-| 17 | Find K-th Smallest Pair Distance | 719 | BS on answer + sliding window check | 40 min |
+Why this problem: Builds mental flexibility for binary search on answer. There is no physical array. The "array" is the integers 1..n in sorted order. You call `guess(mid)` instead of comparing `nums[mid]`. The insight is that sorted structure can be implicit — this is exactly what happens in BS-on-answer problems where you search over a range of possible values.
+
+Target time: 3 minutes.
+
+Edge cases: n = 1 (only one number, return 1 immediately after checking). `guess(mid) == 0` means you found it — return `mid` immediately, don't continue searching.
+
+Common mistake: Calling `guess` with values outside [1, n]. Your lo and hi should always stay within [1, n].
+
+---
+
+**4. First Bad Version — LC 278 — [Your first real BS on answer]**
+
+Why this problem: The "array" is `[1, 2, 3, ..., n]`. The predicate is `isBadVersion(v)`, which is FFFTTTTT — false for good versions, true from the first bad version onwards. This is the BS-on-answer template in its purest form. Every Koko/Split Array/Capacity-to-Ship problem is a more complex version of this exact structure.
+
+What to prove: `hi = mid` (NOT `hi = mid-1`) when `isBadVersion(mid)` returns true — mid might be the first bad version, so we must keep it as a candidate. `lo = mid + 1` when `isBadVersion(mid)` returns false — mid is definitely NOT the first bad version.
+
+Target time: 5 minutes.
+
+Edge cases: All versions are bad (n=1, version 1 is bad → return 1). The last version is the first bad one (first bad = n).
+
+---
+
+### CORE — 5 problems (the real pattern learning)
+
+**5. Find First and Last Position of Element in Sorted Array — LC 34 — [Lower bound + upper bound]**
+
+Why this problem: The single most important lower_bound application. Forces you to implement two binary searches and combine them. The `last = upperBound - 1` transformation must become automatic — if you have to derive it each time, you haven't internalized it.
+
+What to prove: First occurrence = `lower_bound(target)`. Last occurrence = `upper_bound(target) - 1`. When target doesn't exist: `first == n` OR `nums[first] != target` → return `{-1, -1}`. Without the second check, you get wrong answers on arrays where target is not present but lower_bound returns a valid index.
+
+Target time: 15 minutes.
+
+Edge cases: Target not in array (return {-1,-1}). All elements equal target. Single occurrence. Target at index 0 or n-1.
+
+Common mistake: Running upper_bound starting from index 0 when you already found `first` — it works but wastes log(n) comparisons and shows you didn't think about the optimization. Start upper_bound from `first`.
+
+---
+
+**6. Search in Rotated Sorted Array — LC 33 — [Identify the sorted half]**
+
+Why this problem: Tests the single most important insight about rotated arrays: **in any rotated sorted array, at least one half is ALWAYS fully sorted**. The rotation creates exactly one "descent." That descent is either in the left half or the right half — making the other half a clean sorted sequence you can binary search in.
+
+What to prove: `nums[lo] <= nums[mid]` (with `<=` for lo==mid edge case) → left half is sorted. Check if target is within `[nums[lo], nums[mid])` → search left, else right. The symmetric logic for the right-sorted case.
+
+Target time: 20 minutes.
+
+The thing to do before coding: **Trace through [4,5,6,7,0,1,2] with target=0 manually on paper.** The logic only "clicks" after a concrete trace. Don't attempt to code from pure reasoning.
+
+Edge cases: Two-element arrays (lo=0, hi=1 → mid=0 → the `<=` in `nums[lo] <= nums[mid]` matters here). Array that was never rotated (rotation at index 0 is equivalent to no rotation — your code must handle this).
+
+---
+
+**7. Find Minimum in Rotated Sorted Array — LC 153 — [Compare with nums[hi], not nums[lo]]**
+
+Why this problem: This is the source of one of the most common confusion pairs in binary search — LC 33 uses `nums[lo]` for the rotation detection, but LC 153 MUST use `nums[hi]`. Understanding WHY they're different cements the rotation array understanding.
+
+Key insight: To find the minimum, you want to move toward the "descending" side — where the rotation dipped the values low. If `nums[mid] > nums[hi]`, the minimum is in the right half (the descent is there). If `nums[mid] <= nums[hi]`, minimum is at mid or in the left half.
+
+What to prove: Trace `[1,2,3,4,5]` (non-rotated). With `nums[lo]`: `nums[mid]=3 > nums[lo]=1` is always true → always go right → end at 5 (WRONG). With `nums[hi]`: `nums[mid]=3 <= nums[hi]=5` → go left → correctly find 1.
+
+Target time: 15 minutes.
+
+Edge cases: Non-rotated array (must still return index 0). All same elements: LC 154 variant requires `hi--` when `nums[mid] == nums[hi]`.
+
+---
+
+**8. Find Peak Element — LC 162 — [Move toward rising slope]**
+
+Why this problem: Binary search on an array that is NOT sorted and doesn't even have a target. You're finding a PROPERTY — local maximum. The insight: if you're on a rising slope (`nums[mid] < nums[mid+1]`), a peak must exist to the right (either the next element is a peak or the slope continues rising and eventually must peak due to the -∞ virtual boundary). This argument — "move toward the guaranteed direction" — is fundamental to many non-obvious binary searches.
+
+Target time: 15 minutes.
+
+Edge cases: Single element (it's always a peak). Strictly increasing array (peak is the last element). Strictly decreasing array (peak is the first element). Two adjacent peaks (any one of them is fine — problem only requires ANY peak).
+
+---
+
+**9. Koko Eating Bananas — LC 875 — [BS on answer, canonical minimize template]**
+
+Why this problem: The canonical BS-on-answer problem. Every aspect of Template 2A must come from reasoning, not memory: lo = 1 (speed 0 is useless), hi = max(piles) (faster than this doesn't help), `canFinish` check uses ceiling division `(p + k - 1) / k`.
+
+What to prove: You can derive lo, hi, and the check function independently from the problem statement. The check function sums ceiling-divided hours and compares to h. You use `lo < hi` and `hi = mid` (not `hi = mid - 1`) when check passes.
+
+Target time: 20 minutes.
+
+Edge cases: h = piles.size() (each hour eats exactly one pile — speed = max pile is needed). A single pile with very large value. Early termination in check when `hours > h` (prevents overflow with large piles).
+
+---
+
+### STRETCH — 4 problems (separate 1600 from 1800)
+
+**10. Capacity to Ship Packages Within D Days — LC 1011 — [Consecutive allocation, same skeleton as Koko]**
+
+Why this problem: Template 2A again, but the check function is "consecutive allocation" (packages must be shipped in order, can't reorder). This forces a fresh derivation of the check — you can't reuse Koko's `ceil(pile/speed)` directly. You greedily fill each day's capacity in order.
+
+What makes this "stretch": Beginners try to sort the packages first (WRONG — order matters). The consecutive constraint forces you to scan left to right and start a new day only when the next package doesn't fit.
+
+Target time: 20 minutes. If you understood Koko fully, this is 10 minutes. The extra time is for people who need to re-derive the greedy check.
+
+---
+
+**11. Split Array Largest Sum — LC 410 — [Correct lo = max_element, NOT 0]**
+
+Why this problem: The hardest thing here is not the code — it's the lo initialization. `lo = 0` passes syntax checks but is semantically wrong: no subarray of positive integers can have sum 0. The check function would incorrectly claim even the first positive element exceeds maxSum=0, returning false for every mid value, so lo marches to hi without finding anything meaningful.
+
+What to prove: You derive `lo = *max_element(nums.begin(), nums.end())` (minimum possible for any part) and `hi = accumulate(...)` (maximum: one part containing everything). Your check handles the `x > maxSum → return false` guard for the single-element-exceeds-maxSum case.
+
+Target time: 25 minutes.
+
+Edge cases: m = 1 (answer is sum of all). m = n (answer is max element — the tightest constraint). A single element larger than all others dominates.
+
+---
+
+**12. Sqrt(x) — LC 69 — [Maximize template, ceiling mid, long long guard]**
+
+Why this problem: "Largest integer k where k² ≤ x" is a "last TRUE" problem (TTTTFFFFF). This requires Template 2B with ceiling mid. If you use floor mid, you get an infinite loop on lo=5, hi=6 when check(5)=true. You MUST cast to long long before squaring — `(long long)mid * mid` — because `mid` can be up to 46340 and `mid*mid` overflows int.
+
+Target time: 10 minutes. If this takes more than 15 minutes, the maximize template isn't internalized yet. Re-read Template 2B, trace through lo=5, hi=6 with both floor and ceiling mid, and repeat.
+
+---
+
+**13. Median of Two Sorted Arrays — LC 4 — [BS on partition, hardest BS problem]**
+
+Why this problem: Binary search on the partition POSITION, not on a value or answer. You're searching for the correct way to split both arrays such that every element in the left halves is ≤ every element in the right halves. The INT_MIN/INT_MAX sentinel values, the even/odd total length handling, and the "always BS on the smaller array" optimization all require deep understanding.
+
+What to prove: p2 = (m+n+1)/2 - p1. The `+1` is for odd total lengths. The partition is correct when `maxL1 <= minR2` AND `maxL2 <= minR1`.
+
+Target time: 40 minutes. Do NOT attempt this without first tracing through the example `nums1=[1,3], nums2=[2]` on paper with the partition logic.
+
+---
+
+### CONTEST — 4 problems (CF Div 2 C/D level)
+
+**14. Magnetic Force Between Two Balls — LC 1552 — [Maximize minimum, ceiling mid mandatory]**
+
+Why this is contest level: "Maximize the minimum distance" is the exact OPPOSITE of Koko — it uses Template 2B (ceiling mid, `lo = mid`). Getting the ceiling mid wrong causes a silent infinite loop that looks like TLE. You must sort `position[]` first — the greedy check places balls greedily at the earliest valid position, and greedy requires sorted order.
+
+Target time: 25 minutes. If this takes more, the maximize template needs more drilling.
+
+---
+
+**15. Minimize Max Distance to Gas Station — LC 774 — [Floating point BS on answer]**
+
+Why this is contest level: The answer is a real number. The check function computes `ceil(gap / maxDist) - 1` new stations needed per gap. Using the 100-iteration fixed approach is safer than epsilon termination — fixed iterations always terminate with ~10^-30 precision, while epsilon loops can behave poorly near floating-point representation limits.
+
+Target time: 30 minutes.
+
+---
+
+**16. Find in Mountain Array — LC 1095 — [Three separate BS passes]**
+
+Why this is contest level: Three binary searches in one problem: find peak (Template 5), then binary search ascending left side (Template 1A), then binary search descending right side (Template 1A with reversed comparisons). The mountain array is an opaque interface — you can only call `get(index)` with a limited call budget, so binary search is not just efficient but required.
+
+Target time: 30 minutes.
+
+---
+
+**17. Find K-th Smallest Pair Distance — LC 719 — [BS on answer + two-pointer check]**
+
+Why this is contest level: Two patterns combined. Binary search on the distance value d; check function counts pairs with distance ≤ d using a sorted array + two-pointer sliding window. You cannot do the count in O(1) — it requires O(n) per check. Total: O(n log n) sort + O(n log maxDist) for the BS × O(n) check = O(n log maxDist). This pattern — "BS on answer + non-trivial O(n) check" — is exactly what appears in Codeforces Div 2 D problems.
+
+Target time: 35 minutes.
 
 ---
 
@@ -1130,61 +1330,81 @@ Binary search connects to almost every other pattern in this curriculum:
 
 ## INTERVIEW SIMULATION QUESTIONS
 
-### Simulation 1: Koko Eating Bananas (Google phone screen style)
+---
 
-**Interviewer:** "Koko loves to eat bananas. There are n piles of bananas. The i-th pile has piles[i] bananas. The guards have gone and will come back in h hours. Koko can decide her bananas-per-hour eating speed k. Each hour, she chooses some pile of bananas and eats k bananas from that pile. If the pile has less than k bananas, she eats all of them and will not eat any more bananas during this hour. Koko likes to eat slowly but still wants to finish eating all the bananas before the guards come back. Return the minimum integer k such that she can eat all the bananas within h hours."
+### Q1: "Koko loves to eat bananas. There are n piles of bananas. The guards will be back in h hours. Find the minimum eating speed k to finish all the bananas."
 
-**Green flags (what good candidates say):**
-- "Let me think about what values k can take. It ranges from 1 to max(piles). The answer is monotonic — if k works, k+1 works. So I can binary search."
-- States the invariant: "I'll binary search on k, with check function = can she finish in h hours at speed k."
-- `ceil(p / k) = (p + k - 1) / k` without floating point.
-- lo = 1, hi = max(piles) — and EXPLAINS why (not 1e9 blindly).
+**Company type:** Google phone screen, Amazon OA, Microsoft (LC 875 — extremely common)
+**Expected time:** 20 minutes
+**What they are testing:** Recognition of BS on answer, independent derivation of check function and bounds, ceiling division without floating point
 
-**Red flags:**
-- Starts with a brute force loop over all k from 1 to 1e9 without recognizing binary search.
-- Uses `lo = 0` (speed 0 means 0 bananas/hour, can never finish — invalid lo).
-- Uses floating point for ceiling division.
-- Forgets early termination in check function.
+**Red flags that get candidates rejected:**
+- Brute-force loop over all possible speeds from 1 to 10^9, checking each one — O(n × max_pile) which TLEs; worse, it shows you didn't recognize the monotonicity
+- Setting `lo = 0`: speed 0 means eating 0 bananas per hour, meaning Koko never finishes — division by zero in the check function
+- Setting `hi = 10^9` or `hi = INT_MAX` without reasoning — shows you're copying a template without understanding what the bounds mean semantically
+- Using floating point `(double)p / k` for the ceiling division — imprecise, can give wrong answers due to floating point rounding
+- Not adding an early exit in the check function when `hours > h` — not technically wrong but shows you're not thinking about performance or overflow
+- Spending more than 3 minutes without identifying this as binary search on answer
 
-**Follow-up:** "What if h < piles.size()? What if all piles have 1 banana?" Handle edge cases.
+**What they want you to say:**
+"The eating speed k ranges from 1 to max(piles). Any speed higher than max(piles) is useless — at that point, each pile still only takes 1 hour to eat. The condition 'can Koko finish in h hours at speed k' is monotonically non-decreasing as k increases — if speed 5 works, speed 6 also works. So I binary search for the minimum k where the condition is true. For the check function, I sum ceil(pile/k) for each pile. I use the ceiling formula (p + k - 1) / k to avoid floating point."
+
+**The follow-up they WILL ask:** "What is the time complexity?" → O(n log M) where M = max(piles) ≤ 10^9. log₂(10^9) ≈ 30. Total: 30n operations.
+
+**The trace for piles = [3, 6, 7, 11], h = 8:**
+- lo=1, hi=11. mid=6. check(6): ⌈3/6⌉+⌈6/6⌉+⌈7/6⌉+⌈11/6⌉ = 1+1+2+2 = 6 ≤ 8 → true. hi=6.
+- lo=1, hi=6. mid=3. check(3): ⌈3/3⌉+⌈6/3⌉+⌈7/3⌉+⌈11/3⌉ = 1+2+3+4 = 10 > 8 → false. lo=4.
+- lo=4, hi=6. mid=5. check(5): ⌈3/5⌉+⌈6/5⌉+⌈7/5⌉+⌈11/5⌉ = 1+2+2+3 = 8 ≤ 8 → true. hi=5.
+- lo=4, hi=5. mid=4. check(4): ⌈3/4⌉+⌈6/4⌉+⌈7/4⌉+⌈11/4⌉ = 1+2+2+3 = 8 ≤ 8 → true. hi=4.
+- lo=4, hi=4. Exit. Return **4**.
 
 ---
 
-### Simulation 2: Find First and Last Position (Amazon phone screen style)
+### Q2: "Given a sorted array of integers, find the first and last position of a given target value. Your algorithm must run in O(log n) time."
 
-**Interviewer:** "Given a sorted array of integers, find the first and last position of a target value. Must be O(log n)."
+**Company type:** Amazon phone screen, Microsoft, Google, Meta (LC 34 — appears in 30%+ of interviews asking sorted array questions)
+**Expected time:** 15 minutes
+**What they are testing:** Lower bound + upper bound combination, correct handling of "target not found," off-by-one precision
 
-**Green flags:**
-- Immediately identifies this as two binary searches (lower_bound + upper_bound).
-- Explains `lo < hi` termination and why `hi = mid` instead of `hi = mid - 1`.
-- Handles edge cases: target not in array (first == n or nums[first] != target → return -1, -1).
-- `last = upperBound(target) - 1` reasoning.
+**Red flags that get candidates rejected:**
+- Binary searching to find ANY occurrence, then linearly scanning left and right — O(n) worst case; the problem explicitly requires O(log n), so this is a hard failure
+- Using `lo <= hi` with `hi = mid` in the lower bound implementation — creates an infinite loop when lo == hi (they often don't notice because it works for some test cases but fails on others)
+- Returning `{lo, lo-1}` directly from upper_bound without the `last = ub - 1` reasoning — shows mechanical copying vs. understanding
+- Forgetting to check `nums[first] != target` after computing first — leads to wrong answer when target is between two array values
+- Setting `hi = nums.size() - 1` instead of `hi = nums.size()` in the lower bound — misses the case where target should be at index n (insert at end)
 
-**Red flags:**
-- Uses `lo <= hi` template for lower bound (might work but reveals shaky understanding).
-- Does a binary search to find ANY occurrence, then linearly scans left and right (O(n) worst case).
-- Doesn't handle the "target not found" edge case.
+**What they want you to say:**
+"I'll run two binary searches. The first is lower_bound — it finds the first index where nums[i] >= target. If that index is n or nums[index] != target, the target doesn't exist. The second is upper_bound — the first index where nums[i] > target. Last occurrence = upper_bound - 1. Both use the `lo < hi` template with `hi = mid` for the shrinking branch."
 
-**Follow-up:** "What if there are multiple targets and you want the SECOND occurrence?" (Return lower_bound + 1, verify it's still target.)
+**The follow-up:** "What if the target appears exactly once?" → lower_bound and upper_bound differ by exactly 1. last = ub - 1 = lb. Returns {lb, lb}. Correct.
+
+**Second follow-up:** "What if you want the count of occurrences in O(log n)?" → `upper_bound(target) - lower_bound(target)`. This is exactly what STL's `equal_range` computes.
 
 ---
 
-### Simulation 3: Hard Problem (Split Array Largest Sum — Google onsite)
+### Q3: "Given an integer array nums and an integer k, split nums into k non-empty subarrays such that the maximum subarray sum is minimized. Return this minimized maximum."
 
-**Interviewer:** "Given an integer array `nums` and an integer `k`, split `nums` into `k` non-empty subarrays such that the largest sum of any subarray is minimized. Return this minimized largest sum."
+**Company type:** Google onsite (L4/L5), Meta, hard Amazon rounds (LC 410 — tests senior-level thinking)
+**Expected time:** 30 minutes
+**What they are testing:** Recognition of "minimize the maximum" → BS on answer, correct semantic derivation of bounds, greedy feasibility check under pressure
 
-**Green flags:**
-- Immediately says "minimize the maximum → binary search on the answer."
-- States the answer range: lo = max(nums), hi = sum(nums).
-- Writes the check function greedily: greedily pack elements into parts until adding next exceeds maxSum — if we need more than k parts, return false.
-- Uses `lo < hi` template, assigns `hi = mid` when check passes.
+**Red flags that get candidates rejected:**
+- Jumping to DP immediately — DP O(nk) works but is harder to code correctly under time pressure and shows you went for the memorized solution instead of the elegant one; interviewers will ask "can you do better?"
+- Setting `lo = 0` — a subarray with positive integers cannot have sum 0; if every single element > maxSum=0, the check function returns false for all mid values and lo marches to hi unconverged
+- Setting `hi = INT_MAX` or `1e18` without reasoning — acceptable but shows you're guessing, not deriving; interviewers notice this
+- Not handling the `if (x > maxSum) return false` guard inside the check — when a single element exceeds maxSum, no valid split exists for this answer; omitting it produces wrong answers silently
+- Getting the part-counting logic backwards — counting "cuts" vs "parts" is an off-by-one error that passes most test cases but fails on edge inputs
+- Writing DP first and then "optimizing" to binary search — shows reactive thinking; they want you to recognize the pattern upfront
 
-**Red flags:**
-- Tries DP first (DP works but is harder to code correctly under pressure).
-- Sets `lo = 0` (explains a conceptual gap — a subarray with positive integers can't have sum 0).
-- Forgets the `x > maxSum` check inside the greedy checker (a single element might exceed maxSum).
+**What they want you to say:**
+"This is 'minimize the maximum' — the classic signal for binary search on the answer. I binary search on the maximum subarray sum. Lower bound: each part must contain at least one element, so the largest single element is the minimum possible answer. Upper bound: if k=1, we put everything in one part, giving sum(nums). The check function greedily packs elements: when adding the next element would exceed maxSum, start a new part. Count parts and verify ≤ k."
 
-**The real test:** Can they derive the answer range [max_element, sum] from first principles, or do they just "know" it?
+**The trace for nums = [7,2,5,10,8], k = 2:**
+- lo=10, hi=32. mid=21. check(21,2): 7→9→14→[14+10=24>21, new part: parts=2, curr=10]→[10+8=18≤21]. parts=2 ≤ 2 → true. hi=21.
+- lo=10, hi=21. mid=15. check(15,2): 7→9→14→[14+10=24>15, new part: parts=2, curr=10]→[10+8=18>15, new part: parts=3>2] → false. lo=16.
+- lo=16, hi=21. mid=18. check(18,2): 7→9→14→[14+10=24>18, new part: parts=2, curr=10]→[10+8=18≤18]. parts=2 ≤ 2 → true. hi=18.
+- lo=16, hi=18. mid=17. check(17,2): 7→9→14→[14+10=24>17, new part: parts=2, curr=10]→[10+8=18>17, new part: parts=3>2] → false. lo=18.
+- lo=18, hi=18. Exit. Return **18**.
 
 ---
 

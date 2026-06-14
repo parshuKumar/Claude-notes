@@ -112,36 +112,49 @@ Sum of rectangle `(r1, c1)` to `(r2, c2)` (0-indexed):
 
 ## RECOGNITION SIGNALS
 
-### REAL Prefix Sum Signals:
+**Signal 1:** The problem asks for the sum (or XOR, or some aggregate) of a contiguous subarray, with multiple queries on a static array
+→ Build a prefix sum array once in O(n), then answer each query in O(1). The key indicator is "multiple queries" with "no updates between queries." If the array is static and you're querying ranges, prefix sums are almost always the right tool.
 
-| Signal | Pattern to Apply |
-|--------|-----------------|
-| "Subarray sum equals K" | Prefix sum + hash map |
-| "Count subarrays with sum divisible by K" | Prefix sum mod K + hash map |
-| "Range sum query, no updates" | Build prefix sum array, O(1) query |
-| "Matrix region sum query" | 2D prefix sum |
-| "Range update, then print array" | Difference array |
-| "Add value to range [l, r] multiple times" | Difference array |
-| "Subarray sum equals K, count of nice subarrays (odd count)" | Prefix sum on transformed array |
-| "Count subarrays with XOR = K" | Prefix XOR + hash map |
-| "Maximum subarray sum" | Kadane's / prefix sum with running min |
-| "Is there a subarray with sum 0?" | Prefix sum set, check for duplicate |
+**Signal 2:** "Count subarrays with sum = K" or "count subarrays with sum divisible by K" or "count subarrays with exactly M odd numbers"
+→ Prefix sum + hash map. These exact phrasings mean you need to count pairs (i, j) where `prefix[j] - prefix[i] = K`. For each j, you query the hash map for `prefix[j] - K`. The `prefixCount[0] = 1` initialization is NON-NEGOTIABLE — it handles subarrays that start at index 0.
 
-### FAKE Prefix Sum Signals (when prefix sum won't help alone):
+**Signal 3:** "Range update — add value V to all elements in range [l, r] — then read the final array"
+→ Difference array. If the operations are N range updates followed by a single read of the entire array, difference array does this in O(N + n) total instead of O(N × n). The sentinel at index n+1 absorbs the "undo" for updates ending at the last element.
 
-| Fake Signal | Why and What to Use Instead |
-|-------------|----------------------------|
-| "Range sum with point updates" | Prefix sum breaks on updates → use Fenwick tree or segment tree |
-| "Maximum subarray sum of length exactly K" | Use sliding window (fixed window) — prefix sum works too but SW is cleaner |
-| "Subarray with maximum average" | Binary search on answer + sliding window check |
-| "Range updates AND range queries" | Difference array only handles range updates + full rebuild; for both ops use lazy seg tree |
+**Signal 4:** The problem involves a 2D matrix with "sum of elements in rectangle (r1,c1) to (r2,c2)"
+→ 2D prefix sum. Build the 2D prefix array in O(m×n), then each rectangle query is O(1) inclusion-exclusion. This is the 2D generalization of the 1D range sum query.
 
-### The 3-Question Test:
+**Signal 5:** "Subarray sum equals K" with the array containing NEGATIVE numbers
+→ You cannot use sliding window (negative numbers break the monotonicity). You MUST use prefix sum + hash map. This is the critical distinction that separates the two approaches — when the interviewer says "the array may contain negative numbers," they are telling you sliding window won't work.
 
-When you see a subarray/range problem, ask:
-1. "Does the answer depend on a contiguous range's aggregate (sum/XOR/product)?" → Prefix aggregate
-2. "Do I need to count something about subarrays?" → Prefix sum + hash map
-3. "Are there range updates with a delayed final query?" → Difference array
+**Signal 6:** The problem has "longest subarray" or "minimum length subarray" with some sum condition
+→ Prefix sum + hash map tracking FIRST occurrence of each prefix value (not count). For longest: `maxLen = max(maxLen, i - firstSeen[prefix])`. For minimum: needs a deque or different approach.
+
+**Signal 7:** "Product of array except self" or "sum of elements to the left/right"
+→ Prefix product (or sum) from the left combined with a suffix sweep from the right. Build once from each direction, combine in O(n) total.
+
+**Signal 8:** The problem says "at most K" subarrays or "at most K" aggregate — and the array is non-negative
+→ Binary search on the count using prefix sums, or sliding window (valid for non-negative). "Exactly K" = "at most K" minus "at most K-1." This transformation is extremely common in advanced prefix sum problems.
+
+### Signals that LOOK like prefix sums but are NOT:
+
+**Fake signal 1:** "Range sum query with point updates" (e.g., update nums[i] = x, then query range sum)
+→ Prefix sum breaks the moment you update an element — you'd need to rebuild the entire prefix array in O(n). Use a Fenwick tree (Pattern 28) for O(log n) updates and queries.
+
+**Fake signal 2:** "Maximum subarray sum of EXACTLY length K"
+→ Sliding window (fixed window size). Prefix sum also works here (`prefix[i+k] - prefix[i]`) but sliding window is slightly cleaner. Both are O(n).
+
+**Fake signal 3:** "Range updates AND range queries simultaneously"
+→ Difference array only handles range updates + full final read. For simultaneous range updates and range queries, you need lazy segment tree (Pattern 27).
+
+**Fake signal 4:** "Maximum subarray sum" (without subarray length constraint)
+→ Kadane's algorithm O(n). Not a prefix sum problem. You CAN express Kadane's as "maximum over all j of (prefix[j] - min prefix seen so far)" but coding it as Kadane's is much cleaner.
+
+### The 3-Question Test — Apply Before Writing Any Code:
+
+1. "Does the answer depend on a CONTIGUOUS range's aggregate (sum/XOR/product) on a STATIC array?" → Prefix aggregate (build once, query O(1))
+2. "Do I need to COUNT subarrays with a sum property?" → Prefix sum + hash map (`prefixCount[0] = 1`, look up BEFORE updating)
+3. "Are there range UPDATES with a delayed final SINGLE read?" → Difference array (O(updates + n) total)
 
 ---
 
@@ -826,73 +839,69 @@ The difference array win is most dramatic: if k = 10^5 updates each on range of 
 
 ## COMMON MISTAKES AT 1600 LEVEL
 
+---
+
 ### Mistake 1: Forgetting `prefixCount[0] = 1`
 
+**What they do:** Start the hash map empty and begin the scan loop directly.
+
+**What goes wrong:** When `curr == target` at some position j (meaning the subarray from index 0 to j-1 sums to target), the lookup `prefixCount[curr - target] = prefixCount[0]` returns 0 instead of 1. You miss every subarray that starts at index 0. Your code passes most test cases but fails on inputs like `nums=[3,1,2], k=3` where the expected answer is 2 but you return 1.
+
+**The fix:** Always initialize `prefixCount[0] = 1` before the loop. Read it three ways until it's automatic: (1) "empty prefix has sum 0," (2) "there is one way to take a prefix of sum 0 — take nothing," (3) "this handles subarrays starting at index 0."
+
 ```cpp
-// WRONG — misses subarrays starting from index 0
-int subarraySum(vector<int>& nums, int target) {
-    unordered_map<int, int> prefixCount;
-    // MISSING: prefixCount[0] = 1
-    int curr = 0, result = 0;
-    for (int x : nums) {
-        curr += x;
-        result += prefixCount[curr - target];  // Will miss when curr == target
-        prefixCount[curr]++;
-    }
-    return result;
+// WRONG — fails on subarrays starting at index 0:
+unordered_map<int, int> prefixCount;
+// MISSING: prefixCount[0] = 1
+int curr = 0, result = 0;
+for (int x : nums) {
+    curr += x;
+    result += prefixCount[curr - target];  // returns 0 when curr == target
+    prefixCount[curr]++;
 }
 
-// RIGHT
-int subarraySum(vector<int>& nums, int target) {
-    unordered_map<int, int> prefixCount;
-    prefixCount[0] = 1;                        // ← THIS LINE IS NON-NEGOTIABLE
-    int curr = 0, result = 0;
-    for (int x : nums) {
-        curr += x;
-        result += prefixCount[curr - target];
-        prefixCount[curr]++;
-    }
-    return result;
+// CORRECT:
+unordered_map<int, int> prefixCount;
+prefixCount[0] = 1;                        // NON-NEGOTIABLE
+int curr = 0, result = 0;
+for (int x : nums) {
+    curr += x;
+    result += prefixCount[curr - target];  // now correctly counts when curr == target
+    prefixCount[curr]++;
 }
 ```
 
-**The mental model:** `prefixCount[0] = 1` means "there's one way to have a prefix sum of 0 — by taking NO elements." This accounts for subarrays that begin at index 0.
-
 ---
 
-### Mistake 2: Wrong Order — Looking Up Before or After Updating the Map
+### Mistake 2: Wrong Update Order — Updating the Map BEFORE Querying
+
+**What they do:** Write `prefixCount[curr]++` before `result += prefixCount[curr - target]` (the two lines in the opposite order).
+
+**What goes wrong:** When `curr - target == curr` (i.e., target == 0), the count includes the current position as a "previous" prefix, creating phantom subarrays of length 0. More generally, the current prefix sum can match itself, generating false positives. The bug is subtle — it only manifests when target = 0 or when specific prefix sums collide.
+
+**The fix:** Always look up FIRST, then update.
 
 ```cpp
-// WRONG for COUNT problems: update map BEFORE looking up (counts subarrays [i..i])
+// WRONG for COUNT problems — update before lookup:
 for (int x : nums) {
     curr += x;
-    prefixCount[curr]++;                      // Update first
-    result += prefixCount[curr - target];     // Then look up — counts curr == curr - target? NO.
+    prefixCount[curr]++;                      // update first
+    result += prefixCount[curr - target];     // lookup second — can count the current prefix as "previous"
 }
 
-// WRONG for LONGEST problems: recording LAST occurrence instead of FIRST
-for (int i = 0; i < n; i++) {
-    curr += nums[i];
-    firstSeen[curr] = i;                      // Overwrites first occurrence!
-    if (firstSeen.count(curr - target)) { ... }
-}
-
-// RIGHT for COUNT: look up FIRST, then update
+// CORRECT for COUNT — lookup first, then update:
 for (int x : nums) {
     curr += x;
-    result += prefixCount[curr - target];     // Look up first (can't use current prefix)
-    prefixCount[curr]++;                      // Then record current prefix
+    result += prefixCount[curr - target];     // lookup first (current prefix not yet in map)
+    prefixCount[curr]++;                      // then record current
 }
 
-// RIGHT for LONGEST: record FIRST occurrence
+// CORRECT for LONGEST — record first occurrence only:
 for (int i = 0; i < n; i++) {
     curr += nums[i];
-    if (firstSeen.count(curr)) {
-        maxLen = max(maxLen, i - firstSeen[curr]);
-        // DO NOT update firstSeen[curr] — keep earliest
-    } else {
-        firstSeen[curr] = i;                  // Record only first time seen
-    }
+    if (!firstSeen.count(curr)) firstSeen[curr] = i;   // record ONLY if first time
+    if (firstSeen.count(curr - target))
+        maxLen = max(maxLen, i - firstSeen[curr - target]);
 }
 ```
 
@@ -900,124 +909,287 @@ for (int i = 0; i < n; i++) {
 
 ### Mistake 3: Negative Modulo in Prefix Sum Mod K Problems
 
-```cpp
-// WRONG: In C++, (-3) % 5 = -3, NOT 2
-int subarraysDivByK(vector<int>& nums, int k) {
-    unordered_map<int, int> modCount;
-    modCount[0] = 1;
-    int curr = 0, result = 0;
-    for (int x : nums) {
-        curr = (curr + x) % k;               // WRONG if x can be negative: (-3) % 5 = -3
-        result += modCount[curr];
-        modCount[curr]++;
-    }
-    return result;
-}
+**What they do:** Write `curr = (curr + x) % k` directly without handling negative values.
 
-// RIGHT: normalize to [0, k-1]
+**What goes wrong:** In C++, the `%` operator truncates toward zero: `-3 % 5 = -3` (NOT 2). When the running prefix sum becomes negative (due to negative array elements), you get negative keys in your hash map. These negative keys never match the positive expected values, causing silent wrong answers with no crash or error.
+
+**The fix:** Always normalize to [0, k-1] using `((x % k) + k) % k`.
+
+```cpp
+// WRONG: negative modulo causes wrong keys in hash map
 for (int x : nums) {
-    curr = ((curr + x) % k + k) % k;         // Always in [0, k-1]
+    curr = (curr + x) % k;               // if x=-3, k=5, curr=1: (1-3)%5 = -2 (WRONG, should be 3)
     result += modCount[curr];
     modCount[curr]++;
 }
+
+// CORRECT: always normalize to positive remainder
+for (int x : nums) {
+    curr = ((curr + x) % k + k) % k;    // always in [0, k-1], even for negative x
+    result += modCount[curr];
+    modCount[curr]++;
+}
+// Why does this work? (a % k + k) % k:
+// If a % k >= 0: (non-negative + k) % k = non-negative (the +k adds at most k, %k removes it)
+// If a % k < 0: (negative + k) % k gives the positive equivalent
 ```
 
 ---
 
 ### Mistake 4: Off-by-One in 2D Prefix Sum Formula
 
+**What they do:** Write the query formula using raw matrix coordinates without the +1 offset, or mix up which coordinates are row/column in the 4-term inclusion-exclusion.
+
+**What goes wrong:** For a query (r1=0, c1=0, r2=1, c2=1) on a 2×2 matrix, using `P[r2][c2] - P[r1-1][c2] - P[r2][c1-1] + P[r1-1][c1-1]` with 0-indexed inputs accesses `P[-1][c2]` → undefined behavior. Or the signs are right but the indices are wrong — you get plausible but incorrect sums.
+
+**The fix:** Use 1-indexed prefix array. The input (0-indexed) gets +1 in the prefix array access.
+
 ```cpp
-// WRONG: common index confusion
-// P[i][j] starts at 1-indexed, but forgetting to shift
+// WRONG: assuming 1-indexed input but receiving 0-indexed matrix coordinates
 int sumRegion(int r1, int c1, int r2, int c2) {
-    return P[r2][c2] - P[r1-1][c2] - P[r2][c1-1] + P[r1-1][c1-1]; // Assumes 1-indexed input
+    return P[r2][c2] - P[r1-1][c2] - P[r2][c1-1] + P[r1-1][c1-1];
+    // When r1=0: accesses P[-1][c2] → undefined behavior!
 }
 
-// If your prefix array is 1-indexed and input is 0-indexed:
+// CORRECT: 0-indexed input, 1-indexed prefix array
 int sumRegion(int r1, int c1, int r2, int c2) {
-    // Convert 0-indexed input to 1-indexed prefix array access
     return P[r2+1][c2+1] - P[r1][c2+1] - P[r2+1][c1] + P[r1][c1];
+    // Full rect - top strip - left strip + top-left corner (subtracted twice)
 }
-```
-
-**Mnemonic for the formula:** "Full minus Top strip minus Left strip plus Top-Left corner (added back because it was subtracted twice)."
-
----
-
-### Mistake 5: Not Allocating Extra Space for Difference Array
-
-```cpp
-// WRONG: diff[r+1] can access index n when r = n-1
-vector<int> diff(n);            // Size n — accessing diff[n] is out of bounds!
-
-// RIGHT: allocate n+1
-vector<int> diff(n + 1, 0);    // The extra slot absorbs the r+1 = n case
+// Mnemonic: Full minus Top minus Left plus Corner
 ```
 
 ---
 
-### Mistake 6: Using Prefix Sum When Array Has Updates
+### Mistake 5: Not Allocating the Extra Slot for Difference Array
+
+**What they do:** Declare `vector<int> diff(n)` for a difference array.
+
+**What goes wrong:** For a range update ending at index `r = n-1`, the code does `diff[r+1] -= val` which accesses `diff[n]` — out of bounds. This causes undefined behavior (sometimes a crash, sometimes a silent wrong answer that varies by run).
+
+**The fix:** Always allocate `n+1` for difference arrays. The extra slot at index n absorbs the "undo" for updates ending at the last element.
 
 ```cpp
-// WRONG: building prefix sum, then modifying the original array
-// Prefix sum is a STATIC structure — it doesn't update when the array changes
+// WRONG: accessing diff[n] when r = n-1
+vector<int> diff(n);
+diff[l] += val;
+diff[r + 1] -= val;   // r = n-1 → diff[n] → OUT OF BOUNDS
 
-// If you have:
-// - Multiple point updates AND range queries: use Fenwick tree or segment tree
-// - Multiple range updates AND single final read: use difference array
-// - Multiple range updates AND range queries: use lazy segment tree
+// CORRECT: one extra slot
+vector<int> diff(n + 1, 0);   // size n+1
+diff[l] += val;
+diff[r + 1] -= val;   // r = n-1 → diff[n] → valid access
+```
 
-// Prefix sum alone handles:
-// - Build once, query many (no updates)
-// - Count/length problems (with hash map)
+---
+
+### Mistake 6: Using Prefix Sum When the Array Has Updates
+
+**What they do:** Build a prefix sum array in setup, then later modify the original array and continue querying the prefix array.
+
+**What goes wrong:** Prefix sums are STATIC. If `nums[2]` changes from 5 to 10, the prefix sum array still reflects the old value 5 at all indices >= 2. All subsequent range queries that include index 2 return wrong values — no crash, no warning, purely silent wrong answers.
+
+**The fix:** Match the data structure to the update pattern.
+
+```cpp
+// WRONG: building prefix sum, then updating original array
+vector<int> prefix(n+1);
+// ... build prefix ...
+nums[2] = 10;                        // prefix array is now stale at all indices >= 3
+cout << query(prefix, 0, 5);         // WRONG: still uses old value at index 2
+
+// CORRECT choices:
+// Point updates + range queries → Fenwick tree (Pattern 28) or segment tree (Pattern 27)
+// Range updates + single final read → difference array (this pattern)
+// Range updates + range queries → lazy segment tree (Pattern 27)
+// No updates → prefix sum (this pattern)
 ```
 
 ---
 
 ## PROBLEM SET
 
-### Tier 1: Warmup (Build the foundation)
+### WARMUP — 4 problems (build the foundation)
 
-| # | Problem | LC # | Key Learning | Est. Time |
-|---|---------|------|--------------|-----------|
-| 1 | Running Sum of 1d Array | 1480 | Basic prefix sum, build array | 5 min |
-| 2 | Range Sum Query - Immutable | 303 | Build once, query many | 10 min |
-| 3 | Find Pivot Index | 724 | Prefix sum without building array | 10 min |
-| 4 | Minimum Value to Get Positive Step by Step Sum | 1413 | Running prefix sum tracking | 10 min |
+**1. Running Sum of 1d Array — LC 1480 — [Build prefix sum in place]**
 
----
+Why this problem: The most direct possible application of prefix sums. You're literally building `prefix[i] = prefix[i-1] + nums[i]` with no hash map, no queries, no tricks. If you can't do this in 2 minutes, you don't have the pattern in your hands yet.
 
-### Tier 2: Core (The patterns every interviewer asks)
+What to prove: You understand that `prefix[0] = nums[0]` (no separate "empty prefix" slot needed here since you return the modified nums). The transformation is in-place — no extra array required.
 
-| # | Problem | LC # | Key Learning | Est. Time |
-|---|---------|------|--------------|-----------|
-| 5 | Subarray Sum Equals K | 560 | Prefix sum + hash map, `prefixCount[0]=1` | 20 min |
-| 6 | Continuous Subarray Sum | 523 | Prefix mod + hash map, length ≥ 2 edge case | 25 min |
-| 7 | Range Sum Query 2D - Immutable | 304 | 2D prefix sum build + query | 25 min |
-| 8 | Product of Array Except Self | 238 | Prefix × suffix product, no division | 20 min |
-| 9 | Count Number of Nice Subarrays | 1248 | Transform (parity) + prefix sum hash map | 20 min |
+Target time: 2 minutes.
+
+Edge cases: Single element (return as-is). Already all zeros (running sum is all zeros).
 
 ---
 
-### Tier 3: Stretch (Separate 1600 from 1800)
+**2. Range Sum Query — Immutable — LC 303 — [Build once, query O(1)]**
 
-| # | Problem | LC # | Key Learning | Est. Time |
-|---|---------|------|--------------|-----------|
-| 10 | Subarray Sums Divisible by K | 974 | Prefix mod, negative mod fix | 25 min |
-| 11 | Maximum Subarray Sum with One Deletion | 1186 | Prefix + suffix Kadane | 30 min |
-| 12 | Range Addition | 370 | Difference array, O(k + n) | 20 min |
-| 13 | Corporate Flight Bookings | 1109 | Difference array application | 20 min |
+Why this problem: The canonical "build once, query many" problem. Forces you to understand that prefix[i] represents the sum of the FIRST i elements (not the first i-1), making the range query formula `prefix[r+1] - prefix[l]`. This 1-indexed prefix array design with `prefix[0] = 0` eliminates all off-by-one errors.
+
+What to prove: The constructor builds the prefix array. `sumRange(l, r)` returns `prefix[r+1] - prefix[l]`. The +1 offset and the empty prefix at index 0 are the key insight here.
+
+Target time: 10 minutes.
+
+Edge cases: Query covering the full array (l=0, r=n-1). Single element query (l==r).
 
 ---
 
-### Tier 4: Contest (What appears in CF Div 2 B/C)
+**3. Find Pivot Index — LC 724 — [Prefix sum without building an array]**
 
-| # | Problem | LC # | Key Learning | Est. Time |
-|---|---------|------|--------------|-----------|
-| 14 | Number of Sub-arrays of Size K and Average ≥ Threshold | 1343 | Prefix sum for fixed window check | 15 min |
-| 15 | Minimum Operations to Reduce X to Zero | 1658 | Complement: total sum - x = target subarray | 25 min |
-| 16 | Ways to Split Array into Three Parts | 1013 | Two-pass prefix sum trick | 20 min |
-| 17 | Maximum Sum of Two Non-Overlapping Subarrays | 1031 | Prefix max of subarray sums | 30 min |
+Why this problem: Instead of building the full prefix array, you compute `leftSum` on the fly and derive `rightSum = totalSum - leftSum - nums[i]`. This is the "space-optimized" prefix sum pattern — recognizing that you only need the current prefix sum plus the total.
+
+What to prove: `rightSum = totalSum - leftSum - nums[i]` (not `totalSum - leftSum`). If they're equal, `i` is the pivot. You must NOT include `nums[i]` in either side.
+
+Target time: 10 minutes.
+
+Edge cases: Pivot at index 0 (leftSum = 0, rightSum = totalSum - nums[0]). Pivot at last index. No pivot exists (return -1).
+
+---
+
+**4. Minimum Value to Get Positive Step by Step Sum — LC 1413 — [Running prefix sum, track minimum]**
+
+Why this problem: The answer is `1 - minPrefixSum` (clamped to 1 if minPrefixSum >= 0). Trains you to track the minimum running sum as you scan left to right, which is a fundamental sub-operation in harder prefix sum problems.
+
+Target time: 10 minutes.
+
+Edge cases: All positive numbers (minPrefixSum is always > 0, answer is 1). Large negative numbers in the array.
+
+---
+
+### CORE — 5 problems (the real pattern learning)
+
+**5. Subarray Sum Equals K — LC 560 — [prefixCount[0]=1, look up BEFORE updating]**
+
+Why this problem: The single most important prefix sum problem. It appears in ~30% of Meta and Google interviews asking about subarrays. The two principles are non-negotiable: (1) `prefixCount[0] = 1` — must initialize before the loop — (2) look up `prefixCount[curr - k]` BEFORE updating `prefixCount[curr]++`.
+
+What to prove: You can explain `prefixCount[0] = 1` three ways — "empty prefix," "subarrays starting at 0," "baseline for when prefix itself equals k." You can explain why negative numbers make sliding window impossible here: as you expand the window, the sum doesn't monotonically change, so you can't shrink from one side to fix an overshoot.
+
+Target time: 20 minutes.
+
+Edge cases: k = 0 (count subarrays with sum 0). Negative numbers in array. Single-element subarray equaling k.
+
+Common mistake: Updating `prefixCount` BEFORE querying. This counts the current element as a "previous" prefix sum, adding phantom subarrays of length 0.
+
+---
+
+**6. Continuous Subarray Sum — LC 523 — [Prefix mod + first-seen index, length ≥ 2 edge case]**
+
+Why this problem: Extends the prefix sum hash map pattern to MODULAR arithmetic. Two prefix sums at positions i and j have the same mod-k remainder if and only if the subarray `[i+1..j]` has sum divisible by k. You need to track FIRST occurrence (not count) because you need the longest/valid subarray.
+
+What to prove: `prefixMod[0] = -1` (not 0 or missing) to handle subarrays starting at index 0 with the length ≥ 2 constraint. The length check `i - firstSeen[mod] >= 2`.
+
+Target time: 25 minutes.
+
+Edge cases: k = 1 (every subarray sum is divisible by 1 — need length ≥ 2, so answer is true if n ≥ 2). Two adjacent zeros. Negative numbers require the `((curr % k) + k) % k` fix.
+
+---
+
+**7. Range Sum Query 2D — Immutable — LC 304 — [2D prefix sum, inclusion-exclusion]**
+
+Why this problem: The 2D generalization. The build formula adds a row, adds a column, subtracts the overlap (which was added twice), then adds the single cell. The query formula is inclusion-exclusion in reverse. Being able to draw this on a whiteboard is an interview skill.
+
+What to prove: Build: `P[i][j] = mat[i-1][j-1] + P[i-1][j] + P[i][j-1] - P[i-1][j-1]`. Query (0-indexed input, 1-indexed prefix): `P[r2+1][c2+1] - P[r1][c2+1] - P[r2+1][c1] + P[r1][c1]`.
+
+Target time: 25 minutes.
+
+Edge cases: Single cell query (r1==r2, c1==c2). Full matrix query. The 1-indexed prefix array with extra row and column of zeros is the cleanest design — all boundary checks disappear.
+
+---
+
+**8. Product of Array Except Self — LC 238 — [Left prefix product × right suffix product]**
+
+Why this problem: Classic "no division" constraint forces you to use prefix and suffix aggregates. Left sweep builds the prefix products; right sweep builds the suffix products and combines them into the answer. Space complexity: O(1) extra if you reuse the result array for the left pass.
+
+What to prove: Left pass: `res[i] = product of nums[0..i-1]`. Right pass: multiply `res[i]` by `rightProduct` and update `rightProduct *= nums[i]`. The pattern of "left accumulation × right accumulation" appears in many other problems.
+
+Target time: 20 minutes.
+
+Edge cases: Zeros in the array (products involving the zero position are 0 except potentially the position at the zero itself). Multiple zeros.
+
+---
+
+**9. Count Number of Nice Subarrays — LC 1248 — [Parity transform + prefix sum hash map]**
+
+Why this problem: Teaches you to transform the problem before applying prefix sums. Replace each number with its parity (0 for even, 1 for odd). Now "exactly k odd numbers in subarray" = "sum of transformed subarray equals k." Then the exact same `prefixCount[0] = 1` template from LC 560 applies directly. This transformation trick is reusable in many problems.
+
+Target time: 20 minutes.
+
+Edge cases: k = 0 (count subarrays with all even numbers). All numbers are odd. Single element equal to k=1.
+
+---
+
+### STRETCH — 4 problems (separate 1600 from 1800)
+
+**10. Subarray Sums Divisible by K — LC 974 — [Prefix mod, negative mod fix]**
+
+Why this problem: The negative modulo is the trap. In C++, `-3 % 5 = -3` (NOT 2). Without the fix `((curr % k) + k) % k`, your hash map will have negative keys that never match, silently producing wrong answers. This is one of the most common C++ gotchas in contest problems.
+
+What to prove: You understand WHY `-3 % 5 = -3` in C++ (truncation toward zero), and WHY the fix `((x % k) + k) % k` always gives the correct positive remainder in [0, k-1].
+
+Target time: 25 minutes.
+
+Common mistake: Using `(curr + x) % k` directly. For x = -3, k = 5, curr = 1: `(1 + (-3)) % 5 = (-2) % 5 = -2`. Should be 3. Wrong key → wrong count.
+
+---
+
+**11. Maximum Subarray Sum with One Deletion — LC 1186 — [Prefix Kadane + Suffix Kadane]**
+
+Why this problem: Combines prefix sum with DP. For each position i, the optimal subarray using one deletion ending at position i is: max of (no deletion, ending at i) OR (prefix ending at i-1 + suffix starting at i+1 using the element at i as the deleted one). Build forward-Kadane array and backward-Kadane array, then combine.
+
+Target time: 30 minutes.
+
+Edge cases: All negative (must keep at least one element — the "one deletion" means you can delete ONE element, not that you MUST). Single element.
+
+---
+
+**12. Range Addition — LC 370 — [Difference array, the canonical example]**
+
+Why this problem: This IS the difference array template. Each update `[l, r, val]` becomes `diff[l] += val; diff[r+1] -= val`. The final array is the prefix sum of the difference array. Understanding this makes Corporate Flight Bookings and similar problems trivial.
+
+Target time: 20 minutes. If this takes more than 15 minutes, re-read the difference array template until the "add at start, subtract at end+1" pattern is mechanical.
+
+---
+
+**13. Corporate Flight Bookings — LC 1109 — [Difference array, 1-indexed input]**
+
+Why this problem: Identical structure to Range Addition but with 1-indexed flights. The main trap is index confusion — flights are 1-indexed (1 to n), so `diff[first-1] += seats` and `diff[last] -= seats` when your array is 0-indexed. Alternatively, use a size n+2 array with 1-indexed indexing throughout.
+
+Target time: 20 minutes. If you solved LC 370, this is 5 minutes of index adjustment.
+
+---
+
+### CONTEST — 4 problems
+
+**14. Number of Sub-arrays of Size K and Average ≥ Threshold — LC 1343 — [Prefix sum for fixed window sum check]**
+
+Why this is contest level: Trains the "fixed window sum via prefix sum" pattern. For a window of size k, sum = `prefix[i+k] - prefix[i]`. If sum ≥ k × threshold, count it. Direct application of prefix sum on a fixed-size window, which is the building block for harder variable-window problems.
+
+Target time: 15 minutes.
+
+---
+
+**15. Minimum Operations to Reduce X to Zero — LC 1658 — [Complement: find subarray with sum = total - x]**
+
+Why this is contest level: You can't directly binary search or prefix-sum for "remove elements from both ends." The insight: removing elements summing to x from the ends is equivalent to keeping a middle subarray with sum = `total - x`. Now it's a sliding window problem (max length subarray with sum = total - x). The transformation from "remove from ends" to "keep middle" is a common contest trick.
+
+Target time: 25 minutes.
+
+---
+
+**16. Ways to Split Array into Three Parts with Equal Sum — LC 1013 — [Two-pass prefix sum trick]**
+
+Why this is contest level: First pass finds all positions where prefix sum = total/3. Second pass counts valid pairs. The subtlety: the third part must be non-empty, so the second split index must be strictly less than n-1. Off-by-one errors on the index range are the trap.
+
+Target time: 20 minutes.
+
+---
+
+**17. Maximum Sum of Two Non-Overlapping Subarrays — LC 1031 — [Prefix max of subarray sums]**
+
+Why this is contest level: For each split point between the two subarrays, you need "max subarray sum of length L ending before the split" and "max subarray sum of length M starting at or after the split." Pre-compute these in two passes using prefix sums + rolling maximum. Two orderings (L before M, M before L) must both be checked. This pre-computation + greedy combination pattern appears frequently in CF Div 2 C problems.
+
+Target time: 30 minutes.
 
 ---
 
@@ -1038,58 +1210,81 @@ vector<int> diff(n + 1, 0);    // The extra slot absorbs the r+1 = n case
 
 ## INTERVIEW SIMULATION QUESTIONS
 
-### Simulation 1: Subarray Sum Equals K (Meta/Google phone screen)
+---
 
-**Interviewer:** "Given an array of integers `nums` and an integer `k`, return the total number of continuous subarrays whose sum equals `k`. The array may contain negative numbers."
+### Q1: "Given an array of integers nums and an integer k, return the total number of continuous subarrays whose sum equals k. The array may contain negative numbers."
 
-**Green flags:**
-- Mentions brute force O(n²) first, then immediately says "we can do O(n) with prefix sums."
-- Initializes `prefixCount[0] = 1` and can explain WHY ("to count subarrays starting at index 0").
-- Recognizes that negative numbers make sliding window inapplicable.
-- States the invariant: "as we compute prefix[j], count how many previous i's have prefix[i] = prefix[j] - k."
+**Company type:** Meta, Google phone screen (LC 560 — appears in ~30% of Meta onsite rounds)
+**Expected time:** 20 minutes
+**What they are testing:** Recognition that sliding window fails with negatives, prefix sum + hash map pattern, `prefixCount[0] = 1` initialization, correct update order
 
-**Red flags:**
-- Tries sliding window first (fails on negative numbers, wastes time).
-- Forgets `prefixCount[0] = 1` (misses subarrays starting at index 0).
-- Updates the hash map before querying (counts current element as its own "previous").
+**Red flags that get candidates rejected:**
+- Immediately jumping to sliding window and coding it — it flat-out doesn't work when the array has negative numbers; the interviewer will let you finish and then say "what about negative numbers?" wasting 10+ minutes
+- Implementing O(n²) brute force and calling it done — shows you don't know the O(n) approach
+- Forgetting `prefixCount[0] = 1` — this is the most common mistake; your code passes most test cases but fails on subarrays that start at index 0 (e.g., nums=[1,2,3], k=3 — expects 2 but returns 1)
+- Updating `prefixCount[curr]++` BEFORE `result += prefixCount[curr - k]` — this counts the current prefix sum as a "previous" occurrence, adding phantom subarrays of length 0
+- Not being able to explain WHY `prefixCount[0] = 1` even after writing it
 
-**Follow-up:** "What if we want the LONGEST subarray with sum = k instead of counting all?" (Change `prefixCount` to `firstSeen`, record first occurrence, compute `i - firstSeen[curr - k]`.)
+**What they want you to say:**
+"Since the array can have negative numbers, sliding window won't work — the sum doesn't change monotonically as we expand the window. I'll use prefix sums with a hash map. For each position j, I need to count how many previous positions i have `prefix[i] = prefix[j] - k`, meaning the subarray `[i..j-1]` sums to k. I preload `prefixCount[0] = 1` to account for subarrays starting at index 0 — it represents the empty prefix. I look up `prefixCount[curr - k]` first, then update the map."
+
+**The follow-up:** "What if we want the LONGEST subarray with sum = k instead of the count?"
+→ Change from counting occurrences to tracking FIRST occurrence. Use `firstSeen[prefix] = i` (only set if not already present). Then `maxLen = max(maxLen, i - firstSeen[curr - k])`.
+
+**The trace for nums = [1, 1, 1], k = 2:**
+- prefixCount = {0:1}, curr=0, result=0
+- x=1: curr=1. Lookup prefixCount[1-2] = prefixCount[-1] = 0. result=0. prefixCount = {0:1, 1:1}
+- x=1: curr=2. Lookup prefixCount[2-2] = prefixCount[0] = 1. result=1. prefixCount = {0:1, 1:1, 2:1}
+- x=1: curr=3. Lookup prefixCount[3-2] = prefixCount[1] = 1. result=2. prefixCount = {0:1, 1:1, 2:1, 3:1}
+- Return **2** (subarrays [1,1] at index 0-1 and index 1-2).
 
 ---
 
-### Simulation 2: Range Sum Query 2D (Amazon onsite)
+### Q2: "Design a class NumMatrix. On construction, take a 2D matrix. Implement sumRegion(r1,c1,r2,c2) that returns the sum of elements in the rectangle from (r1,c1) to (r2,c2). Assume many calls to sumRegion."
 
-**Interviewer:** "Design a class that takes a 2D matrix and answers multiple queries: sum of elements in the rectangle from (r1,c1) to (r2,c2). Queries happen after matrix is built."
+**Company type:** Amazon onsite, Google (LC 304 — tests 2D extension of a known technique)
+**Expected time:** 25 minutes
+**What they are testing:** 2D prefix sum construction, correct inclusion-exclusion query formula, clean constructor design
 
-**Green flags:**
-- Immediately says "build 2D prefix sum in the constructor, O(m×n) once, then O(1) per query."
-- Writes the build formula: `P[i][j] = matrix[i-1][j-1] + P[i-1][j] + P[i][j-1] - P[i-1][j-1]`
-- Writes the query formula: `P[r2+1][c2+1] - P[r1][c2+1] - P[r2+1][c1] + P[r1][c1]`
-- Can draw the inclusion-exclusion diagram on a whiteboard.
+**Red flags that get candidates rejected:**
+- Re-summing the rectangle on every query — O(m×n) per query — the problem says "many calls," making this TLE and showing you didn't read the constraints
+- Writing the build formula incorrectly — the most common error is forgetting to subtract P[i-1][j-1] (the top-left corner that was subtracted twice)
+- Writing the query formula with wrong signs — this is pure memorization failure; every sign error here is preventable by re-deriving inclusion-exclusion
+- Confusing 0-indexed matrix with 1-indexed prefix array — using `matrix[i][j]` when you should be using `matrix[i-1][j-1]` in the build, or messing up the query's +1 offsets
+- Not allocating the extra row and column of zeros — accessing P[-1][j] or P[i][-1] causes undefined behavior
 
-**Red flags:**
-- Builds prefix sum but writes wrong query formula (common: using 1-indexed coordinates without shifting).
-- Forgets the extra row/column of zeros (sentinel).
-- Gets confused between 0-indexed matrix and 1-indexed prefix array.
+**What they want you to say:**
+"I'll build a 2D prefix sum in the constructor. P[i][j] stores the sum of all elements in the rectangle from (0,0) to (i-1,j-1). The build recurrence is: P[i][j] = matrix[i-1][j-1] + P[i-1][j] + P[i][j-1] - P[i-1][j-1]. Each query is O(1) inclusion-exclusion: P[r2+1][c2+1] - P[r1][c2+1] - P[r2+1][c1] + P[r1][c1]. The extra row and column of zeros eliminates all boundary checks."
 
-**Follow-up:** "What if the matrix has updates?" (Prefix sum breaks → need segment tree or Fenwick tree.)
+**The follow-up:** "What if the matrix has updates?" → This breaks prefix sums entirely — you'd need to rebuild in O(m×n). Use a 2D Fenwick tree for O(log m × log n) per update and query.
+
+**The whiteboard they'll ask you to draw:**
+```
+Full rectangle (0,0 to r2,c2)
+MINUS top strip (0,0 to r1-1,c2)
+MINUS left strip (0,0 to r2,c1-1)
+PLUS top-left corner (0,0 to r1-1,c1-1)  ← added back because it was subtracted twice
+```
 
 ---
 
-### Simulation 3: Corporate Flight Bookings (Google/Microsoft)
+### Q3: "There are n flights numbered 1 to n. You're given an array bookings where bookings[i] = [first_i, last_i, seats_i]. The i-th booking reserves seats_i seats on every flight from first_i to last_i. Return an array of length n, the total seats reserved for each flight."
 
-**Interviewer:** "There are n flights numbered 1 to n. Some bookings exist: bookings[i] = [first_i, last_i, seats_i]. The i-th booking reserves seats_i seats on flights from first_i to last_i. Return an array of length n where answer[i] is the total number of seats reserved in flight i."
+**Company type:** Google, Microsoft (LC 1109 — commonly used for difference array pattern recognition)
+**Expected time:** 20 minutes
+**What they are testing:** Difference array recognition ("range update, read final array"), correct 1-indexed handling, O(k + n) approach vs. O(k × n) brute force
 
-**Green flags:**
-- Immediately identifies this as "range update, full array read" → difference array.
-- Allocates `diff[n+1]` (extra slot) and handles 1-indexed flights correctly.
-- States time complexity: O(k + n) for k bookings.
-- Correctly computes prefix sum at the end to materialize the result.
+**Red flags that get candidates rejected:**
+- Iterating over each booking and updating every flight in the range — O(k × n) which TLEs for large inputs; the entire point of difference arrays is to avoid this inner loop
+- Not allocating `diff[n+2]` (one extra slot at both ends) — accessing `diff[n+1]` (when last=n) causes out-of-bounds in a size-n+1 array
+- Mixing 0-indexed and 1-indexed — the flights are 1-indexed (1 to n); writing `diff[first] += seats` when you mean flight `first` means different things depending on your indexing
+- Forgetting to run the prefix sum pass over the difference array to get the actual flight counts
+- Building the final answer array with the wrong range — iterating 0 to n-1 but the flights are 1 to n
 
-**Red flags:**
-- Tries to update each element in the range (O(k×n) TLE).
-- Doesn't use the extra slot `diff[n+1]`, leading to out-of-bounds.
-- Confuses 0-indexed vs 1-indexed (flights are 1-indexed, need `diff[first]` not `diff[first-1]`).
+**What they want you to say:**
+"This is a classic difference array problem — each booking is a range update, and we read the entire array once at the end. I allocate `diff[n+2]` (size n+2 for 1-indexed flights plus one sentinel slot). For each booking [first, last, seats]: `diff[first] += seats; diff[last+1] -= seats`. Then I take the prefix sum of diff to get the actual reservations per flight. Total time: O(k + n)."
+
+**The follow-up:** "What if we also need to answer 'how many total seats are reserved on flights from a to b?' after building?" → Now we need range queries ON the flight reservation array — use a Fenwick tree or segment tree on top of the difference array result.
 
 ---
 
