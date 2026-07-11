@@ -105,10 +105,10 @@
 
 ### PHASE 1 — How the Internet Actually Works
 - [x] `01` — How the Internet Works
-- [ ] `02` — The OSI Model
-- [ ] `03` — The TCP/IP Model
-- [ ] `04` — IP Addresses in Depth
-- [ ] `05` — Ports
+- [x] `02` — The OSI Model
+- [x] `03` — The TCP/IP Model
+- [x] `04` — IP Addresses in Depth
+- [x] `05` — Ports
 
 ### PHASE 2 — Core Protocols
 - [ ] `06` — DNS in Depth
@@ -194,4 +194,4 @@
 
 ---
 
-*Last updated: Topic 00 — Plan created. No topics completed yet.*
+*Last updated: Topics 01–05 complete. Phase 1 (How the Internet Actually Works) finished. Phase 2 (Core Protocols) starts next with Topic 06 — DNS in Depth.*
