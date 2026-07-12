@@ -194,78 +194,78 @@ docs/docker-kubernetes/
 ## Progress Tracker
 
 ### Docker Phase 1 — Foundations
-- [ ] 01 — What Is a Container
-- [ ] 02 — Linux Foundations of Containers
-- [ ] 03 — Docker Architecture
-- [ ] 04 — Images and Layers
-- [ ] 05 — Your First Container
+- [x] 01 — What Is a Container
+- [x] 02 — Linux Foundations of Containers
+- [x] 03 — Docker Architecture
+- [x] 04 — Images and Layers
+- [x] 05 — Your First Container
 
 ### Docker Phase 2 — Images and Dockerfiles
-- [ ] 06 — Dockerfile in Depth
-- [ ] 07 — CMD vs ENTRYPOINT
-- [ ] 08 — Layer Caching in Depth
-- [ ] 09 — Multi-Stage Builds
-- [ ] 10 — .dockerignore
-- [ ] 11 — Production Dockerfile for Node.js
+- [x] 06 — Dockerfile in Depth
+- [x] 07 — CMD vs ENTRYPOINT
+- [x] 08 — Layer Caching in Depth
+- [x] 09 — Multi-Stage Builds
+- [x] 10 — .dockerignore
+- [x] 11 — Production Dockerfile for Node.js
 
 ### Docker Phase 3 — Running Containers
-- [ ] 12 — docker run in Depth
-- [ ] 13 — Networking in Docker
-- [ ] 14 — Volumes in Depth
-- [ ] 15 — Environment Variables and Secrets
-- [ ] 16 — Container Lifecycle
-- [ ] 17 — Logging
+- [x] 12 — docker run in Depth
+- [x] 13 — Networking in Docker
+- [x] 14 — Volumes in Depth
+- [x] 15 — Environment Variables and Secrets
+- [x] 16 — Container Lifecycle
+- [x] 17 — Logging
 
 ### Docker Phase 4 — Docker Compose
-- [ ] 18 — Docker Compose in Depth
-- [ ] 19 — Compose File Deep Dive
-- [ ] 20 — Multi-Container Apps
-- [ ] 21 — Compose for Development
-- [ ] 22 — Compose Commands
+- [x] 18 — Docker Compose in Depth
+- [x] 19 — Compose File Deep Dive
+- [x] 20 — Multi-Container Apps
+- [x] 21 — Compose for Development
+- [x] 22 — Compose Commands
 
 ### Docker Phase 5 — Docker in Production
-- [ ] 23 — Image Security
-- [ ] 24 — Docker Registry
-- [ ] 25 — Resource Limits
-- [ ] 26 — Health Checks
-- [ ] 27 — Docker in CI/CD
+- [x] 23 — Image Security
+- [x] 24 — Docker Registry
+- [x] 25 — Resource Limits
+- [x] 26 — Health Checks
+- [x] 27 — Docker in CI/CD
 
 ### Kubernetes Phase 1 — Foundations
-- [ ] 28 — What Is Kubernetes and Why
-- [ ] 29 — Kubernetes Architecture
-- [ ] 30 — The Reconciliation Loop
-- [ ] 31 — kubectl Basics
-- [ ] 32 — YAML and Manifests
+- [x] 28 — What Is Kubernetes and Why
+- [x] 29 — Kubernetes Architecture
+- [x] 30 — The Reconciliation Loop
+- [x] 31 — kubectl Basics
+- [x] 32 — YAML and Manifests
 
 ### Kubernetes Phase 2 — Core Objects
-- [ ] 33 — Pods in Depth
-- [ ] 34 — Deployments
-- [ ] 35 — Services
-- [ ] 36 — ConfigMaps and Secrets
-- [ ] 37 — Namespaces
-- [ ] 38 — Labels and Selectors
+- [x] 33 — Pods in Depth
+- [x] 34 — Deployments
+- [x] 35 — Services
+- [x] 36 — ConfigMaps and Secrets
+- [x] 37 — Namespaces
+- [x] 38 — Labels and Selectors
 
 ### Kubernetes Phase 3 — Storage and Networking
-- [ ] 39 — Persistent Volumes and Claims
-- [ ] 40 — Kubernetes Networking in Depth
-- [ ] 41 — Ingress
-- [ ] 42 — Network Policies
+- [x] 39 — Persistent Volumes and Claims
+- [x] 40 — Kubernetes Networking in Depth
+- [x] 41 — Ingress
+- [x] 42 — Network Policies
 
 ### Kubernetes Phase 4 — Operations
-- [ ] 43 — Health Checks in Kubernetes
-- [ ] 44 — Resource Requests and Limits
-- [ ] 45 — Horizontal Pod Autoscaler
-- [ ] 46 — Rolling Updates and Rollbacks
-- [ ] 47 — DaemonSets and StatefulSets
-- [ ] 48 — Jobs and CronJobs
+- [x] 43 — Health Checks in Kubernetes
+- [x] 44 — Resource Requests and Limits
+- [x] 45 — Horizontal Pod Autoscaler
+- [x] 46 — Rolling Updates and Rollbacks
+- [x] 47 — DaemonSets and StatefulSets
+- [x] 48 — Jobs and CronJobs
 
 ### Kubernetes Phase 5 — Production Kubernetes
-- [ ] 49 — Helm Basics
-- [ ] 50 — Secrets Management at Scale
-- [ ] 51 — Observability in Kubernetes
-- [ ] 52 — CI/CD with Kubernetes
-- [ ] 53 — RBAC
-- [ ] 54 — Multi-Environment Strategy
+- [x] 49 — Helm Basics
+- [x] 50 — Secrets Management at Scale
+- [x] 51 — Observability in Kubernetes
+- [x] 52 — CI/CD with Kubernetes
+- [x] 53 — RBAC
+- [x] 54 — Multi-Environment Strategy
 
 ---
 

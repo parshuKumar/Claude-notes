@@ -111,48 +111,48 @@
 - [x] `05` — Ports
 
 ### PHASE 2 — Core Protocols
-- [ ] `06` — DNS in Depth
-- [ ] `07` — UDP
-- [ ] `08` — TCP in Depth
-- [ ] `09` — TLS/SSL in Depth
-- [ ] `10` — HTTP/1.1 in Depth
-- [ ] `11` — HTTP/2
-- [ ] `12` — HTTP/3 and QUIC
-- [ ] `13` — WebSockets
+- [x] `06` — DNS in Depth
+- [x] `07` — UDP
+- [x] `08` — TCP in Depth
+- [x] `09` — TLS/SSL in Depth
+- [x] `10` — HTTP/1.1 in Depth
+- [x] `11` — HTTP/2
+- [x] `12` — HTTP/3 and QUIC
+- [x] `13` — WebSockets
 
 ### PHASE 3 — HTTP for Backend Developers
-- [ ] `14` — HTTP Headers in Depth
-- [ ] `15` — REST over HTTP
-- [ ] `16` — Authentication over HTTP
-- [ ] `17` — CORS in Depth
-- [ ] `18` — Rate Limiting at the HTTP Level
-- [ ] `19` — Cookies and Sessions over the Wire
-- [ ] `20` — Caching in Depth
+- [x] `14` — HTTP Headers in Depth
+- [x] `15` — REST over HTTP
+- [x] `16` — Authentication over HTTP
+- [x] `17` — CORS in Depth
+- [x] `18` — Rate Limiting at the HTTP Level
+- [x] `19` — Cookies and Sessions over the Wire
+- [x] `20` — Caching in Depth
 
 ### PHASE 4 — Network Debugging and Tooling
-- [ ] `21` — curl Mastery
-- [ ] `22` — dig and DNS Debugging
-- [ ] `23` — tcpdump and Wireshark
-- [ ] `24` — netstat and ss
-- [ ] `25` — ping, traceroute, mtr
-- [ ] `26` — nmap Basics
-- [ ] `27` — Debugging a Slow API
+- [x] `21` — curl Mastery
+- [x] `22` — dig and DNS Debugging
+- [x] `23` — tcpdump and Wireshark
+- [x] `24` — netstat and ss
+- [x] `25` — ping, traceroute, mtr
+- [x] `26` — nmap Basics
+- [x] `27` — Debugging a Slow API
 
 ### PHASE 5 — Production Networking Concepts
-- [ ] `28` — Load Balancers
-- [ ] `29` — Reverse Proxies
-- [ ] `30` — CDNs
-- [ ] `31` — VPNs and Private Networks
-- [ ] `32` — Firewalls and Security Groups
-- [ ] `33` — Network Latency
-- [ ] `34` — API Gateways
+- [x] `28` — Load Balancers
+- [x] `29` — Reverse Proxies
+- [x] `30` — CDNs
+- [x] `31` — VPNs and Private Networks
+- [x] `32` — Firewalls and Security Groups
+- [x] `33` — Network Latency
+- [x] `34` — API Gateways
 
 ### PHASE 6 — Networking in System Design
-- [ ] `35` — Network in System Design
-- [ ] `36` — Service-to-Service Communication
-- [ ] `37` — gRPC and Protocol Buffers
-- [ ] `38` — Message Queues at the Network Level
-- [ ] `39` — Database Connections over the Network
+- [x] `35` — Network in System Design
+- [x] `36` — Service-to-Service Communication
+- [x] `37` — gRPC and Protocol Buffers
+- [x] `38` — Message Queues at the Network Level
+- [x] `39` — Database Connections over the Network
 
 ---
 
@@ -194,4 +194,4 @@
 
 ---
 
-*Last updated: Topics 01–05 complete. Phase 1 (How the Internet Actually Works) finished. Phase 2 (Core Protocols) starts next with Topic 06 — DNS in Depth.*
+*Last updated: All 39 topics complete. Every phase (1–6) finished — the full Networking Deep Mastery Curriculum is written.*
