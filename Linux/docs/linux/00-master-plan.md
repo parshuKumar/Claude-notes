@@ -132,51 +132,51 @@ docs/linux/
 ## Progress Tracker
 
 ### Phase 1 — Linux Architecture & Orientation
-- [ ] 01 — What Linux Actually Is
-- [ ] 02 — The Filesystem Hierarchy
-- [ ] 03 — Everything Is a File
-- [ ] 04 — Inodes in Depth
-- [ ] 05 — File Permissions in Depth
-- [ ] 06 — Users and Groups
+- [x] 01 — What Linux Actually Is
+- [x] 02 — The Filesystem Hierarchy
+- [x] 03 — Everything Is a File
+- [x] 04 — Inodes in Depth
+- [x] 05 — File Permissions in Depth
+- [x] 06 — Users and Groups
 
 ### Phase 2 — The Shell & Command Line
-- [ ] 07 — How the Shell Works
-- [ ] 08 — Navigating the Filesystem
-- [ ] 09 — Working with Files
-- [ ] 10 — Viewing and Reading Files
-- [ ] 11 — Text Processing Powertools
-- [ ] 12 — Pipes and Redirection
-- [ ] 13 — Shell Scripting Fundamentals
-- [ ] 14 — Environment Variables
-- [ ] 15 — Shell Shortcuts & Productivity
+- [x] 07 — How the Shell Works
+- [x] 08 — Navigating the Filesystem
+- [x] 09 — Working with Files
+- [x] 10 — Viewing and Reading Files
+- [x] 11 — Text Processing Powertools
+- [x] 12 — Pipes and Redirection
+- [x] 13 — Shell Scripting Fundamentals
+- [x] 14 — Environment Variables
+- [x] 15 — Shell Shortcuts & Productivity
 
 ### Phase 3 — Processes & System Resources
-- [ ] 16 — Processes in Depth
-- [ ] 17 — Process Management
-- [ ] 18 — System Resource Monitoring
-- [ ] 19 — File Descriptors
-- [ ] 20 — Cron and Scheduled Tasks
+- [x] 16 — Processes in Depth
+- [x] 17 — Process Management
+- [x] 18 — System Resource Monitoring
+- [x] 19 — File Descriptors
+- [x] 20 — Cron and Scheduled Tasks
 
 ### Phase 4 — System Administration
-- [ ] 21 — Package Management
-- [ ] 22 — Services and systemd
-- [ ] 23 — Logs and Log Management
-- [ ] 24 — SSH in Depth
-- [ ] 25 — File Compression & Archiving
+- [x] 21 — Package Management
+- [x] 22 — Services and systemd
+- [x] 23 — Logs and Log Management
+- [x] 24 — SSH in Depth
+- [x] 25 — File Compression & Archiving
 
 ### Phase 5 — Networking from the Linux Side
-- [ ] 26 — Network Interfaces
-- [ ] 27 — DNS from the Command Line
-- [ ] 28 — Ports and Sockets
-- [ ] 29 — Firewalls
-- [ ] 30 — curl and wget in Depth
+- [x] 26 — Network Interfaces
+- [x] 27 — DNS from the Command Line
+- [x] 28 — Ports and Sockets
+- [x] 29 — Firewalls
+- [x] 30 — curl and wget in Depth
 
 ### Phase 6 — Production Server Skills
-- [ ] 31 — Disk Management
-- [ ] 32 — User & Permission Management for Deployments
-- [ ] 33 — Environment & Process Management for Node.js
-- [ ] 34 — Performance Investigation
-- [ ] 35 — Security Basics
+- [x] 31 — Disk Management
+- [x] 32 — User & Permission Management for Deployments
+- [x] 33 — Environment & Process Management for Node.js
+- [x] 34 — Performance Investigation
+- [x] 35 — Security Basics
 
 ---
 
