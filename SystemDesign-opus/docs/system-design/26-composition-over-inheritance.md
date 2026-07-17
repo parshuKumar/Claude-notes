@@ -22,7 +22,7 @@ If you don't understand this, here is what happens to your code, in order:
 3. Another requirement arrives that cuts *across* the hierarchy. You add a flag to the base class, or you copy-paste a subclass.
 4. Six months later you have a 9-level-deep hierarchy, a base class that nobody dares touch because 40 classes extend it, and subclasses that inherit methods they must override to throw `Error('not supported')`.
 
-That last symptom — overriding a method just to disable it — is the smell that tells you inheritance was the wrong tool. It's also a direct violation of the Liskov Substitution Principle (recall from [17 — SOLID: Liskov Substitution](./17-solid-liskov-substitution.md) that a subclass must be usable *anywhere* the base class is, with no surprises).
+That last symptom — overriding a method just to disable it — is the smell that tells you inheritance was the wrong tool. It's also a direct violation of the Liskov Substitution Principle (recall from [17 — SOLID: Liskov Substitution](./16-solid-liskov-substitution.md) that a subclass must be usable *anywhere* the base class is, with no surprises).
 
 **In interviews:** This is one of the most reliable follow-ups in an LLD round. You design a class hierarchy, and the interviewer says *"now the system needs a rubber duck that can't fly."* If your first instinct is `class RubberDuck extends Duck { fly() { throw new Error(); } }`, you've failed the question. The expected answer is to pull the varying behaviour out into its own object.
 

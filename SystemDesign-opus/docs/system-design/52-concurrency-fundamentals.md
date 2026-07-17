@@ -763,8 +763,8 @@ Create `bank.js` and do all five steps. Budget ~35 minutes.
 
 | Direction | Topic |
 |---|---|
-| **Previous** | [51 — Dependency Injection](./51-dependency-injection.md) — DI is how you inject a *shared* Mutex, Semaphore, or worker pool into the classes that need it, instead of reaching for a module-level global |
-| **Next** | [53 — Idempotency](./53-idempotency.md) — the production answer to the race we saw here: make the operation safe to run twice, so retries and interleavings can't double-charge |
-| **Related** | [30 — Singleton Pattern](./30-singleton-pattern.md) — the "one shared instance" assumption that quietly breaks under `cluster`, where each process gets its own |
+| **Previous** | [51 — Dependency Injection](./18-solid-dependency-inversion.md) — DI is how you inject a *shared* Mutex, Semaphore, or worker pool into the classes that need it, instead of reaching for a module-level global |
+| **Next** | [53 — Idempotency](./85-idempotency.md) — the production answer to the race we saw here: make the operation safe to run twice, so retries and interleavings can't double-charge |
+| **Related** | [30 — Singleton Pattern](./29-pattern-singleton.md) — the "one shared instance" assumption that quietly breaks under `cluster`, where each process gets its own |
 | **Related** | [08 — Consistency Models](./08-consistency-models.md) — the same read-modify-write hazard, scaled up: lost updates across *machines* instead of across `await`s |
-| **Related** | [21 — Load Balancing](./21-load-balancing.md) — how requests get spread across the `cluster` workers and containers whose isolated memory we just warned about |
+| **Related** | [21 — Load Balancing](./55-load-balancing.md) — how requests get spread across the `cluster` workers and containers whose isolated memory we just warned about |

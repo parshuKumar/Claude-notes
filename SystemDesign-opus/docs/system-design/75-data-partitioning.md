@@ -597,7 +597,7 @@ async function scatterGather(shards, queryFn, { timeoutMs = 100 } = {}) {
 }
 ```
 
-**The maths that should scare you.** Suppose each partition independently has a 1% chance of being slow (>100 ms). With 1 partition, 99% of queries are fast. With 100 partitions, the chance that *all* are fast is `0.99^100 ≈ 36.6%` — so **63% of your scatter-gather queries are slow**, even though every single machine is behaving 99% well. Fanning out converts a rare per-node event into a common per-query event. This is **tail latency amplification** — see **[06 — Latency, Throughput and Performance](./06-latency-throughput-performance.md)**.
+**The maths that should scare you.** Suppose each partition independently has a 1% chance of being slow (>100 ms). With 1 partition, 99% of queries are fast. With 100 partitions, the chance that *all* are fast is `0.99^100 ≈ 36.6%` — so **63% of your scatter-gather queries are slow**, even though every single machine is behaving 99% well. Fanning out converts a rare per-node event into a common per-query event. This is **tail latency amplification** — see **[06 — Latency, Throughput and Performance](./06-latency-and-throughput.md)**.
 
 **Mitigations:** hedged requests (after p95, re-send to a replica and take whichever answers first), per-shard timeouts with partial results, and — best of all — **design your partition key so your hot queries never need to scatter at all.**
 

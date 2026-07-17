@@ -472,8 +472,8 @@ In our notification example: `Alert`, `Reminder`, `Escalation` are three refined
 
 | Pattern | Difference from Bridge |
 |---------|-----------------------|
-| **[Adapter](./33-pattern-adapter.md)** | Adapter makes an *existing incompatible* interface work — it's a rescue applied **after** the fact. Bridge is designed **up front**, and both sides are yours. Adapter fixes; Bridge prevents. |
-| **[Abstract Factory](./32-pattern-factory.md)** | Often *paired* with Bridge: the factory decides which Concrete Implementor to inject. Factory creates; Bridge connects. |
+| **[Adapter](./34-pattern-adapter.md)** | Adapter makes an *existing incompatible* interface work — it's a rescue applied **after** the fact. Bridge is designed **up front**, and both sides are yours. Adapter fixes; Bridge prevents. |
+| **[Abstract Factory](./30-pattern-factory-method.md)** | Often *paired* with Bridge: the factory decides which Concrete Implementor to inject. Factory creates; Bridge connects. |
 | **[State](./46-pattern-state.md)** | Same code shape again (object delegates to a swappable object), but State's whole point is that the object **swaps itself out** as it changes. Bridge's implementor is stable. |
 | **[Decorator](./35-pattern-decorator.md)** | Decorator wraps the *same* interface to add behaviour (stacking). Bridge connects *two different* interfaces to separate concerns. |
 
@@ -672,5 +672,5 @@ PayrollReportPDF, PayrollReportCSV, PayrollReportHTML
 | **Previous** | [38 — Composite Pattern](./38-pattern-composite.md) — the other structural pattern for taming hierarchies, by making trees uniform |
 | **Next** | [40 — Flyweight Pattern](./40-pattern-flyweight.md) — the structural pattern for taming *object count* instead of *class count* |
 | **Related** | [42 — Strategy Pattern](./42-pattern-strategy.md) — the pattern Bridge is constantly confused with; read them back to back |
-| **Related** | [33 — Adapter Pattern](./33-pattern-adapter.md) — same delegation shape, opposite timing: a rescue, not a prevention |
-| **Related** | [28 — SOLID Principles](./28-solid-principles.md) — Bridge is the Open/Closed and Dependency Inversion principles made concrete |
+| **Related** | [33 — Adapter Pattern](./34-pattern-adapter.md) — same delegation shape, opposite timing: a rescue, not a prevention |
+| **Related** | [28 — SOLID Principles](./14-solid-single-responsibility.md) — Bridge is the Open/Closed and Dependency Inversion principles made concrete |

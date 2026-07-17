@@ -677,8 +677,8 @@ Use `new.target` in the constructor to make `new FileStore()` throw.
 
 | Direction | Topic |
 |---|---|
-| **Previous** | [26 — Encapsulation and Information Hiding](./26-encapsulation-and-information-hiding.md) — abstraction decides *what* to hide; encapsulation is the mechanism that *enforces* the hiding |
-| **Next** | [28 — Composition vs Inheritance](./28-composition-vs-inheritance.md) — once you have an abstraction, this is how you decide to reuse it: `has-a` or `is-a` |
-| **Related** | [15 — Open/Closed Principle](./15-open-closed-principle.md) — adding `SlackChannel` without touching `NotificationService` *is* OCP; abstraction is the machinery that makes OCP possible |
-| **Related** | [18 — Dependency Inversion Principle](./18-dependency-inversion-principle.md) — DIP is the rule "depend on the abstraction, not the concretion"; this doc is how you build the abstraction it tells you to depend on |
-| **Related** | [33 — Strategy Pattern](./33-strategy-pattern.md) — the `NotificationChannel` family is Strategy: interchangeable algorithms behind one contract |
+| **Previous** | [26 — Encapsulation and Information Hiding](./13-oop-four-pillars.md) — abstraction decides *what* to hide; encapsulation is the mechanism that *enforces* the hiding |
+| **Next** | [28 — Composition vs Inheritance](./26-composition-over-inheritance.md) — once you have an abstraction, this is how you decide to reuse it: `has-a` or `is-a` |
+| **Related** | [15 — Open/Closed Principle](./15-solid-open-closed.md) — adding `SlackChannel` without touching `NotificationService` *is* OCP; abstraction is the machinery that makes OCP possible |
+| **Related** | [18 — Dependency Inversion Principle](./18-solid-dependency-inversion.md) — DIP is the rule "depend on the abstraction, not the concretion"; this doc is how you build the abstraction it tells you to depend on |
+| **Related** | [33 — Strategy Pattern](./42-pattern-strategy.md) — the `NotificationChannel` family is Strategy: interchangeable algorithms behind one contract |

@@ -203,9 +203,8 @@ class QueryBuilder {
   constructor(table) {
     if (!table) throw new Error('QueryBuilder needs a table name');
     Object.assign(this, {
-      _table: table, _columns: [], _wheres: [], _orderBy: [],
-      _params: [],           // stays index-aligned with the $N placeholders
-      _limit: null, _offset: null,
+      _table: table, _columns: [], _wheres: [], _orderBy: [], _limit: null,
+      _offset: null, _params: [],   // _params stays index-aligned with the $N's
     });
   }
 

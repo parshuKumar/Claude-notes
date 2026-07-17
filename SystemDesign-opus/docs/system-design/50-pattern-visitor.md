@@ -437,7 +437,7 @@ The #1 interview follow-up. Know these cold.
 | Pattern | Confusion with Visitor | The actual difference |
 |---|---|---|
 | **Iterator** ([44](./44-pattern-iterator.md)) | Both walk a structure | Iterator gives you elements **one at a time, all treated the same**. Visitor does **type-specific work** at each node. Iterator = "give me the next thing"; Visitor = "do the right thing for *this kind* of thing". They compose: iterate a collection, `accept` a visitor on each item. |
-| **Strategy** ([40](./40-pattern-strategy.md)) | Both extract an algorithm into its own object | Strategy has **one** method and is chosen by the *caller*. Visitor has **N** methods (one per element type) and the method is chosen by the *element*. Strategy = single dispatch; Visitor = double dispatch. |
+| **Strategy** ([40](./42-pattern-strategy.md)) | Both extract an algorithm into its own object | Strategy has **one** method and is chosen by the *caller*. Visitor has **N** methods (one per element type) and the method is chosen by the *element*. Strategy = single dispatch; Visitor = double dispatch. |
 | **Composite** ([38](./38-pattern-composite.md)) | Both live on trees | Composite *is* the tree structure. Visitor is the operation you run *over* a Composite. They are best friends — Composite builds the AST, Visitor operates on it. |
 | **Command** ([43](./43-pattern-command.md)) | Both turn an action into an object | Command wraps **one** action to defer/queue/undo it. Visitor wraps a **family** of type-dispatched actions to run across a structure. |
 | **Interpreter** | Almost the same code | Interpreter puts `interpret()` *on the nodes*. Visitor pulls it out. Interpreter is the "bad example" from section 1 — and it's fine when you only ever need to evaluate. |

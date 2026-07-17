@@ -515,7 +515,7 @@ This is the #1 interview follow-up. Know these cold.
 
 | Pattern | How it differs from Producer-Consumer |
 |---|---|
-| **Observer** ([37](./37-pattern-observer.md)) | Observer is **push, synchronous, fan-out to all**: every subscriber gets every event, and `emit()` runs them inline on the caller's stack. Producer-Consumer is **pull, asynchronous, one-of-N**: exactly one consumer gets each item, and the producer doesn't run it. Node's `EventEmitter` is Observer, *not* a queue — it has no buffer and no backpressure. |
+| **Observer** ([37](./41-pattern-observer.md)) | Observer is **push, synchronous, fan-out to all**: every subscriber gets every event, and `emit()` runs them inline on the caller's stack. Producer-Consumer is **pull, asynchronous, one-of-N**: exactly one consumer gets each item, and the producer doesn't run it. Node's `EventEmitter` is Observer, *not* a queue — it has no buffer and no backpressure. |
 | **Mediator** ([48](./48-pattern-mediator.md)) | The buffer is arguably a degenerate mediator, but a mediator *routes and coordinates* (it knows about the participants). A buffer is dumb — it holds items and knows nothing. |
 | **Thread Pool** | A thread pool is the **consumer half** of this pattern. Every thread pool has a queue in front of it; you just don't always see it. |
 | **Pipeline / Chain of Responsibility** ([47](./47-pattern-chain-of-responsibility.md)) | CoR passes *one* request through *many* handlers until one handles it. Producer-Consumer passes *many* items to *one of many* interchangeable handlers. Chain a series of producer-consumer stages and you get a **pipeline** (which is exactly what a Node stream `pipeline()` is). |

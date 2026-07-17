@@ -651,6 +651,6 @@ Model a **movie ticket booking**, both as a diagram and as running code. Budget 
 | Direction | Topic |
 |---|---|
 | **Previous** | [20 — UML Class Diagrams](./20-uml-class-diagrams.md) — the nouns and the structure; sequence diagrams lay the verbs and the timeline on top of those same classes |
-| **Next** | [22 — SOLID Principles](./22-solid-principles.md) — once you can see the call flow, you can see which class is doing too much (SRP) and where to invert a dependency (DIP) |
+| **Next** | [22 — SOLID Principles](./20-uml-class-diagrams.md) — once you can see the call flow, you can see which class is doing too much (SRP) and where to invert a dependency (DIP) |
 | **Related** | [02 — HLD vs LLD](./02-hld-vs-lld.md) — sequence diagrams work at both altitudes: service-to-service in HLD, object-to-object in LLD |
-| **Related** | [10 — Message Queues](./10-message-queues.md) — the async half of this doc; an open-arrowhead message with no return arrow is exactly what a queue buys you |
+| **Related** | [10 — Message Queues](./67-message-queues.md) — the async half of this doc; an open-arrowhead message with no return arrow is exactly what a queue buys you |

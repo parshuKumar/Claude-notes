@@ -259,7 +259,7 @@ B+ trees are ~95% of what you'll use. Know the rest exist and know exactly when 
 
 **Bitmap index** — one bitmap per distinct value: for `status`, a bit-vector saying which rows are `'paid'`, another for `'shipped'`. Brilliant for **low-cardinality** columns in **analytics** workloads, because you can `AND`/`OR` bitmaps together at CPU-word speed to combine many predicates. Terrible for OLTP: a single-row update has to rewrite big chunks of bitmap and takes heavy locks. Native in Oracle and in column stores (ClickHouse, Redshift). PostgreSQL has no bitmap *index*, but it builds bitmaps *on the fly* — that's what `Bitmap Heap Scan` in a plan means (see §7).
 
-**Inverted index (full-text)** — for `WHERE body LIKE '%database%'` a B-tree is worthless (leading wildcard = no prefix = no seek). An inverted index maps **each word → list of documents containing it**, which is the exact opposite direction of a normal index. PostgreSQL: `GIN`. This is the foundation of Elasticsearch and Lucene. Covered properly in [79 — Full-Text Search & Inverted Indexes](./79-full-text-search-and-inverted-indexes.md).
+**Inverted index (full-text)** — for `WHERE body LIKE '%database%'` a B-tree is worthless (leading wildcard = no prefix = no seek). An inverted index maps **each word → list of documents containing it**, which is the exact opposite direction of a normal index. PostgreSQL: `GIN`. This is the foundation of Elasticsearch and Lucene. Covered properly in [79 — Full-Text Search & Inverted Indexes](./79-search-systems.md).
 
 **GiST / geospatial** — "find all restaurants within 2km of me" can't be answered by a 1-D sorted tree, because 2-D proximity has no total ordering. GiST is a generalized tree that indexes *bounding boxes*; R-trees and PostGIS build on it. Also used for range types and nearest-neighbour search.
 
@@ -626,7 +626,7 @@ SELECT * FROM orders WHERE status = 'pending' AND created_at > now() - interval 
 
 | Direction | Topic |
 |---|---|
-| **Previous** | [61 — SQL vs NoSQL](./61-sql-vs-nosql.md) — the index is the machinery that makes a relational query planner viable in the first place |
-| **Next** | [63 — Database Sharding](./63-database-sharding.md) — when one machine's indexes can no longer keep the working set in RAM, you split the data across machines |
-| **Related** | [64 — Caching Strategies](./64-caching-strategies.md) — a cache and an index solve the same problem (avoid expensive reads) at different layers; index first, cache second |
-| **Related** | [79 — Full-Text Search & Inverted Indexes](./79-full-text-search-and-inverted-indexes.md) — the index type that B+ trees cannot do: word → documents, the basis of Elasticsearch |
+| **Previous** | [61 — SQL vs NoSQL](./61-databases-sql-vs-nosql.md) — the index is the machinery that makes a relational query planner viable in the first place |
+| **Next** | [63 — Database Sharding](./64-database-sharding.md) — when one machine's indexes can no longer keep the working set in RAM, you split the data across machines |
+| **Related** | [64 — Caching Strategies](./59-caching-in-depth.md) — a cache and an index solve the same problem (avoid expensive reads) at different layers; index first, cache second |
+| **Related** | [79 — Full-Text Search & Inverted Indexes](./79-search-systems.md) — the index type that B+ trees cannot do: word → documents, the basis of Elasticsearch |

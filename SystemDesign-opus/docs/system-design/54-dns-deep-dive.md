@@ -549,7 +549,7 @@ You run `api.shopfast.com`, currently a single EC2 box at `54.10.20.30` in `us-e
 
 | Direction | Topic |
 |---|---|
-| **Previous** | [53 — Load Balancers](./53-load-balancers.md) — DNS steers you *to* a region; the load balancer steers you *within* it. Read them as a pair. |
-| **Next** | [55 — CDN — Content Delivery Networks](./55-cdn.md) — CDNs are built on GeoDNS and anycast; this doc is the mechanism, that doc is the product. |
-| **Related** | [56 — Caching Strategies](./56-caching-strategies.md) — TTL, cache invalidation, and stale reads are the same problems DNS has, one layer up. |
-| **Related** | [57 — Reverse Proxy and API Gateway](./57-reverse-proxy-api-gateway.md) — the health-aware, per-request layer that DNS deliberately is not. |
+| **Previous** | [53 — Load Balancers](./55-load-balancing.md) — DNS steers you *to* a region; the load balancer steers you *within* it. Read them as a pair. |
+| **Next** | [55 — CDN — Content Delivery Networks](./60-cdn.md) — CDNs are built on GeoDNS and anycast; this doc is the mechanism, that doc is the product. |
+| **Related** | [56 — Caching Strategies](./59-caching-in-depth.md) — TTL, cache invalidation, and stale reads are the same problems DNS has, one layer up. |
+| **Related** | [57 — Reverse Proxy and API Gateway](./57-reverse-proxy.md) — the health-aware, per-request layer that DNS deliberately is not. |

@@ -631,7 +631,7 @@ Write a single file, `chess-flyweight.js`, and produce a working demo.
 
 | Direction | Topic |
 |---|---|
-| **Previous** | [39 — Proxy Pattern](./39-pattern-proxy.md) — like Flyweight, it inserts an indirection between client and the real object; Proxy does it to control *access*, Flyweight to control *memory*. |
-| **Next** | [41 — Chain of Responsibility](./41-pattern-chain-of-responsibility.md) — moves from structural patterns into behavioural ones; Express middleware is the canonical Node example. |
-| **Related** | [30 — Singleton Pattern](./30-pattern-singleton.md) — the #1 confusion point. Singleton = exactly one instance; Flyweight = a few shared instances. Know the difference cold. |
-| **Related** | [37 — Composite Pattern](./37-pattern-composite.md) — Flyweight's classic partner. The leaves of a Composite document tree (characters, tiles) are almost always flyweights. |
+| **Previous** | [39 — Proxy Pattern](./37-pattern-proxy.md) — like Flyweight, it inserts an indirection between client and the real object; Proxy does it to control *access*, Flyweight to control *memory*. |
+| **Next** | [41 — Chain of Responsibility](./47-pattern-chain-of-responsibility.md) — moves from structural patterns into behavioural ones; Express middleware is the canonical Node example. |
+| **Related** | [30 — Singleton Pattern](./29-pattern-singleton.md) — the #1 confusion point. Singleton = exactly one instance; Flyweight = a few shared instances. Know the difference cold. |
+| **Related** | [37 — Composite Pattern](./38-pattern-composite.md) — Flyweight's classic partner. The leaves of a Composite document tree (characters, tiles) are almost always flyweights. |

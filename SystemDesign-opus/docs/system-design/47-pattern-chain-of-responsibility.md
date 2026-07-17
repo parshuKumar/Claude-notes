@@ -258,7 +258,7 @@ demoApprovals();
 // ₹5000000 (travel) -> approved by CFO
 ```
 
-Notice what adding a **VP** tier costs you: one new class, one line in `buildApprovalChain()`. `TeamLead`, `Manager`, `Director`, `CFO` are untouched. That is the Open/Closed Principle ([17](./17-solid-open-closed.md)) paying rent.
+Notice what adding a **VP** tier costs you: one new class, one line in `buildApprovalChain()`. `TeamLead`, `Manager`, `Director`, `CFO` are untouched. That is the Open/Closed Principle ([17](./15-solid-open-closed.md)) paying rent.
 
 ### 4. Example (b) — the processing pipeline ("everybody runs")
 
