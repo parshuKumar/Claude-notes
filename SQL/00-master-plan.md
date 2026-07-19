@@ -196,88 +196,88 @@
 ### Phase 3 — JOINs — Complete Mastery
 - [x] 10 — JOIN Fundamentals and Mental Model
 - [x] 11 — INNER JOIN in Depth
-- [ ] 12 — LEFT JOIN and RIGHT JOIN
-- [ ] 13 — FULL OUTER JOIN
-- [ ] 14 — CROSS JOIN
-- [ ] 15 — Self JOIN
-- [ ] 16 — Multiple JOINs
-- [ ] 17 — JOIN Performance Deep Dive
-- [ ] 18 — The N+1 Query Problem
-- [ ] 19 — JOIN Alternatives
+- [x] 12 — LEFT JOIN and RIGHT JOIN
+- [x] 13 — FULL OUTER JOIN
+- [x] 14 — CROSS JOIN
+- [x] 15 — Self JOIN
+- [x] 16 — Multiple JOINs
+- [x] 17 — JOIN Performance Deep Dive
+- [x] 18 — The N+1 Query Problem
+- [x] 19 — JOIN Alternatives
 
 ### Phase 4 — Aggregation and Grouping
-- [ ] 20 — GROUP BY Fundamentals
-- [ ] 21 — Aggregate Functions in Depth
-- [ ] 22 — HAVING
-- [ ] 23 — FILTER Clause
-- [ ] 24 — GROUPING SETS, ROLLUP, CUBE
-- [ ] 25 — Aggregate Performance
+- [x] 20 — GROUP BY Fundamentals
+- [x] 21 — Aggregate Functions in Depth
+- [x] 22 — HAVING
+- [x] 23 — FILTER Clause
+- [x] 24 — GROUPING SETS, ROLLUP, CUBE
+- [x] 25 — Aggregate Performance
 
 ### Phase 5 — Subqueries and CTEs
-- [ ] 26 — Subqueries in Depth
-- [ ] 27 — EXISTS and NOT EXISTS
-- [ ] 28 — CTEs (Common Table Expressions)
-- [ ] 29 — Recursive CTEs
-- [ ] 30 — Subquery vs CTE vs JOIN
-- [ ] 31 — Lateral Joins
+- [x] 26 — Subqueries in Depth
+- [x] 27 — EXISTS and NOT EXISTS
+- [x] 28 — CTEs (Common Table Expressions)
+- [x] 29 — Recursive CTEs
+- [x] 30 — Subquery vs CTE vs JOIN
+- [x] 31 — Lateral Joins
 
 ### Phase 6 — Window Functions — Complete Mastery
-- [ ] 32 — Window Functions Fundamentals
-- [ ] 33 — PARTITION BY and ORDER BY in OVER
-- [ ] 34 — Ranking Functions
-- [ ] 35 — NTILE, PERCENT_RANK, CUME_DIST
-- [ ] 36 — LAG and LEAD
-- [ ] 37 — FIRST_VALUE, LAST_VALUE, NTH_VALUE
-- [ ] 38 — Aggregate Functions as Window Functions
-- [ ] 39 — Frame Clauses in Depth
-- [ ] 40 — Window Function Performance
-- [ ] 41 — Top-N Per Group
+- [x] 32 — Window Functions Fundamentals
+- [x] 33 — PARTITION BY and ORDER BY in OVER
+- [x] 34 — Ranking Functions
+- [x] 35 — NTILE, PERCENT_RANK, CUME_DIST
+- [x] 36 — LAG and LEAD
+- [x] 37 — FIRST_VALUE, LAST_VALUE, NTH_VALUE
+- [x] 38 — Aggregate Functions as Window Functions
+- [x] 39 — Frame Clauses in Depth
+- [x] 40 — Window Function Performance
+- [x] 41 — Top-N Per Group
 
 ### Phase 7 — Indexes and Query Optimisation
-- [ ] 42 — Index Types in PostgreSQL
-- [ ] 43 — Index Scan Types
-- [ ] 44 — Composite Index Strategy
-- [ ] 45 — Partial Indexes
-- [ ] 46 — Expression Indexes
-- [ ] 47 — Index-Only Scans
-- [ ] 48 — When Indexes Hurt
-- [ ] 49 — Query Optimisation Methodology
-- [ ] 50 — Statistics and the Planner
-- [ ] 51 — Optimizer Hints and Interventions
+- [x] 42 — Index Types in PostgreSQL
+- [x] 43 — Index Scan Types
+- [x] 44 — Composite Index Strategy
+- [x] 45 — Partial Indexes
+- [x] 46 — Expression Indexes
+- [x] 47 — Index-Only Scans
+- [x] 48 — When Indexes Hurt
+- [x] 49 — Query Optimisation Methodology
+- [x] 50 — Statistics and the Planner
+- [x] 51 — Optimizer Hints and Interventions
 
 ### Phase 8 — Transactions and Concurrency
-- [ ] 52 — Transaction Syntax in Depth
-- [ ] 53 — Isolation Levels in SQL
-- [ ] 54 — SELECT FOR UPDATE / FOR SHARE
-- [ ] 55 — Deadlocks in Practice
-- [ ] 56 — Advisory Locks
-- [ ] 57 — Transaction Patterns in Node.js
+- [x] 52 — Transaction Syntax in Depth
+- [x] 53 — Isolation Levels in SQL
+- [x] 54 — SELECT FOR UPDATE / FOR SHARE
+- [x] 55 — Deadlocks in Practice
+- [x] 56 — Advisory Locks
+- [x] 57 — Transaction Patterns in Node.js
 
 ### Phase 9 — Advanced SQL Patterns
-- [ ] 58 — Set Operations
-- [ ] 59 — Upsert Patterns
-- [ ] 60 — Bulk Operations
-- [ ] 61 — Pivot and Crosstab
-- [ ] 62 — Generating Data
-- [ ] 63 — Date and Time Mastery
-- [ ] 64 — JSON and JSONB in PostgreSQL
-- [ ] 65 — Array Operations
-- [ ] 66 — Full-Text Search
-- [ ] 67 — Materialized Views
+- [x] 58 — Set Operations
+- [x] 59 — Upsert Patterns
+- [x] 60 — Bulk Operations
+- [x] 61 — Pivot and Crosstab
+- [x] 62 — Generating Data
+- [x] 63 — Date and Time Mastery
+- [x] 64 — JSON and JSONB in PostgreSQL
+- [x] 65 — Array Operations
+- [x] 66 — Full-Text Search
+- [x] 67 — Materialized Views
 
 ### Phase 10 — PostgreSQL Specific Power Features
-- [ ] 68 — EXPLAIN Options Deep Dive
-- [ ] 69 — pg_stat_statements
-- [ ] 70 — Table Partitioning
-- [ ] 71 — Schema Design Patterns
-- [ ] 72 — Row Level Security (RLS)
-- [ ] 73 — Essential Extensions
+- [x] 68 — EXPLAIN Options Deep Dive
+- [x] 69 — pg_stat_statements
+- [x] 70 — Table Partitioning
+- [x] 71 — Schema Design Patterns
+- [x] 72 — Row Level Security (RLS)
+- [x] 73 — Essential Extensions
 
 ### Phase 11 — SQL for Backend Developer Interviews
-- [ ] 74 — The 20 Most Common SQL Interview Questions
-- [ ] 75 — Live Coding Patterns
-- [ ] 76 — System Design SQL Questions
-- [ ] 77 — Canonical Hard SQL Problems
+- [x] 74 — The 20 Most Common SQL Interview Questions
+- [x] 75 — Live Coding Patterns
+- [x] 76 — System Design SQL Questions
+- [x] 77 — Canonical Hard SQL Problems
 
 ---
 
