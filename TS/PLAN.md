@@ -67,61 +67,61 @@
 
 - [x] 40. Type narrowing in depth — typeof, instanceof, in operator, equality narrowing, truthiness narrowing
 - [x] 41. Type guards — custom type guard functions, the is keyword (value is Type), discriminated union guards
-- [ ] 42. Discriminated unions — the tag/kind field pattern, exhaustive checks with never, real state machine example ← current
-- [ ] 43. Mapped types — transforming every key of a type, Readonly and Partial built with mapped types, custom mapped types
-- [ ] 44. Conditional types — T extends U ? X : Y, infer keyword, extracting types conditionally
-- [ ] 45. Template literal types — building string types dynamically, combining with unions, real use cases
-- [ ] 46. Recursive types — types that reference themselves, JSON type, deeply nested structures
-- [ ] 47. keyof and typeof operators — keyof for object keys, typeof for getting types from values, combining them
+- [x] 42. Discriminated unions — the tag/kind field pattern, exhaustive checks with never, real state machine example
+- [x] 43. Mapped types — transforming every key of a type, Readonly and Partial built with mapped types, custom mapped types
+- [x] 44. Conditional types — T extends U ? X : Y, infer keyword, extracting types conditionally
+- [x] 45. Template literal types — building string types dynamically, combining with unions, real use cases
+- [x] 46. Recursive types — types that reference themselves, JSON type, deeply nested structures
+- [x] 47. keyof and typeof operators — keyof for object keys, typeof for getting types from values, combining them
 
 ## PHASE 8 — Modules and declaration files
 
-- [ ] 48. Modules in TypeScript — import/export in TS, esModuleInterop, default vs named imports, module resolution
-- [ ] 49. Declaration files — .d.ts files, what they are, how @types packages work, writing a basic .d.ts
-- [ ] 50. Ambient declarations — declare keyword, declaring global variables, augmenting existing types
-- [ ] 51. Module augmentation — adding to existing module types, extending Express Request with custom properties
+- [x] 48. Modules in TypeScript — import/export in TS, esModuleInterop, default vs named imports, module resolution
+- [x] 49. Declaration files — .d.ts files, what they are, how @types packages work, writing a basic .d.ts
+- [x] 50. Ambient declarations — declare keyword, declaring global variables, augmenting existing types
+- [x] 51. Module augmentation — adding to existing module types, extending Express Request with custom properties
 
 ## PHASE 9 — TypeScript with Node.js and Express
 
-- [ ] 52. Typing Express routes — Request, Response, NextFunction types, typed route handlers
-- [ ] 53. Extending Express Request — adding req.user, req.body types, declaration merging on Express
-- [ ] 54. Typed middleware — writing middleware with correct TS types, error middleware types
-- [ ] 55. Typing environment variables — process.env is string | undefined problem, typed env with zod or custom solution
-- [ ] 56. Typing database models with Mongoose — Document type, Model type, Schema generics, lean() return type
-- [ ] 57. Typing database queries with pg (PostgreSQL) — QueryResult type, typed rows, generic query helper
-- [ ] 58. Typing API responses — consistent ApiResponse<T> type, error response type, using across the whole app
-- [ ] 59. Typing configuration objects — config files, typed settings, environment-specific config
+- [x] 52. Typing Express routes — Request, Response, NextFunction types, typed route handlers
+- [x] 53. Extending Express Request — adding req.user, req.body types, declaration merging on Express
+- [x] 54. Typed middleware — writing middleware with correct TS types, error middleware types
+- [x] 55. Typing environment variables — process.env is string | undefined problem, typed env with zod or custom solution
+- [x] 56. Typing database models with Mongoose — Document type, Model type, Schema generics, lean() return type
+- [x] 57. Typing database queries with pg (PostgreSQL) — QueryResult type, typed rows, generic query helper
+- [x] 58. Typing API responses — consistent ApiResponse<T> type, error response type, using across the whole app
+- [x] 59. Typing configuration objects — config files, typed settings, environment-specific config
 
 ## PHASE 10 — Error handling and advanced patterns in TS
 
-- [ ] 60. Error handling in TypeScript — catch block gives unknown not Error, narrowing errors, custom error classes with types
-- [ ] 61. Result type pattern — avoiding thrown errors, Result<T, E> type, functional error handling
-- [ ] 62. Strict null checks — what strictNullChecks does, non-null assertion operator (!), optional chaining in TS
-- [ ] 63. Assertion functions — asserts keyword, throwing on bad input, making TypeScript trust your checks
-- [ ] 64. Satisfies operator — satisfies keyword (ES2022+), checking type without widening, real use cases
+- [x] 60. Error handling in TypeScript — catch block gives unknown not Error, narrowing errors, custom error classes with types
+- [x] 61. Result type pattern — avoiding thrown errors, Result<T, E> type, functional error handling
+- [x] 62. Strict null checks — what strictNullChecks does, non-null assertion operator (!), optional chaining in TS
+- [x] 63. Assertion functions — asserts keyword, throwing on bad input, making TypeScript trust your checks
+- [x] 64. Satisfies operator — satisfies keyword (ES2022+), checking type without widening, real use cases
 
 ## PHASE 11 — TypeScript patterns and best practices
 
-- [ ] 65. Readonly and immutability patterns — Readonly<T>, as const, readonly arrays, enforcing immutability
-- [ ] 66. Builder pattern in TypeScript — fluent API with typed chaining, real query builder example
-- [ ] 67. Repository pattern in TypeScript — typed repository interface, generic base repository, with Mongoose
-- [ ] 68. Dependency injection basics in TS — constructor injection, interface-based injection, why it helps testing
-- [ ] 69. Enum vs union types — TypeScript enums (string and numeric), const enums, why many prefer union types over enums
-- [ ] 70. Namespaces — the namespace keyword, when they were used, why modules replaced them, legacy code
-- [ ] 71. Triple slash directives — /// references, when you still see them, what they do
+- [x] 65. Readonly and immutability patterns — Readonly<T>, as const, readonly arrays, enforcing immutability
+- [x] 66. Builder pattern in TypeScript — fluent API with typed chaining, real query builder example
+- [x] 67. Repository pattern in TypeScript — typed repository interface, generic base repository, with Mongoose
+- [x] 68. Dependency injection basics in TS — constructor injection, interface-based injection, why it helps testing
+- [x] 69. Enum vs union types — TypeScript enums (string and numeric), const enums, why many prefer union types over enums
+- [x] 70. Namespaces — the namespace keyword, when they were used, why modules replaced them, legacy code
+- [x] 71. Triple slash directives — /// references, when you still see them, what they do
 
 ## PHASE 12 — Tooling and workflow
 
-- [ ] 72. ESLint with TypeScript — @typescript-eslint setup, important rules, integrating with Prettier
-- [ ] 73. Prettier with TypeScript — setup, config file, format on save, integrating in CI
-- [ ] 74. Path aliases in TypeScript — configuring paths in tsconfig, using @/ imports, making it work with Node at runtime
-- [ ] 75. Debugging TypeScript in VS Code — source maps, launch.json config, breakpoints in .ts files
-- [ ] 76. Building for production — tsc build, removing source maps in prod, build scripts, ts-node vs compiled JS in production
-- [ ] 77. Monorepo basics with TypeScript — project references, composite projects, sharing types across packages
+- [x] 72. ESLint with TypeScript — @typescript-eslint setup, important rules, integrating with Prettier
+- [x] 73. Prettier with TypeScript — setup, config file, format on save, integrating in CI
+- [x] 74. Path aliases in TypeScript — configuring paths in tsconfig, using @/ imports, making it work with Node at runtime
+- [x] 75. Debugging TypeScript in VS Code — source maps, launch.json config, breakpoints in .ts files
+- [x] 76. Building for production — tsc build, removing source maps in prod, build scripts, ts-node vs compiled JS in production
+- [x] 77. Monorepo basics with TypeScript — project references, composite projects, sharing types across packages
 
 ---
 
 ## Current Progress
 
-**Current Topic:** 42  
-**Completed:** 41 / 77  
+**Current Topic:** — all topics complete  
+**Completed:** 77 / 77 ✅  
