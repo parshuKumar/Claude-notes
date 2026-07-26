@@ -304,21 +304,23 @@ Phase 15 (113–120)→ Advanced patterns                   [WEEK 27–30]
 
 | Phase | Topics | Status |
 |---|---|---|
-| Phase 1 — How Node.js works | 01–07 | ⬜ Not started |
-| Phase 2 — Module systems | 08–13 | ⬜ Not started |
-| Phase 3 — Core built-ins | 14–33 | ⬜ Not started |
-| Phase 4 — Networking | 34–39 | ⬜ Not started |
-| Phase 5 — File system patterns | 40–44 | ⬜ Not started |
-| Phase 6 — Async patterns | 45–51 | ⬜ Not started |
-| Phase 7 — HTTP servers | 52–60 | ⬜ Not started |
-| Phase 8 — Error handling | 61–66 | ⬜ Not started |
-| Phase 9 — Performance | 67–73 | ⬜ Not started |
-| Phase 10 — Security | 74–81 | ⬜ Not started |
-| Phase 11 — Testing | 82–89 | ⬜ Not started |
-| Phase 12 — Databases | 90–98 | ⬜ Not started |
-| Phase 13 — Real-time | 99–104 | ⬜ Not started |
-| Phase 14 — Deployment | 105–112 | ⬜ Not started |
-| Phase 15 — Advanced patterns | 113–120 | ⬜ Not started |
+| Phase 1 — How Node.js works | 01–07 | ✅ Docs written |
+| Phase 2 — Module systems | 08–13 | ✅ Docs written |
+| Phase 3 — Core built-ins | 14–33 | ✅ Docs written |
+| Phase 4 — Networking | 34–39 | ✅ Docs written |
+| Phase 5 — File system patterns | 40–44 | ✅ Docs written |
+| Phase 6 — Async patterns | 45–51 | ✅ Docs written |
+| Phase 7 — HTTP servers | 52–60 | ✅ Docs written |
+| Phase 8 — Error handling | 61–66 | ✅ Docs written |
+| Phase 9 — Performance | 67–73 | ✅ Docs written |
+| Phase 10 — Security | 74–81 | ✅ Docs written |
+| Phase 11 — Testing | 82–89 | ✅ Docs written |
+| Phase 12 — Databases | 90–98 | ✅ Docs written |
+| Phase 13 — Real-time | 99–104 | ✅ Docs written |
+| Phase 14 — Deployment | 105–112 | ✅ Docs written |
+| Phase 15 — Advanced patterns | 113–120 | ✅ Docs written |
+
+> **All 120 docs written** to `/docs/nodejs/`. "Docs written" = the reference/tutorial doc exists with 3 practice exercises. Practicing the exercises is the next step — go topic by topic and attempt them.
 
 ---
 
