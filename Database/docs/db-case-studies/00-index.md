@@ -265,7 +265,7 @@ These appear so often they're stated once here instead of in every file:
 ### Tier 2 — Write-heavy and fan-out
 - [x] 05 — Social feed fan-out
 - [x] 06 — Chat / messaging
-- [ ] 07 — IoT telemetry
+- [x] 07 — IoT telemetry
 - [ ] 08 — Audit log
 - [ ] 09 — Notification delivery
 
@@ -289,7 +289,7 @@ These appear so often they're stated once here instead of in every file:
 - [ ] 22 — Debugging drills (15 incidents)
 - [ ] 23 — Schema review checklist
 
-**Completed: 6 / 23**
+**Completed: 7 / 23**
 
 ---
 

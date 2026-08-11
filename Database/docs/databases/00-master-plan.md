@@ -271,31 +271,31 @@ Tick each topic when the doc is written **and** all three exercises pass.
 ### Phase 3 — Database Design
 - [x] 20 — Entity-relationship modelling
 - [x] 21 — Translating ER to relational schema
-- [ ] 22 — Primary keys in depth
-- [ ] 23 — Foreign keys and referential integrity
-- [ ] 24 — Constraints in depth
-- [ ] 25 — Data types and physical storage
-- [ ] 26 — Modelling time, money and identity
-- [ ] 27 — Schema patterns and antipatterns
-- [ ] 28 — Schema versioning and zero-downtime migrations
+- [x] 22 — Primary keys in depth
+- [x] 23 — Foreign keys and referential integrity
+- [x] 24 — Constraints in depth
+- [x] 25 — Data types and physical storage
+- [x] 26 — Modelling time, money and identity
+- [x] 27 — Schema patterns and antipatterns
+- [x] 28 — Schema versioning and zero-downtime migrations  ← **PHASE 3 COMPLETE**
 
 ### Phase 4 — Normalisation
-- [ ] 29 — What normalisation is
-- [ ] 30 — Functional dependencies and keys
-- [ ] 31 — First normal form
-- [ ] 32 — Second normal form
-- [ ] 33 — Third normal form
-- [ ] 34 — Boyce-Codd normal form
-- [ ] 35 — Fourth normal form
-- [ ] 36 — Fifth normal form and beyond
-- [ ] 37 — Normalisation worked example
-- [ ] 38 — When to stop normalising
+- [x] 29 — What normalisation is
+- [x] 30 — Functional dependencies and keys
+- [x] 31 — First normal form
+- [x] 32 — Second normal form
+- [x] 33 — Third normal form
+- [x] 34 — Boyce-Codd normal form
+- [x] 35 — Fourth normal form
+- [x] 36 — Fifth normal form and beyond
+- [x] 37 — Normalisation worked example
+- [x] 38 — When to stop normalising  ← **PHASE 4 COMPLETE**
 
 ### Phase 5 — Transactions & Concurrency
-- [ ] 39 — What a transaction is
-- [ ] 40 — ACID in depth
-- [ ] 41 — The write-ahead log
-- [ ] 42 — Crash recovery and checkpoints
+- [x] 39 — What a transaction is
+- [x] 40 — ACID in depth
+- [x] 41 — The write-ahead log
+- [x] 42 — Crash recovery and checkpoints
 - [ ] 43 — Concurrency anomalies
 - [ ] 44 — Transaction isolation levels
 - [ ] 45 — Locks in depth
@@ -342,7 +342,7 @@ Tick each topic when the doc is written **and** all three exercises pass.
 - [ ] 78 — Capstone: scale it
 - [ ] 79 — Principal engineer review checklist
 
-**Completed: 21 / 79**  ·  Case studies: 6 / 23
+**Completed: 42 / 79**  ·  Case studies: 7 / 23
 
 ---
 
