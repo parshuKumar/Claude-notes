@@ -296,31 +296,31 @@ Tick each topic when the doc is written **and** all three exercises pass.
 - [x] 40 — ACID in depth
 - [x] 41 — The write-ahead log
 - [x] 42 — Crash recovery and checkpoints
-- [ ] 43 — Concurrency anomalies
-- [ ] 44 — Transaction isolation levels
-- [ ] 45 — Locks in depth
-- [ ] 46 — MVCC in depth
-- [ ] 47 — VACUUM, dead tuples and bloat
-- [ ] 48 — Deadlocks
-- [ ] 49 — Optimistic vs pessimistic concurrency
-- [ ] 50 — Serializable snapshot isolation
-- [ ] 51 — Distributed transactions and 2PC
-- [ ] 52 — Idempotency and transactional messaging
+- [x] 43 — Concurrency anomalies
+- [x] 44 — Transaction isolation levels
+- [x] 45 — Locks in depth
+- [x] 46 — MVCC in depth
+- [x] 47 — VACUUM, dead tuples and bloat
+- [x] 48 — Deadlocks
+- [x] 49 — Optimistic vs pessimistic concurrency
+- [x] 50 — Serializable snapshot isolation
+- [x] 51 — Distributed transactions and 2PC
+- [x] 52 — Idempotency and transactional messaging  ← **PHASE 5 COMPLETE**
 
 ### Phase 6 — Denormalisation & Performance
-- [ ] 53 — What denormalisation is
-- [ ] 54 — When to denormalise
-- [ ] 55 — Denormalisation patterns
-- [ ] 56 — Materialised views
-- [ ] 57 — Caching as an alternative
-- [ ] 58 — Read replicas
-- [ ] 59 — Partitioning in depth
-- [ ] 60 — Sharding in depth
-- [ ] 61 — Counters, aggregates and hot rows
+- [x] 53 — What denormalisation is
+- [x] 54 — When to denormalise
+- [x] 55 — Denormalisation patterns
+- [x] 56 — Materialised views
+- [x] 57 — Caching as an alternative
+- [x] 58 — Read replicas
+- [x] 59 — Partitioning in depth
+- [x] 60 — Sharding in depth
+- [x] 61 — Counters, aggregates and hot rows  ← **PHASE 6 COMPLETE**
 
 ### Phase 7 — Reliability & Scale
-- [ ] 62 — Replication in depth
-- [ ] 63 — High availability and failover
+- [x] 62 — Replication in depth
+- [x] 63 — High availability and failover
 - [ ] 64 — Backup, recovery and PITR
 - [ ] 65 — Connection pooling
 - [ ] 66 — The N+1 query problem
@@ -342,7 +342,7 @@ Tick each topic when the doc is written **and** all three exercises pass.
 - [ ] 78 — Capstone: scale it
 - [ ] 79 — Principal engineer review checklist
 
-**Completed: 42 / 79**  ·  Case studies: 7 / 23
+**Completed: 63 / 79**  ·  Case studies: 7 / 23
 
 ---
 
