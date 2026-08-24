@@ -20,7 +20,10 @@
 
 7. isGraphBipartite - DFS
 8. isGraphBipartite - BFS
-9. 
+9. DSU
+10. DSU by Rank and Path Compression
+11. Detect Cycle using DSU
+12. 
 
 ## THE GRANDMASTER'S HONEST TAKE
 
