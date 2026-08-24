@@ -6,6 +6,17 @@
 
 ---
 
+## CODESTORYWTHMIK
+- Graph Representation, BFS & DFS
+- Cycle Detection in Undirected Graph using BFS & DFS
+- Cycle in Directed Graph using DFS & 3 Idiots (horse)
+- Topological Sort using DFS
+- Topological Sort using BFS - Kahn's Algorithm
+- Cycle in Directed Graph using BFS - Kahn's Algo (related to above horse point)
+- isGraphBipartite - DFS
+- isGraphBipartite - BFS
+- 
+
 ## THE GRANDMASTER'S HONEST TAKE
 
 Graphs are the most important pattern in the entire curriculum for interview performance. More hard problems reduce to graphs than any other single pattern. Trees are special cases of graphs. Intervals can be modeled as graphs. Shortest path, connectivity, cycle detection, dependency ordering — all graphs.
