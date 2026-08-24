@@ -7,15 +7,20 @@
 ---
 
 ## CODESTORYWTHMIK
-- Graph Representation, BFS & DFS
-- Cycle Detection in Undirected Graph using BFS & DFS
-- Cycle in Directed Graph using DFS & 3 Idiots (horse)
-- Topological Sort using DFS
-- Topological Sort using BFS - Kahn's Algorithm
-- Cycle in Directed Graph using BFS - Kahn's Algo (related to above horse point)
-- isGraphBipartite - DFS
-- isGraphBipartite - BFS
-- 
+1. Graph Representation, BFS & DFS
+2. Cycle Detection in Undirected Graph using BFS & DFS
+3. Cycle in Directed Graph using DFS & 3 Idiots (horse) and for bfs(kahn's see point 6)
+4. Topological Sort using DFS
+5. Topological Sort using BFS - Kahn's Algorithm
+6. Cycle in Directed Graph using BFS - Kahn's Algo (related to above horse point)
+### Now did three questions : 
+1. Number of Provinces
+2. Course Schedule I (BFS & DFS)
+3. Course Schedule II (BFS & DFS)
+
+7. isGraphBipartite - DFS
+8. isGraphBipartite - BFS
+9. 
 
 ## THE GRANDMASTER'S HONEST TAKE
 
