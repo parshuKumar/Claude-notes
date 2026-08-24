@@ -14,7 +14,7 @@
 5. Topological Sort using BFS - Kahn's Algorithm
 6. Cycle in Directed Graph using BFS - Kahn's Algo (related to above horse point)
 ### Now did three questions : 
-1. Number of Provinces
+1. Number of Provinces (DFS, BFS, DSU)
 2. Course Schedule I (BFS & DFS)
 3. Course Schedule II (BFS & DFS)
 
