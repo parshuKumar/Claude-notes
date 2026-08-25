@@ -321,17 +321,17 @@ Tick each topic when the doc is written **and** all three exercises pass.
 ### Phase 7 — Reliability & Scale
 - [x] 62 — Replication in depth
 - [x] 63 — High availability and failover
-- [ ] 64 — Backup, recovery and PITR
-- [ ] 65 — Connection pooling
-- [ ] 66 — The N+1 query problem
-- [ ] 67 — Performance investigation methodology
-- [ ] 68 — CAP theorem and consistency models
-- [ ] 69 — Security at the data layer
+- [x] 64 — Backup, recovery and PITR
+- [x] 65 — Connection pooling
+- [x] 66 — The N+1 query problem
+- [x] 67 — Performance investigation methodology
+- [x] 68 — CAP theorem and consistency models
+- [x] 69 — Security at the data layer  ← **PHASE 7 COMPLETE**
 
 ### Phase 8 — NoSQL Data Modelling
-- [ ] 70 — Document database modelling
-- [ ] 71 — Key-value store design
-- [ ] 72 — Wide-column design
+- [x] 70 — Document database modelling
+- [x] 71 — Key-value store design
+- [x] 72 — Wide-column design
 - [ ] 73 — Time-series data modelling
 - [ ] 74 — Graph and search data modelling
 - [ ] 75 — Choosing between SQL and NoSQL
@@ -342,7 +342,7 @@ Tick each topic when the doc is written **and** all three exercises pass.
 - [ ] 78 — Capstone: scale it
 - [ ] 79 — Principal engineer review checklist
 
-**Completed: 63 / 79**  ·  Case studies: 7 / 23
+**Completed: 72 / 79**  ·  Case studies: 7 / 23
 
 ---
 
