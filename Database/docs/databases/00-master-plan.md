@@ -332,17 +332,17 @@ Tick each topic when the doc is written **and** all three exercises pass.
 - [x] 70 — Document database modelling
 - [x] 71 — Key-value store design
 - [x] 72 — Wide-column design
-- [ ] 73 — Time-series data modelling
-- [ ] 74 — Graph and search data modelling
-- [ ] 75 — Choosing between SQL and NoSQL
-- [ ] 76 — Polyglot persistence and CDC
+- [x] 73 — Time-series data modelling
+- [x] 74 — Graph and search data modelling
+- [x] 75 — Choosing between SQL and NoSQL
+- [x] 76 — Polyglot persistence and CDC  ← **PHASE 8 COMPLETE**
 
 ### Phase 9 — Capstone
-- [ ] 77 — Capstone: design the schema
-- [ ] 78 — Capstone: scale it
+- [x] 77 — Capstone: design the schema
+- [x] 78 — Capstone: scale it
 - [ ] 79 — Principal engineer review checklist
 
-**Completed: 72 / 79**  ·  Case studies: 7 / 23
+**Completed: 78 / 79**  ·  Case studies: 7 / 23
 
 ---
 
