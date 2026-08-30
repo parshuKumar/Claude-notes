@@ -1283,3 +1283,57 @@ Per §0.3, and stated so neither of us drifts:
   and benchmark number in this curriculum comes from a command **you** run. Where
   I'm uncertain about version-specific behaviour, I will say so in one line and
   give you the command that settles it.
+
+---
+
+## J. GENERATION STATUS (resume point)
+
+**63 of 135 topic docs written.** Generation was interrupted by a session rate
+limit, not by any content problem. All 63 files on disk are complete documents —
+no stubs, no partials. Agents that were killed mid-batch had already saved every
+file they had finished.
+
+### Written (63)
+`01`–`37`, `39`–`44`, `46`–`52`, `54`–`56`, `58`–`60`, `62`–`64`, `66`, `71`, `76`, `80`
+
+### Not yet written (72)
+
+| Phase | Missing topics |
+|---|---|
+| 4 — Spring Core | 38 |
+| 5 — Boot & Persistence | 45, 53, 57 |
+| 6 — Testing | 61 |
+| 7 — GATE | **65** |
+| 8 — JVM Internals | 67, 68, 69, 70, 72, 73, 74, 75, 77, 78, 79, 81, 82, 83 |
+| 9 — Concurrency | 84–102 (all 19) |
+| 10 — Reactive | 103–108 (all 6) |
+| 11 — Distributed & Production | 109–124 (all 16) |
+| 12 — Principal Track | 125–135 (all 11) |
+
+### Verification performed on the 63 written docs
+- **Template compliance:** all 63 contain every required section in the correct
+  order for their category tier.
+- **Tier compliance:** every `DIFFERENTIATOR`/`ELITE` doc has `Mechanical statement`
+  (not ELI5) plus `Machine-level reality`; all but two carry `Failure drill` and
+  `Measurement` (Topic 42's drill weight sits in its condition-evaluation-report
+  hands-on proof; Topic 64 is measurement-only by design).
+- **No fabricated tool output.** One flagged GC log line in Topic 71 was inspected
+  and is a correctly labelled *"illustration of the format, not captured output"*
+  with placeholder numbers — the permitted teaching exception.
+- **No `foo`/`bar`/`baz` placeholders** — all use the `orderflow` domain.
+
+### Note on length
+Docs came in at 1,150–2,280 lines rather than the 700–950 originally targeted.
+Every agent independently reported the same reason: satisfying the mandatory
+section set (5–6 traps with observable symptoms, 5 four-part interview questions,
+3 exercises, 5–7 checkpoint questions, and per-tier drill/measurement sections)
+does not fit in 950 lines. Nothing was padded. A compression pass is available on
+request; the most compressible material is the interview answers and the mental
+model checkpoints.
+
+### To resume
+Regenerate the missing topics in the order listed above. Phase 8's remaining
+topics and all of Phase 9 are the highest-risk documents in the curriculum for
+fabricated output — the anti-fabrication rule must be restated in full to any
+agent writing them, along with R14 (the two-column interleaving trace) for every
+Phase 9 topic.

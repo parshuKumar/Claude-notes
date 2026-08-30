@@ -951,7 +951,7 @@ javap OrderService.class | grep -i validate
 and it is sitting right there as `private`. In the lambda case, the symptom is
 sharper and stranger: you disassemble a class containing lambdas, see the
 `invokedynamic` sites, and **cannot find the method bodies anywhere**, because
-`lambda$foo$0` is `private static synthetic` and plain `javap` hides it. You conclude
+`lambda$totalFor$0` is `private static synthetic` and plain `javap` hides it. You conclude
 the bodies "live in the JDK", which is wrong and will mislead you for months.
 
 **Root cause:** bare `javap` prints only members the *access flags* say are `public`
@@ -2029,15 +2029,15 @@ Reason these out. Do not look them up.
 
 | Command | What it gives you |
 |---|---|
-| `javap Foo.class` | public signatures only. Almost never what you want. |
-| `javap -p Foo.class` | **+ private, package-private, and synthetic members.** Use `-p` always. |
-| `javap -c -p Foo.class` | **+ disassembled method bodies.** Your default. |
-| `javap -v -p Foo.class` | **+ constant pool, `BootstrapMethods`, access flags, `Code` lengths, stack map.** For `invokedynamic` and inlining-size questions. |
-| `javap -l -p Foo.class` | `LineNumberTable` and `LocalVariableTable` (needs `-g` at compile time) |
-| `javap -s -p Foo.class` | internal type descriptors (`(Ljava/lang/String;I)J`) |
-| `javap -v Foo.class \| head -5` | **class-file major version — establish provenance first, always** |
-| `javap -c -p -cp app.jar com.orderflow.Foo` | disassemble straight out of a jar, no unzip needed |
-| `javap -c -p -m your.module com.orderflow.Foo` | disassemble from a module (JPMS, Topic 20) |
+| `javap Order.class` | public signatures only. Almost never what you want. |
+| `javap -p Order.class` | **+ private, package-private, and synthetic members.** Use `-p` always. |
+| `javap -c -p Order.class` | **+ disassembled method bodies.** Your default. |
+| `javap -v -p Order.class` | **+ constant pool, `BootstrapMethods`, access flags, `Code` lengths, stack map.** For `invokedynamic` and inlining-size questions. |
+| `javap -l -p Order.class` | `LineNumberTable` and `LocalVariableTable` (needs `-g` at compile time) |
+| `javap -s -p Order.class` | internal type descriptors (`(Ljava/lang/String;I)J`) |
+| `javap -v Order.class \| head -5` | **class-file major version — establish provenance first, always** |
+| `javap -c -p -cp app.jar com.orderflow.orders.Order` | disassemble straight out of a jar, no unzip needed |
+| `javap -c -p -m your.module com.orderflow.orders.Order` | disassemble from a module (JPMS, Topic 20) |
 
 ### Compile-side flags that change what you will see
 
