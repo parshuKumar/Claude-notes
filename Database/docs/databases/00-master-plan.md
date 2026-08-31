@@ -340,9 +340,9 @@ Tick each topic when the doc is written **and** all three exercises pass.
 ### Phase 9 — Capstone
 - [x] 77 — Capstone: design the schema
 - [x] 78 — Capstone: scale it
-- [ ] 79 — Principal engineer review checklist
+- [x] 79 — Principal engineer review checklist  ← **PHASE 9 COMPLETE · ★ CURRICULUM COMPLETE**
 
-**Completed: 78 / 79**  ·  Case studies: 7 / 23
+**Completed: 79 / 79 ★ COMPLETE**  ·  Case studies: 7 / 23
 
 ---
 
