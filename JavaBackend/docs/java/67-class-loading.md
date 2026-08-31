@@ -816,12 +816,12 @@ message distinguishes them:
 
 | Message shape | Meaning | Where to look |
 |---|---|---|
-| `java.lang.NoClassDefFoundError: com/orderflow/Foo` (a bare name, slashes) | The class was present when this code was **compiled** but is not present at **runtime**. Genuine classpath problem. | Topic 31 `provided` scope, Topic 32 dependency resolution, container image contents |
-| `java.lang.NoClassDefFoundError: Could not initialize class com.orderflow.Foo` | The class was found, and its **static initializer already threw**. It is poisoned. | The **first** `ExceptionInInitializerError` in the log, earlier in time |
+| `java.lang.NoClassDefFoundError: com/orderflow/orders/OrderService` (a bare name, slashes) | The class was present when this code was **compiled** but is not present at **runtime**. Genuine classpath problem. | Topic 31 `provided` scope, Topic 32 dependency resolution, container image contents |
+| `java.lang.NoClassDefFoundError: Could not initialize class com.orderflow.orders.OrderService` | The class was found, and its **static initializer already threw**. It is poisoned. | The **first** `ExceptionInInitializerError` in the log, earlier in time |
 
 And the third member of the family, which people conflate with both:
 
-| `java.lang.ClassNotFoundException: com.orderflow.Foo` (dotted name) | A **reflective or explicit** lookup failed: `Class.forName`, `loader.loadClass`, a Spring bean class name in YAML, a JDBC driver name, a deserialization `resolveClass` (Topic 19). It is a *checked exception*, which tells you somebody called an API that declared it. | The string that was looked up — often it is a typo or a stale configuration value, not a missing jar |
+| `java.lang.ClassNotFoundException: com.orderflow.orders.OrderService` (dotted name) | A **reflective or explicit** lookup failed: `Class.forName`, `loader.loadClass`, a Spring bean class name in YAML, a JDBC driver name, a deserialization `resolveClass` (Topic 19). It is a *checked exception*, which tells you somebody called an API that declared it. | The string that was looked up — often it is a typo or a stale configuration value, not a missing jar |
 
 **Fix:** a decision procedure you can run in ten seconds.
 
@@ -2027,9 +2027,9 @@ jcmd <pid> help
 
 | You see | It means | First command |
 |---|---|---|
-| `ClassNotFoundException: com.foo.Bar` (dotted) | A reflective/string lookup failed | Find the string. Check config, then the loader used. |
-| `NoClassDefFoundError: com/foo/Bar` (slashed) | Present at compile time, absent at runtime | `mvn dependency:tree`; `unzip -l app.jar` |
-| `NoClassDefFoundError: Could not initialize class com.foo.Bar` | The class is **poisoned** | `grep -n -m1 ExceptionInInitializerError app.log` |
+| `ClassNotFoundException: com.orderflow.orders.OrderService` (dotted) | A reflective/string lookup failed | Find the string. Check config, then the loader used. |
+| `NoClassDefFoundError: com/orderflow/orders/OrderService` (slashed) | Present at compile time, absent at runtime | `mvn dependency:tree`; `unzip -l app.jar` |
+| `NoClassDefFoundError: Could not initialize class com.orderflow.orders.OrderService` | The class is **poisoned** | `grep -n -m1 ExceptionInInitializerError app.log` |
 | `ExceptionInInitializerError` | A static initializer threw — **read the `Caused by`** | Fix the cause; move it out of `<clinit>` |
 | `ClassCastException: X cannot be cast to X` | Two loaders defined X | Print `getClassLoader()` on both sides |
 | `IllegalAccessError` on package-private access | Same-named package, two loaders | Same as above |

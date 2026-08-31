@@ -1860,7 +1860,7 @@ you more than three sentences you have not compressed it yet.
 @Component @Scope(value = SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Component @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 
-@Bean @RequestScope Foo foo() { ... }         // also works on @Bean methods
+@Bean @RequestScope TenantContext tenantContext() { ... }         // also works on @Bean methods
 ```
 
 ### `ScopedProxyMode`

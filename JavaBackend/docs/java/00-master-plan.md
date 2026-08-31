@@ -1288,52 +1288,47 @@ Per §0.3, and stated so neither of us drifts:
 
 ## J. GENERATION STATUS (resume point)
 
-**63 of 135 topic docs written.** Generation was interrupted by a session rate
-limit, not by any content problem. All 63 files on disk are complete documents —
-no stubs, no partials. Agents that were killed mid-batch had already saved every
-file they had finished.
+**95 of 135 topic docs written — 165,000+ lines.** Generation was interrupted twice by
+session rate limits, never by a content problem. Every file on disk is a complete
+document; agents save each file before starting the next, so nothing is a partial.
 
-### Written (63)
-`01`–`37`, `39`–`44`, `46`–`52`, `54`–`56`, `58`–`60`, `62`–`64`, `66`, `71`, `76`, `80`
+### Not yet written (40)
 
-### Not yet written (72)
-
-| Phase | Missing topics |
+| Phase | Missing |
 |---|---|
-| 4 — Spring Core | 38 |
-| 5 — Boot & Persistence | 45, 53, 57 |
-| 6 — Testing | 61 |
-| 7 — GATE | **65** |
-| 8 — JVM Internals | 67, 68, 69, 70, 72, 73, 74, 75, 77, 78, 79, 81, 82, 83 |
-| 9 — Concurrency | 84–102 (all 19) |
-| 10 — Reactive | 103–108 (all 6) |
-| 11 — Distributed & Production | 109–124 (all 16) |
-| 12 — Principal Track | 125–135 (all 11) |
+| 5 — Boot & Persistence | 57 |
+| 8 — JVM Internals | 69, 70, 74, 75, 77, 78, 79, 83 |
+| 9 — Concurrency | 86, 87, 88, 91, 92, 93, 96, 97, 98, 101, 102 |
+| 10 — Reactive | 105, 106, 107, 108 |
+| 11 — Distributed & Production | 111, 112, 113, 116, 117, 118, 119, 122, 123, 124 |
+| 12 — Principal Track | 127, 128, 129, 132, 133, 134, 135 |
 
-### Verification performed on the 63 written docs
-- **Template compliance:** all 63 contain every required section in the correct
-  order for their category tier.
-- **Tier compliance:** every `DIFFERENTIATOR`/`ELITE` doc has `Mechanical statement`
-  (not ELI5) plus `Machine-level reality`; all but two carry `Failure drill` and
-  `Measurement` (Topic 42's drill weight sits in its condition-evaluation-report
-  hands-on proof; Topic 64 is measurement-only by design).
-- **No fabricated tool output.** One flagged GC log line in Topic 71 was inspected
-  and is a correctly labelled *"illustration of the format, not captured output"*
-  with placeholder numbers — the permitted teaching exception.
-- **No `foo`/`bar`/`baz` placeholders** — all use the `orderflow` domain.
+**Highest priority on resume:** 77 (JMH) — roughly fifteen other topics forward-reference
+it as the measurement authority; and 86–88 (the Java Memory Model), which 92–102 all
+build on.
+
+### Verification performed
+- **Template compliance:** all 95 pass — every required section, correct order for tier.
+- **R14 concurrency traces:** every written Phase 9 doc carries the two-column
+  thread-by-thread interleaving trace before any correct code.
+- **No fabricated tool output.** Three GC/safepoint log lines flagged by sweep were
+  inspected and are all correctly labelled *"illustration of the format, not captured
+  output"* — the permitted teaching exception.
+- **Topic 65 (the gate) contains zero invented performance numbers** — 14 explicit
+  blank-template labels; its results tables are generated at runtime by the k6
+  `handleSummary` function from the learner's own run.
+- **No placeholder names** — all use the `orderflow` domain.
 
 ### Note on length
-Docs came in at 1,150–2,280 lines rather than the 700–950 originally targeted.
-Every agent independently reported the same reason: satisfying the mandatory
-section set (5–6 traps with observable symptoms, 5 four-part interview questions,
-3 exercises, 5–7 checkpoint questions, and per-tier drill/measurement sections)
-does not fit in 950 lines. Nothing was padded. A compression pass is available on
-request; the most compressible material is the interview answers and the mental
-model checkpoints.
+Docs run 1,150–3,089 lines against an original 700–950 target. Every agent
+independently reported the same cause: the mandatory section set (5–6 traps with
+observable symptoms, 5 four-part interview questions, 3 exercises, 5–7 checkpoint
+questions, plus per-tier mechanical statement / machine-level reality / failure drill /
+measurement) does not compress into 950 lines. Nothing is padded.
 
 ### To resume
-Regenerate the missing topics in the order listed above. Phase 8's remaining
-topics and all of Phase 9 are the highest-risk documents in the curriculum for
-fabricated output — the anti-fabrication rule must be restated in full to any
-agent writing them, along with R14 (the two-column interleaving trace) for every
-Phase 9 topic.
+Regenerate the missing topics above. Restate in full to any agent writing them: the
+anti-fabrication rule, R14 (the two-column interleaving trace) for every Phase 9 topic,
+and the version-honesty requirements — `StructuredTaskScope`'s API changed across
+preview rounds, and `synchronized` pinning was largely removed in JDK 24+, so Topic
+101's drill must be informative under both outcomes.
