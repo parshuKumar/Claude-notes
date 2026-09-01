@@ -7,7 +7,7 @@
 
 ---
 
-## R0 — READ THIS BEFORE ANY OTHER LINE IN THIS DOCUMENT
+## Before anything else — what is and is not in this document
 
 **I do not have a JVM, a heap dump, or Eclipse MAT. Nothing in this document is captured
 tool output.**

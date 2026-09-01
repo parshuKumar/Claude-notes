@@ -151,9 +151,9 @@ The `e` handed to `exceptionally`, `handle` and `whenComplete` is a
 **`CompletionException` wrapping your exception**. You must inspect `e.getCause()`.
 
 There is one nasty asymmetry worth knowing before it bites you: the wrapping is not
-uniform. If the exception was set by `completeExceptionally(new Foo())` and you read it
-via `whenComplete` on that same future, you may see `Foo` unwrapped; if it propagated
-through a `thenApply`, you see `CompletionException(Foo)`. **Never rely on the
+uniform. If the exception was set by `completeExceptionally(new PaymentDeclinedException())` and you read it
+via `whenComplete` on that same future, you may see `PaymentDeclinedException` unwrapped; if it propagated
+through a `thenApply`, you see `CompletionException(PaymentDeclinedException)`. **Never rely on the
 distinction.** Write one unwrapping helper and route everything through it. There is one
 in the Quick reference card.
 

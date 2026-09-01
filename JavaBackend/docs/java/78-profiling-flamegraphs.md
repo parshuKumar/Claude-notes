@@ -7,7 +7,7 @@
 
 ---
 
-## R0 — READ THIS BEFORE ANY OTHER LINE IN THIS DOCUMENT
+## Before anything else — what is and is not in this document
 
 **I do not have a JVM, a profiler, or a running `orderflow`. There is not a single
 captured profiler output in this document, and there is no flame graph image.**

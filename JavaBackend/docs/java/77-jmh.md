@@ -7,7 +7,7 @@
 
 ---
 
-## R0 — READ THIS BEFORE ANY OTHER LINE IN THIS DOCUMENT
+## Before anything else — what is and is not in this document
 
 **I do not have a JVM. I have never run JMH on your machine. Nothing in this document
 is captured benchmark output, and I will never present anything as if it were.**

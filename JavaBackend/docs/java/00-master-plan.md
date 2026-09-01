@@ -1286,49 +1286,47 @@ Per §0.3, and stated so neither of us drifts:
 
 ---
 
-## J. GENERATION STATUS (resume point)
+## J. GENERATION STATUS — COMPLETE
 
-**95 of 135 topic docs written — 165,000+ lines.** Generation was interrupted twice by
-session rate limits, never by a content problem. Every file on disk is a complete
-document; agents save each file before starting the next, so nothing is a partial.
+**All 135 topic docs written. ~246,500 lines.**
 
-### Not yet written (40)
-
-| Phase | Missing |
+### Verification passed on all 135
+| Check | Result |
 |---|---|
-| 5 — Boot & Persistence | 57 |
-| 8 — JVM Internals | 69, 70, 74, 75, 77, 78, 79, 83 |
-| 9 — Concurrency | 86, 87, 88, 91, 92, 93, 96, 97, 98, 101, 102 |
-| 10 — Reactive | 105, 106, 107, 108 |
-| 11 — Distributed & Production | 111, 112, 113, 116, 117, 118, 119, 122, 123, 124 |
-| 12 — Principal Track | 127, 128, 129, 132, 133, 134, 135 |
+| Coverage 01–135, no gaps, no duplicates | PASS |
+| Every doc reaches its final `## Connected topics` (no truncation) | PASS |
+| Template: bridge / traps / interview / quick-reference / anchor present | PASS |
+| Tier discipline: every DIFFERENTIATOR+ELITE doc has a Mechanical statement, none has an ELI5 | PASS |
+| Phase 9 (84–102): all 19 carry the two-column interleaving trace | PASS |
+| No fabricated tool output; every log/table illustration explicitly labelled | PASS |
+| Realistic domain throughout — no `foo`/`bar` placeholders | PASS |
 
-**Highest priority on resume:** 77 (JMH) — roughly fifteen other topics forward-reference
-it as the measurement authority; and 86–88 (the Java Memory Model), which 92–102 all
-build on.
+### Two docs were rebuilt
+Topics 83 and 116 were truncated mid-write by an interrupted session (both stopped
+after "Example 2"). They were deleted and regenerated in full rather than patched.
 
-### Verification performed
-- **Template compliance:** all 95 pass — every required section, correct order for tier.
-- **R14 concurrency traces:** every written Phase 9 doc carries the two-column
-  thread-by-thread interleaving trace before any correct code.
-- **No fabricated tool output.** Three GC/safepoint log lines flagged by sweep were
-  inspected and are all correctly labelled *"illustration of the format, not captured
-  output"* — the permitted teaching exception.
-- **Topic 65 (the gate) contains zero invented performance numbers** — 14 explicit
-  blank-template labels; its results tables are generated at runtime by the k6
-  `handleSummary` function from the learner's own run.
-- **No placeholder names** — all use the `orderflow` domain.
+### A note on the honesty sections
+Topics 76–79 and 83 open with `## Before anything else — what is and is not in this
+document`. That began as an internal instruction heading and was kept deliberately: it
+tells the reader plainly that the author has no JVM and that nothing in the document is
+captured output. Topic 77 explains why the rule is strictest there — roughly fifteen
+documents point at it saying "settle it with JMH", so one invented constant would sit
+underneath every performance argument made for a year.
 
-### Note on length
-Docs run 1,150–3,089 lines against an original 700–950 target. Every agent
-independently reported the same cause: the mandatory section set (5–6 traps with
-observable symptoms, 5 four-part interview questions, 3 exercises, 5–7 checkpoint
-questions, plus per-tier mechanical statement / machine-level reality / failure drill /
-measurement) does not compress into 950 lines. Nothing is padded.
+### Known internal conventions not in this plan
+Topic 124 introduces failure-mode IDs **F1–F26**, derived from the Phase 8–11 drill
+list. Topic 133 cross-references them (F14 = virtual-thread pinning). They are
+self-consistent across those docs but are not defined anywhere in this master plan — if
+they are ever renumbered, both files must change together.
 
-### To resume
-Regenerate the missing topics above. Restate in full to any agent writing them: the
-anti-fabrication rule, R14 (the two-column interleaving trace) for every Phase 9 topic,
-and the version-honesty requirements — `StructuredTaskScope`'s API changed across
-preview rounds, and `synchronized` pinning was largely removed in JDK 24+, so Topic
-101's drill must be informative under both outcomes.
+### Length
+Docs run roughly 1,200–3,100 lines. Later batches were deliberately capped at
+1,400–1,800 after truncation losses showed that a complete doc at 1,500 lines is worth
+more than a partial one at 2,400. Earlier Phase 5/8/9 docs are longer and denser; a few
+Phase 9 docs written under the cap (93, 96, 97, 98) are noticeably tighter than their
+neighbours (92, 94), mainly in Measurement and Connected topics.
+
+### Next step for the learner
+Start at Topic 01 and work forward. The tracker in Section H is the progress checklist —
+tick each topic only after all three of its exercises pass. Topic 65 is a hard gate:
+everything from Topic 66 onward profiles the service built and baselined there.
