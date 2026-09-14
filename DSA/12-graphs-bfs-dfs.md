@@ -24,7 +24,32 @@
 9. DSU
 10. DSU by Rank and Path Compression
 11. Detect Cycle using DSU
-12. 
+
+### Now did three questions : 
+    1. Satisfiability of Equality Equations (LC : 990)
+    2. Number of Operations to make Network Connected (LC : 1319)
+    3. Count Unreachable Pairs of Nodes in an Undirected graph (LC : 2316)
+
+12. Dijkstra's Part(I & II)
+13. Shortest Path in Weighted Directed Graph
+
+### Now did three questions : 
+    1. Network Delay Time (LC : 743)
+    2. Shortest Path in Binary Matrix (LC : 1091)
+    3. Path with Minimum Effort (LC : 1631)
+
+14. Bellman Ford Algorithm
+15. Floyd Warshall Algorithm
+16. Min. Spanning Tree
+17. PRIM's algorithm
+
+###
+    1. Min. Cost to Connect all Points (LC : 1584)
+
+18. Kruskal's Algorithm
+19. Kosaraju's Algorithm
+20. DSU by Size and Path Compression
+
 
 ## THE GRANDMASTER'S HONEST TAKE
 
