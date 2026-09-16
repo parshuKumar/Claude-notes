@@ -6,6 +6,10 @@
 
 ---
 
+### ShashCode
+1. 429. N-ary Tree Level Order Traversal
+2. 
+
 ## THE GRANDMASTER'S HONEST TAKE
 
 Trees are where recursion stops being a trick and becomes a way of thinking.
